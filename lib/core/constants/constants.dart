@@ -1,0 +1,1 @@
+const COMPANY_NAME = 'sudol_coo';

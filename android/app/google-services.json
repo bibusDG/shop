@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "293929116157",
+    "project_id": "shop-da808",
+    "storage_bucket": "shop-da808.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293929116157:android:4074fd47df23411393b994",
+        "android_client_info": {
+          "package_name": "com.dominikgrosser.shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEJ8DA9-uQ08ipQ9WePrF6SbObribhmnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
