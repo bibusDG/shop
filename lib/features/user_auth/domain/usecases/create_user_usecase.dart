@@ -11,7 +11,7 @@ class CreateUserUseCase implements UseCasesWithParams<void, CreateUserParams>{
   @override
   Future<Either<Failure, void>> call(CreateUserParams params) async{
     return await userRepo.createNewUser(
-        userID: '',
+        userID: params.userID,
         userName: params.userName,
         userSurname: params.userSurname,
         userEmail: params.userEmail,
@@ -20,7 +20,7 @@ class CreateUserUseCase implements UseCasesWithParams<void, CreateUserParams>{
         userCountry: params.userCountry,
         userPostalCode: params.userPostalCode,
         userAddress: params.userAddress,
-        isAdmin: false);
+        isAdmin: params.isAdmin);
     // TODO: implement call
     throw UnimplementedError();
   }
