@@ -25,11 +25,15 @@ abstract class UserFirebaseDataSource{
 });
 
   Future<void> deleteUser({
+    required String userID,
     required String userPassword,
     required String userEmail,
 });
 
 }
+
+
+///firebase code for creating new user
 
 class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
   @override
@@ -68,11 +72,23 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     // throw UnimplementedError();
   }
 
+
+  ///delete user from firebase
+
   @override
-  Future<void> deleteUser({required String userPassword, required String userEmail}) {
+  Future<void> deleteUser({
+    required String userID,
+    required String userPassword,
+    required String userEmail}) async{
+    await FirebaseFirestore.instance.collection('company').
+      doc(COMPANY_NAME).
+      collection('users').
+      doc(userID).delete();
     // TODO: implement deleteUser
-    throw UnimplementedError();
+    // throw UnimplementedError();
   }
+
+  ///get user data from firebase
 
   @override
   Future<UserModel> loginUser({

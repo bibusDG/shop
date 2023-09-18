@@ -42,10 +42,12 @@ class UserRepoImp implements  UserRepo{
 
   @override
   Future<Either<Failure, void>> deleteUser({
+    required String userID,
     required String userEmail,
     required String userPassword}) async{
     try{
       final result = await userFirebaseDataSource.deleteUser(
+          userID: userID,
           userPassword: userPassword,
           userEmail: userEmail);
       return Right(result);
@@ -75,6 +77,12 @@ class UserRepoImp implements  UserRepo{
   @override
   Future<Either<Failure, void>> modifyUserData() {
     // TODO: implement modifyUserData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, void>> logOutUser() {
+    // TODO: implement logOutUser
     throw UnimplementedError();
   }
   

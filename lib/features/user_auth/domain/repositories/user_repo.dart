@@ -20,6 +20,7 @@ abstract class UserRepo {
 });
 
   Future<Either<Failure, void>> deleteUser({
+    required String userID,
     required String userEmail,
     required String  userPassword,
 });
@@ -30,5 +31,7 @@ abstract class UserRepo {
 });
 
   Future<Either<Failure, void>> modifyUserData();
+
+  Future<Either<Failure, void>> logOutUser();
 
 }

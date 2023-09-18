@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
+import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 import 'package:shop/firebase_options.dart';
 
 import 'core/start_page.dart';
@@ -23,9 +24,9 @@ class Shop extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/',
+      initialRoute: '/registration_page',
       getPages: [
-        GetPage(name: '/', page: () => const StartPage(), binding: UserBindings()),
+        GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),
       ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
