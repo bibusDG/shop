@@ -13,7 +13,7 @@ abstract class UserFirebaseDataSource{
     required String userEmail,
     required String userPassword,
     required String userMobilePhone,
-    required String userCountry,
+    required String userCity,
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin,
@@ -44,7 +44,7 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     required String userEmail,
     required String userPassword,
     required String userMobilePhone,
-    required String userCountry,
+    required String userCity,
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin}) async{
@@ -58,7 +58,7 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
           userEmail: userEmail,
           userMobilePhone: userMobilePhone,
           isAdmin: isAdmin,
-          userCountry: userCountry,
+          userCity: userCity,
           userPostalCode: userPostalCode,
           userAddress: userAddress).toJson());
       final userDocID = addUser.id;

@@ -24,6 +24,11 @@ class LoginParams extends Equatable{
   final String userPassword;
   const LoginParams({required this.userPassword, required this.userEmail});
 
+  const LoginParams.empty() : this (
+    userEmail: 'empty_userEmail',
+    userPassword: 'empty_userPassword'
+  );
+
   @override
   List<Object> get props => [userEmail, userPassword];
 

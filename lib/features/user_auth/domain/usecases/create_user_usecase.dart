@@ -17,7 +17,7 @@ class CreateUserUseCase implements UseCasesWithParams<void, CreateUserParams>{
         userEmail: params.userEmail,
         userPassword: params.userPassword,
         userMobilePhone: params.userMobilePhone,
-        userCountry: params.userCountry,
+        userCity: params.userCity,
         userPostalCode: params.userPostalCode,
         userAddress: params.userAddress,
         isAdmin: params.isAdmin);
@@ -33,10 +33,23 @@ class CreateUserParams extends Equatable{
   final String userEmail;
   final String userPassword;
   final String userMobilePhone;
-  final String userCountry;
+  final String userCity;
   final String userPostalCode;
   final String userAddress;
   final bool isAdmin;
+
+  const CreateUserParams.empty() : this(
+    userID: 'empty_userID',
+    userName: 'empty_userName',
+    userSurname: 'empty_userSurname',
+    userPassword: 'empty_userPassword',
+    userAddress: 'empty_usrAddress',
+    userCity: 'empty_userCity',
+    userEmail: 'empty_userEmail',
+    userMobilePhone: 'empty_userMobilePhone',
+    userPostalCode: 'empty_userPostalCode',
+    isAdmin: false,
+  );
 
   const CreateUserParams({
     required this.userID,
@@ -45,7 +58,7 @@ class CreateUserParams extends Equatable{
     required this.userEmail,
     required this.userPassword,
     required this.userMobilePhone,
-    required this.userCountry,
+    required this.userCity,
     required this.userAddress,
     required this.userPostalCode,
     required this.isAdmin,

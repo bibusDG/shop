@@ -13,7 +13,7 @@ abstract class UserRepo {
     required String userEmail,
     required String userPassword,
     required String userMobilePhone,
-    required String userCountry,
+    required String userCity,
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin,

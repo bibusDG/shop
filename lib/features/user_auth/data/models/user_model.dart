@@ -11,10 +11,23 @@ class UserModel extends User{
     required super.userEmail,
     required super.userMobilePhone,
     required super.isAdmin,
-    required super.userCountry,
+    required super.userCity,
     required super.userPostalCode,
     required super.userAddress
 });
+  const UserModel.empty() : this(
+    userPassword: 'password',
+    userEmail: 'email',
+    userPostalCode: 'postalCode',
+    userMobilePhone: 'phone',
+    userCity: 'city',
+    userAddress: 'address',
+    userSurname: 'surname',
+    userName: 'name',
+    userID: 'id',
+    isAdmin: false
+  );
+
   UserModel copyWith({
     String? userID,
     String? userName,
@@ -22,7 +35,7 @@ class UserModel extends User{
     String? userEmail,
     String? userPassword,
     String? userMobilePhone,
-    String? userCountry,
+    String? userCity,
     String? userPostalCode,
     String? userAddress,
     bool? isAdmin,
@@ -34,7 +47,7 @@ class UserModel extends User{
         userEmail: userEmail ?? this.userEmail,
         userPassword: userPassword ?? this.userPassword,
         userMobilePhone: userMobilePhone ?? this.userMobilePhone,
-        userCountry: userCountry ?? this.userCountry,
+        userCity: userCity ?? this.userCity,
         userPostalCode: userPostalCode ?? this.userPostalCode,
         userAddress: userAddress ?? this.userAddress,
         isAdmin: isAdmin ?? this.isAdmin,
@@ -51,7 +64,7 @@ class UserModel extends User{
     userEmail: json["userEmail"],
     userPassword: json["userPassword"],
     userMobilePhone: json["userMobilePhone"],
-    userCountry: json["userCountry"],
+    userCity: json["userCity"],
     userPostalCode: json["userPostalCode"],
     userAddress: json["userAddress"],
     isAdmin: json["isAdmin"],
@@ -64,7 +77,7 @@ class UserModel extends User{
     "userEmail": userEmail,
     "userPassword": userPassword,
     "userMobilePhone": userMobilePhone,
-    "userCountry": userCountry,
+    "userCity": userCity,
     "userPostalCode": userPostalCode,
     "userAddress": userAddress,
     "isAdmin": isAdmin,

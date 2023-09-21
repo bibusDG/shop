@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
 import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 import 'package:shop/firebase_options.dart';
+import 'package:responsive_framework/breakpoint.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import 'core/start_page.dart';
 
@@ -23,15 +24,23 @@ class Shop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+          child: child!,
+          breakpoints: const [
+            Breakpoint(start: 0, end: 450, name: MOBILE),
+            Breakpoint(start: 451, end: 800, name: TABLET),
+          ]
+      ),
       initialRoute: '/registration_page',
       getPages: [
+        GetPage(name: '/start_page', page: () => const StartPage()),
         GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),
       ],
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: ThemeData.dark(),
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+      //   useMaterial3: true,
+      // ),
     );
   }
 }

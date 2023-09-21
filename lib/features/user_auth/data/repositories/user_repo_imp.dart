@@ -16,7 +16,7 @@ class UserRepoImp implements  UserRepo{
     required String userEmail,
     required String userPassword,
     required String userMobilePhone,
-    required String userCountry,
+    required String userCity,
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin}) async{
@@ -28,7 +28,7 @@ class UserRepoImp implements  UserRepo{
           userEmail: userEmail,
           userPassword: userPassword,
           userMobilePhone: userMobilePhone,
-          userCountry: userCountry,
+          userCity: userCity,
           userPostalCode: userPostalCode,
           userAddress: userAddress,
           isAdmin: isAdmin);

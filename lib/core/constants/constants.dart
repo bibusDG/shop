@@ -9,7 +9,7 @@ const EMPTY_USER = User(
     userEmail: '',
     userPassword: '',
     userMobilePhone: '',
-    userCountry: '',
+    userCity: '',
     userAddress: '',
     userPostalCode: '',
     isAdmin: false);

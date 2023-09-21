@@ -40,6 +40,7 @@ dependencies:
   get:
   firebase_core:
   cloud_firestore:
+  responsive_framework:
 
 
 dev_dependencies:
@@ -52,6 +53,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  mocktail:
+  fake_cloud_firestore:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
