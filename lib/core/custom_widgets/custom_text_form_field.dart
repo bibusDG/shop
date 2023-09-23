@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
 
 class CustomTextForm extends StatelessWidget {
   final bool obscureText;
-  final TextEditingController controller;
+  final TextEditingController textEditingController;
+  final CreateUserController? createUserController;
   final String hintText;
   final String labelText;
   final String mustContainText;
@@ -10,16 +13,17 @@ class CustomTextForm extends StatelessWidget {
   final int textLength;
   final TextInputType keyboardType;
   const CustomTextForm({
+    Key? key,
+    required this.textEditingController,
     required this.obscureText,
-    required this.controller,
+    this.createUserController,
     required this.hintText,
     required this.labelText,
     required this.mustContainText,
     required this.notAllowedText,
     required this.textLength,
     required this.keyboardType,
-    super.key,
-  });
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +31,15 @@ class CustomTextForm extends StatelessWidget {
       height: 90,
       width: 340,
       child: TextFormField(
+        onChanged: (value){
+          if(Get.currentRoute == '/registration_page'){
+            createUserController?.createUserButtonActive();
+          }
+        },
         autocorrect: false,
         obscureText: obscureText,
         keyboardType: keyboardType,
-        controller: controller,
+        controller: textEditingController,
         decoration: InputDecoration(
           focusedErrorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 2.0),),

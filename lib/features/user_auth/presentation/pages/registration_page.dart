@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
-
 import '../../../../core/custom_widgets/custom_text_form_field.dart';
-import '../../../../core/custom_widgets/custom_text_input_widget.dart';
 
 class RegistrationPage extends GetView<CreateUserController> {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -26,9 +24,10 @@ class RegistrationPage extends GetView<CreateUserController> {
               children: [
                 const SizedBox(height: 10.0,),
                 CustomTextForm(
+                  textEditingController: controller.userNameTextField,
                   obscureText: false,
                   key: const Key('userName'),
-                  controller: controller.userNameTextField,
+                  createUserController: controller,
                   hintText: 'Podaj imię',
                   labelText: 'imię *',
                   mustContainText: '',
@@ -36,9 +35,10 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 1,
                   keyboardType: TextInputType.text,),
                 CustomTextForm(
+                  textEditingController: controller.userSurnameTextField,
                   obscureText: false,
                   key: const Key('userSurname'),
-                  controller: controller.userSurnameTextField,
+                  createUserController: controller,
                   hintText: 'Podaj nazwisko',
                   labelText: 'nazwisko *',
                   mustContainText: '',
@@ -46,9 +46,10 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 1,
                   keyboardType: TextInputType.text,),
                 CustomTextForm(
+                  textEditingController: controller.userEmailTextField,
                   obscureText: false,
                   key: const Key('email'),
-                  controller: controller.userEmailTextField,
+                  createUserController: controller,
                   hintText: 'Podaj email',
                   labelText: 'email *',
                   mustContainText: '@',
@@ -56,19 +57,21 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 5,
                   keyboardType: TextInputType.emailAddress,),
                 CustomTextForm(
-                  obscureText: false,
-                  key: const Key('cityName'),
-                  controller: controller.userCityTextField,
-                  hintText: 'Podaj miejscowość',
-                  labelText: 'miasto *',
-                  mustContainText: '',
-                  notAllowedText: '@',
-                  textLength: 1,
-                  keyboardType: TextInputType.text),
+                  textEditingController: controller.userCityTextField,
+                    obscureText: false,
+                    key: const Key('cityName'),
+                    createUserController: controller,
+                    hintText: 'Podaj miejscowość',
+                    labelText: 'miasto *',
+                    mustContainText: '',
+                    notAllowedText: '@',
+                    textLength: 1,
+                    keyboardType: TextInputType.text),
                 CustomTextForm(
+                  textEditingController: controller.userPostalCodeTextField,
                   obscureText: false,
                   key: const Key('postalCode'),
-                  controller: controller.userPostalCodeTextField,
+                  createUserController: controller,
                   hintText: 'Podaj kod pocztowy',
                   labelText: 'kod *',
                   mustContainText: '',
@@ -76,9 +79,10 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 1,
                   keyboardType: TextInputType.number,),
                 CustomTextForm(
+                  textEditingController: controller.userAddressTextField,
                   obscureText: false,
                   key: const Key('address'),
-                  controller: controller.userAddressTextField,
+                  createUserController: controller,
                   hintText: 'Podaj adres',
                   labelText: 'adres *',
                   mustContainText: '',
@@ -86,9 +90,10 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 1,
                   keyboardType: TextInputType.streetAddress,),
                 CustomTextForm(
+                  textEditingController: controller.userMobilePhoneTextField,
                   obscureText: false,
                   key: const Key('phone'),
-                  controller: controller.userMobilePhoneTextField,
+                  createUserController: controller,
                   hintText: 'Podaj numer telefonu',
                   labelText: '+telefon *',
                   mustContainText: '',
@@ -96,9 +101,10 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 1,
                   keyboardType: TextInputType.number,),
                 CustomTextForm(
+                  textEditingController: controller.userPasswordTextField,
                   obscureText: true,
                   key: const Key('password'),
-                  controller: controller.userPasswordTextField,
+                  createUserController: controller,
                   hintText: 'Podaj hasło',
                   labelText: 'hasło *',
                   mustContainText: '',
@@ -106,9 +112,12 @@ class RegistrationPage extends GetView<CreateUserController> {
                   textLength: 1,
                   keyboardType: TextInputType.text,),
                 const SizedBox(height: 5,),
-                CupertinoButton(child: const Text('Zarejestruj'), onPressed: () async{
-                  await controller.createUser();
-                }),
+                Obx(() {
+                  return CupertinoButton(child: const Text('Zarejestruj'),
+                      onPressed: controller.activateRegistrationButton.value ? () async {
+                    await controller.createUser();
+                      } : null);
+                })
 
               ],
             ),
@@ -119,68 +128,3 @@ class RegistrationPage extends GetView<CreateUserController> {
     );
   }
 }
-
-
-
-
-// SingleChildScrollView(
-// child: Center(
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: [
-// const SizedBox(height: 50.0,),
-// CustomTextInput(
-// controller: controller.userNameTextField,
-// prefixText: ' imię: ',
-// inputType: TextInputType.name,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userSurnameTextField,
-// prefixText: ' nazwisko: ',
-// inputType: TextInputType.name,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userEmailTextField,
-// prefixText: ' e-mail: ',
-// inputType: TextInputType.emailAddress,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userCountryTextField,
-// prefixText: ' miasto: ',
-// inputType: TextInputType.text,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userPostalCodeTextField,
-// prefixText: ' kod pocztowy: ',
-// inputType: TextInputType.number,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userAddressTextField,
-// prefixText: ' adres: ',
-// inputType: TextInputType.streetAddress,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userMobilePhoneTextField,
-// prefixText: ' telefon: ',
-// inputType: TextInputType.phone,
-// obscureText: false),
-// const SizedBox(height: 10.0,),
-// CustomTextInput(
-// controller: controller.userPasswordTextField,
-// prefixText: ' hasło: ',
-// inputType: TextInputType.text,
-// obscureText: true),
-// const SizedBox(height: 30.0,),
-// CupertinoButton(child: const Text('Zarejstruj'), onPressed: () async{
-// await controller.createUser();
-// }),
-// ],
-// ),
-// ),
-// )

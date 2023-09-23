@@ -26,7 +26,7 @@ class StartPage extends GetView {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('create user'),
+            Text('Cześć'),
           ],
         ),
       ),),

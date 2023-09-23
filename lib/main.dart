@@ -31,7 +31,7 @@ class Shop extends StatelessWidget {
             Breakpoint(start: 451, end: 800, name: TABLET),
           ]
       ),
-      initialRoute: '/registration_page',
+      initialRoute: '/start_page',
       getPages: [
         GetPage(name: '/start_page', page: () => const StartPage()),
         GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),

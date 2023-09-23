@@ -17,14 +17,25 @@ class CustomAppBar extends StatelessWidget {
         Get.currentRoute == '/registration_page' || Get.currentRoute == '/login_page' ?
         const SizedBox() : IconButton(onPressed: (){}, icon: const Icon(Icons.shopping_cart_rounded)),
         PopupMenuButton(
+          onSelected: (value){
+            if(value == 2){
+              Get.toNamed('/registration_page');
+            }
+          },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
           itemBuilder: (BuildContext context) {
             return [
-              const PopupMenuItem(child: Text('Zaloguj się')),
-              const PopupMenuItem(child: Text('Wyloguj się')),
-              const PopupMenuItem(child: Text('Zarejestruj sie'))
+              const PopupMenuItem(
+                value: 0,
+                  child: Text('Zaloguj się')),
+              const PopupMenuItem(
+                value: 1,
+                  child: Text('Wyloguj się')),
+              const PopupMenuItem(
+                value: 2,
+                  child: Text('Zarejestruj sie'))
             ];
           },),
         // const SizedBox(width: 10.0,)

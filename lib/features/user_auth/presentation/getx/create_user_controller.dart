@@ -21,6 +21,8 @@ class CreateUserController extends GetxController{
   final userAddressTextField = TextEditingController();
   final userPostalCodeTextField = TextEditingController();
 
+  Rx<bool> activateRegistrationButton = false.obs;
+
 
   ///create user controller function
 
@@ -38,10 +40,29 @@ class CreateUserController extends GetxController{
             userPostalCode: userPostalCodeTextField.text,
             isAdmin: false));
     user.fold((failure) {
-      return Get.snackbar('failure', "failure");
+      return Get.snackbar('Błąd !!', "Coć poszło nie tak");
     }, (user) async {
       await Get.toNamed('/start_page');
-      return Get.snackbar('success', 'well done');
+      return Get.snackbar('Udało się !!', 'Rejestracja przebiegła pomyślnie');
     });
   }
+
+  createUserButtonActive(){
+    if(
+    userPasswordTextField.text.trim() != '' &&
+    userPasswordTextField.text.length >= 6 &&
+    userNameTextField.text.trim() != '' &&
+    userMobilePhoneTextField.text.trim() != '' &&
+    userAddressTextField.text.trim() != '' &&
+    userPostalCodeTextField.text.trim() != '' &&
+    userSurnameTextField.text.trim() != '' &&
+    userCityTextField.text.trim() != '' &&
+    userEmailTextField.text.trim() != ''
+    ){
+      activateRegistrationButton.value = true;
+    }else{
+      activateRegistrationButton.value = false;
+    }
+  }
+
 }

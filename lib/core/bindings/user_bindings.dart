@@ -6,6 +6,7 @@ import 'package:shop/features/user_auth/domain/usecases/create_user_usecase.dart
 import 'package:shop/features/user_auth/domain/usecases/logout_user_usecase.dart';
 import 'package:shop/features/user_auth/domain/usecases/user_login_usecase.dart';
 import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
+import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 
 class UserBindings implements Bindings{
   @override

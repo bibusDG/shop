@@ -82,4 +82,20 @@ class UserModel extends User{
     "userAddress": userAddress,
     "isAdmin": isAdmin,
   };
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      userID: map['userID'] as String,
+      userName: map['userName'] as String,
+      userSurname: map['userSurname'] as String,
+      userEmail: map['userEmail'] as String,
+      userPassword: map['userPassword'] as String,
+      userMobilePhone: map['userMobilePhone'] as String,
+      userCity: map['userCity'] as String,
+      userPostalCode: map['userPostalCode'] as String,
+      userAddress: map['userAddress'] as String,
+      isAdmin: map['isAdmin'] as bool,
+    );
+  }
+
 }
