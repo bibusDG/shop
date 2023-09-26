@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
+import 'package:shop/features/product_categories/presentation/pages/product_category_page.dart';
 import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 import 'package:shop/firebase_options.dart';
 import 'package:responsive_framework/breakpoint.dart';
@@ -33,6 +35,7 @@ class Shop extends StatelessWidget {
       ),
       initialRoute: '/start_page',
       getPages: [
+        GetPage(name:'/product_category', page :() => const ProductCategoryPage(), binding: ProductCategoryBindings()),
         GetPage(name: '/start_page', page: () => const StartPage()),
         GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),
       ],

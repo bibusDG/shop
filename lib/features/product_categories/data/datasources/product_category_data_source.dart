@@ -61,7 +61,7 @@ class ProductCategoryDataSourceImp implements ProductCategoryDataSource{
 
     await FirebaseFirestore.instance.collection('company').
           doc(COMPANY_NAME).
-          collection('productCategories').
+          collection('productCategory').
           doc(productCategoryID).update({
       'productCategoryName' : productCategoryName,
       'productCategoryPicture' :productCategoryPicture});
@@ -72,9 +72,14 @@ class ProductCategoryDataSourceImp implements ProductCategoryDataSource{
   }
 
   @override
-  Stream<List<ProductCategoryModel>> streamProductCategory() {
+  Stream<List<ProductCategoryModel>> streamProductCategory() async*{
+    yield* FirebaseFirestore.instance.collection('company').
+      doc(COMPANY_NAME).
+      collection('productCategory').snapshots().map((snapshot) {
+        return snapshot.docs.map((doc) => ProductCategoryModel.fromMap(doc.data())).toList();
+    });
     // TODO: implement streamProductCategory
-    throw UnimplementedError();
+    // throw UnimplementedError();
   }
 
   @override

@@ -9,9 +9,10 @@ abstract class ProductCategoryRepo{
   Future<Either<Failure, void>> addNewCategory({
     required String categoryName,
     required String categoryPicture,
+    required String productCategoryID,
 });
 
-  Stream<Either<Failure, List<ProductCategory>>> streamProductCategories();
+  Future<Either<Failure, Stream<List<ProductCategory>>>> streamProductCategories();
 
   Future<Either<Failure, void>> modifyProductCategory({
     required String categoryName,

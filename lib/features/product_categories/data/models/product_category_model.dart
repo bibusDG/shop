@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/features/product_categories/domain/entities/product_category.dart';
 
 class ProductCategoryModel extends ProductCategory{
@@ -41,4 +42,23 @@ class ProductCategoryModel extends ProductCategory{
     "productCategoryPicture": productCategoryPicture,
     "productCategoryID": productCategoryID,
   };
+
+  factory ProductCategoryModel.fromMap(Map<String, dynamic> map) {
+    return ProductCategoryModel(
+        productCategoryName: map['productCategoryName'] as String,
+        productCategoryPicture: map['productCategoryPicture'] as String,
+        productCategoryID: map['productCategoryID'] as String,
+    );
+  }
+
+  factory ProductCategoryModel.fromDocument(DocumentSnapshot document) {
+    final data = document.data()! as Map<String, dynamic>;
+    return ProductCategoryModel(
+        productCategoryName: data['productCategoryModel'] as String,
+        productCategoryPicture: data['productCategoryPicture'] as String,
+        productCategoryID: data['productCategoryID'] as String,
+
+    );
+  }
+
 }

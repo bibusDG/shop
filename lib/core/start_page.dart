@@ -22,11 +22,12 @@ class StartPage extends GetView {
       body: CupertinoButton(onPressed: () async{
         // controller.createUser();
       },
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Cześć'),
+            GestureDetector(
+                child: Text('Cześć'), onTap: (){Get.toNamed('/product_category');},),
           ],
         ),
       ),),
