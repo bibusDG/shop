@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop/features/user_auth/domain/usecases/create_user_usecase.dart';
-import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import 'custom_widgets/custom_app_bar.dart';
