@@ -23,6 +23,10 @@ abstract class ProductCategoryDataSource{
     required String productCategoryID,
 });
 
+  Future<ProductCategoryModel> getProduct({
+  required String productCategoryID,
+});
+
 }
 
 class ProductCategoryDataSourceImp implements ProductCategoryDataSource{
@@ -93,5 +97,19 @@ class ProductCategoryDataSourceImp implements ProductCategoryDataSource{
 
     // TODO: implement deleteProductCategory
     // throw UnimplementedError();
+  }
+
+  @override
+  Future<ProductCategoryModel> getProduct({required String productCategoryID}) async{
+
+    final productCategory = await FirebaseFirestore.instance.
+      collection('company').
+      doc(COMPANY_NAME).
+      collection('productCategory').doc(productCategoryID).get();
+
+    ProductCategoryModel category = ProductCategoryModel.fromMap(productCategory.data()!);
+    return category;
+    // TODO: implement getProduct
+    throw UnimplementedError();
   }
 }

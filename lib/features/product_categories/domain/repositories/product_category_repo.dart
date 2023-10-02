@@ -24,4 +24,8 @@ abstract class ProductCategoryRepo{
     required String productCategoryID,
 });
 
+  Future<Either<Failure, ProductCategory>> getProductCategory({
+  required String productCategoryID,
+});
+
 }

@@ -68,4 +68,16 @@ class ProductCategoryRepoImp implements ProductCategoryRepo{
     // TODO: implement streamProductCategories
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, ProductCategory>> getProductCategory({required String productCategoryID}) async{
+    try{
+      final result = await productCategoryDataSource.getProduct(productCategoryID: productCategoryID);
+      return Right(result);
+    }catch(error){
+      return const Left(GetProductCategoryFailure(failureMessage: 'Unable to get product category'));
+    }
+    // TODO: implement getProductCategory
+    throw UnimplementedError();
+  }
 }

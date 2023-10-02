@@ -19,6 +19,17 @@ class Product extends Equatable{
     required this.productGallery,
     required this.productID
 });
+
+  Product.empty() : this(
+    productID: 'productID',
+    productAvailability: 0,
+    productName: 'productName',
+    productCategory: 'productCategory',
+    productDescription: 'productDescription',
+    productGallery: [],
+    productPrice: 0.0
+  );
+
   @override
   List<Object> get props => [productID, productName];
 }

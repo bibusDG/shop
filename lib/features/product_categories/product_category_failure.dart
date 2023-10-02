@@ -15,3 +15,7 @@ class UpdateProductCategoryFailure extends Failure{
 class StreamProductCategoryFailure extends Failure{
   const StreamProductCategoryFailure({required super.failureMessage});
 }
+
+class GetProductCategoryFailure extends Failure{
+  const GetProductCategoryFailure({required super.failureMessage});
+}
