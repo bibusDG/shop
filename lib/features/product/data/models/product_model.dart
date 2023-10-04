@@ -12,6 +12,16 @@ class ProductModel extends Product{
    required super.productGallery,
    required super.productID});
 
+ const ProductModel.empty() : this(
+   productID: 'productID',
+   productAvailability: 0,
+   productName: 'productName',
+   productDescription: 'productDescription',
+   productGallery: const [],
+   productPrice: 0.0,
+   productCategory: 'productCategory'
+ );
+
  ProductModel copyWith({
    String? productName,
    String? productID,
@@ -55,16 +65,16 @@ class ProductModel extends Product{
    "productCategory": productCategory,
  };
 
- factory ProductModel.fromMap(Map<String, dynamic> map) {
-   return ProductModel(
-     productName: map['productName'] as String,
-     productAvailability: map['productAvailability'] as int,
-     productCategory: map['productCategory'] as String,
-     productDescription: map['productDescription'] as String,
-     productGallery: map['productGallery'] as List<String>,
-     productID: map['productID'] as String,
-     productPrice: map['productPrice'] as double,
-   );
- }
+ // factory ProductModel.fromMap(Map<String, dynamic> map) {
+ //   return ProductModel(
+ //     productName: map['productName'] as String,
+ //     productAvailability: map['productAvailability'] as int,
+ //     productCategory: map['productCategory'] as String,
+ //     productDescription: map['productDescription'] as String,
+ //     productGallery: map['productGallery'] as List<String>,
+ //     productID: map['productID'] as String,
+ //     productPrice: map['productPrice'] as double,
+ //   );
+ // }
 
 }

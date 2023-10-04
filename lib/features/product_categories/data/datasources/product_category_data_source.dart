@@ -80,7 +80,7 @@ class ProductCategoryDataSourceImp implements ProductCategoryDataSource{
     yield* FirebaseFirestore.instance.collection('company').
       doc(COMPANY_NAME).
       collection('productCategory').snapshots().map((snapshot) {
-        return snapshot.docs.map((doc) => ProductCategoryModel.fromMap(doc.data())).toList();
+        return snapshot.docs.map((doc) => ProductCategoryModel.fromJson(doc.data())).toList();
     });
     // TODO: implement streamProductCategory
     // throw UnimplementedError();
@@ -107,7 +107,7 @@ class ProductCategoryDataSourceImp implements ProductCategoryDataSource{
       doc(COMPANY_NAME).
       collection('productCategory').doc(productCategoryID).get();
 
-    ProductCategoryModel category = ProductCategoryModel.fromMap(productCategory.data()!);
+    ProductCategoryModel category = ProductCategoryModel.fromJson(productCategory.data()!);
     return category;
     // TODO: implement getProduct
     throw UnimplementedError();

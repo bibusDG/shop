@@ -61,7 +61,8 @@ class ProductDataSourceImp implements ProductDataSource{
             productPrice: productPrice,
             productAvailability: productAvailability,
             productDescription: productDescription,
-            productGallery: productGallery, productID: productID).toJson());
+            productGallery: productGallery,
+            productID: productID).toJson());
 
     final docID = addProduct.id;
 
@@ -133,7 +134,7 @@ class ProductDataSourceImp implements ProductDataSource{
 
     yield* FirebaseFirestore.instance.collection('company').doc(COMPANY_NAME).collection('products').
     where('productCategory', isEqualTo: productCategory).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => ProductModel.fromMap(doc.data())).toList();
+      return snapshot.docs.map((doc) => ProductModel.fromJson(doc.data())).toList();
       });
     // TODO: implement streamProducts
     // throw UnimplementedError();

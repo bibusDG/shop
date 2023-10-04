@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/product_categories/presentation/getx/product_category_controller.dart';
+
+import '../../../product/presentation/getx/product_controller.dart';
+import '../../domain/entities/product_category.dart';
 
 class ProductCategoryPage extends GetView<ProductCategoryController> {
   const ProductCategoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    ProductController productController = Get.find();
+
     return ResponsiveScaledBox(
       width: 430,
       child: Scaffold(
@@ -25,8 +30,18 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                     itemExtent: 180,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index){
-                      return const Card(
-                        color: Colors.red,
+                      ProductCategory productCategory = snapshot.data[index];
+                      return GestureDetector(
+                        onLongPress: (){
+                          productController.addProduct();
+                        },
+                        onTap: () async{
+                          productController.productCategory = productCategory.productCategoryName;
+                          Get.toNamed('/products_in_category_page');
+                        },
+                        child: const Card(
+                          color: Colors.red,
+                        ),
                       );
                     });
               }else{
@@ -39,7 +54,4 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
       }),
     ));
   }
-}
-
-class Getview {
 }

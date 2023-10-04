@@ -43,13 +43,13 @@ class ProductCategoryModel extends ProductCategory{
     "productCategoryID": productCategoryID,
   };
 
-  factory ProductCategoryModel.fromMap(Map<String, dynamic> map) {
-    return ProductCategoryModel(
-        productCategoryName: map['productCategoryName'] as String,
-        productCategoryPicture: map['productCategoryPicture'] as String,
-        productCategoryID: map['productCategoryID'] as String,
-    );
-  }
+  // factory ProductCategoryModel.fromMap(Map<String, dynamic> map) {
+  //   return ProductCategoryModel(
+  //       productCategoryName: map['productCategoryName'] as String,
+  //       productCategoryPicture: map['productCategoryPicture'] as String,
+  //       productCategoryID: map['productCategoryID'] as String,
+  //   );
+  // }
 
   factory ProductCategoryModel.fromDocument(DocumentSnapshot document) {
     final data = document.data()! as Map<String, dynamic>;

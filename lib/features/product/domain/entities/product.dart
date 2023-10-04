@@ -20,13 +20,13 @@ class Product extends Equatable{
     required this.productID
 });
 
-  Product.empty() : this(
+  const Product.empty() : this(
     productID: 'productID',
     productAvailability: 0,
     productName: 'productName',
     productCategory: 'productCategory',
     productDescription: 'productDescription',
-    productGallery: [],
+    productGallery: const [],
     productPrice: 0.0
   );
 
