@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/core/bindings/basket_bindings.dart';
 import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
 import 'package:shop/features/product/presentation/pages/products_in_category_page.dart';
@@ -12,6 +13,8 @@ import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import 'core/bindings/product_bindings.dart';
 import 'core/start_page.dart';
+import 'features/basket/presentation/pages/basket_page.dart';
+import 'features/product/presentation/pages/product_details_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +44,8 @@ class Shop extends StatelessWidget {
         GetPage(name: '/start_page', page: () => const StartPage()),
         GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),
         GetPage(name: '/products_in_category_page', page: ()=> const ProductsInCategoryPage(), binding: ProductBindings()),
+        GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), bindings: [ProductBindings(), BasketBindings()]),
+        GetPage(name: '/basket_page', page: () => const BasketPage()),
       ],
       theme: ThemeData.dark(),
       // theme: ThemeData(

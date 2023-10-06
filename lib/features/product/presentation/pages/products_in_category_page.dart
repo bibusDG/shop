@@ -30,12 +30,12 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                           Product product = snapshot.data[index];
                           return GestureDetector(
                             onTap: () async{
-                              print(product.productName);
-                              // productController.productCategory = productCategory.productCategoryID;
+                              await controller.getProduct(productID: product.productID);
+                              Get.toNamed('/product_details_page');
                             },
                             child:Card(
-                              child: Center(child:Text(product.productName)),
                               color: Colors.red,
+                              child: Center(child:Text(product.productName)),
                             ),
                           );
                         });

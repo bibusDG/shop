@@ -39,8 +39,9 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                           productController.productCategory = productCategory.productCategoryName;
                           Get.toNamed('/products_in_category_page');
                         },
-                        child: const Card(
+                        child: Card(
                           color: Colors.red,
+                          child: Center(child: Text(productCategory.productCategoryName)),
                         ),
                       );
                     });

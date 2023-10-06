@@ -16,13 +16,13 @@ class ProductController extends GetxController{
     required this.createProductUseCase,
 });
 
-  String productID = '';
+  // String productID = '';
   String productCategory = '';
-  late Product productData;
+  Product productData = const Product.empty();
 
 
-  Future<Product> getProduct() async{
-    final result = await getProductUseCase.productRepo.getProduct(productID: productID);
+  Future<Product> getProduct({productID}) async{
+    final result = await getProductUseCase(GetProductParams(productID: productID));
     result.fold((failure){
       return Get.defaultDialog();
     }, (result) async{

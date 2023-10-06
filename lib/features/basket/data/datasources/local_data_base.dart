@@ -1,0 +1,3 @@
+class LocalDataBase{
+  Map localDataBase = {};
+}

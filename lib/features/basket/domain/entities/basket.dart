@@ -7,6 +7,11 @@ class Basket extends Equatable{
   const Basket({
     required this.basketContent
 });
+
+  const Basket.empty() : this(
+    basketContent: const [],
+  );
+
   @override
   List<Object> get props => [basketContent];
 }
