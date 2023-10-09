@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 
+
 class BasketPage extends GetView<BasketController> {
   const BasketPage({Key? key}) : super(key: key);
 
@@ -22,7 +23,7 @@ class BasketPage extends GetView<BasketController> {
                 child: Center(child: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () async {
-                      await controller.removeProductFromBasket(productID: listOfKeys[index]);
+                      controller.listOfProducts.remove(listOfKeys[index]);
                     }
                 )),
               );

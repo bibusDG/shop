@@ -41,6 +41,8 @@ dependencies:
   firebase_core:
   cloud_firestore:
   responsive_framework:
+  flutter_bloc:
+#  bloc:
 
 
 dev_dependencies:
