@@ -38,6 +38,7 @@ class CreateUserController extends GetxController{
             userCity: userCityTextField.text,
             userAddress: userAddressTextField.text,
             userPostalCode: userPostalCodeTextField.text,
+            userBonusPoints: 0,
             isAdmin: false));
     user.fold((failure) {
       return Get.snackbar('Błąd !!', "Coć poszło nie tak");

@@ -41,10 +41,10 @@ class Shop extends StatelessWidget {
       initialRoute: '/start_page',
       getPages: [
         GetPage(name:'/product_category', page :() => const ProductCategoryPage(), bindings: [ProductCategoryBindings(), ProductBindings()]),
-        GetPage(name: '/start_page', page: () => const StartPage()),
+        GetPage(name: '/start_page', page: () => const StartPage(), binding: BasketBindings()),
         GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),
         GetPage(name: '/products_in_category_page', page: ()=> const ProductsInCategoryPage(), binding: ProductBindings()),
-        GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), bindings: [ProductBindings(), BasketBindings()]),
+        GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), binding: ProductBindings()),
         GetPage(name: '/basket_page', page: () => const BasketPage()),
       ],
       theme: ThemeData.dark(),

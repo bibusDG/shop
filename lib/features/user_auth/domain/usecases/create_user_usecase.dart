@@ -20,6 +20,7 @@ class CreateUserUseCase implements UseCasesWithParams<void, CreateUserParams>{
         userCity: params.userCity,
         userPostalCode: params.userPostalCode,
         userAddress: params.userAddress,
+        userBonusPoints: params.userBonusPoints,
         isAdmin: params.isAdmin);
     // TODO: implement call
     throw UnimplementedError();
@@ -37,6 +38,7 @@ class CreateUserParams extends Equatable{
   final String userPostalCode;
   final String userAddress;
   final bool isAdmin;
+  final int userBonusPoints;
 
   const CreateUserParams.empty() : this(
     userID: 'empty_userID',
@@ -49,6 +51,7 @@ class CreateUserParams extends Equatable{
     userMobilePhone: 'empty_userMobilePhone',
     userPostalCode: 'empty_userPostalCode',
     isAdmin: false,
+    userBonusPoints: 0,
   );
 
   const CreateUserParams({
@@ -62,6 +65,7 @@ class CreateUserParams extends Equatable{
     required this.userAddress,
     required this.userPostalCode,
     required this.isAdmin,
+    required this.userBonusPoints,
 
   });
   @override

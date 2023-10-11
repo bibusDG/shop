@@ -26,8 +26,11 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
             if(snapshot.hasData){
               if(snapshot.data.length > 0){
-                return ListView.builder(
-                    itemExtent: 180,
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      childAspectRatio: 1.0),
+                    // itemExtent: 180,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index){
                       ProductCategory productCategory = snapshot.data[index];
@@ -39,9 +42,27 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                           productController.productCategory = productCategory.productCategoryName;
                           Get.toNamed('/products_in_category_page');
                         },
-                        child: Card(
-                          color: Colors.red,
-                          child: Center(child: Text(productCategory.productCategoryName)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 20),
+                          child: Card(
+                            // color: Colors.red,
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                  height: 300,
+                                  width: 300,
+                                ),
+                                const SizedBox(height: 20.0,),
+                                Center(child: Text(productCategory.productCategoryName)),
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     });

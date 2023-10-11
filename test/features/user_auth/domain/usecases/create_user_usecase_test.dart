@@ -29,6 +29,7 @@ void main() {
         userCity: any(named: 'userCity'),
         userPostalCode: any(named: 'userPostalCode'),
         userAddress: any(named: 'userAddress'),
+        userBonusPoints: any(named: 'userBonusPoints'),
         isAdmin: false,
     )).thenAnswer((_) async => const Right(null));
 
@@ -47,6 +48,7 @@ void main() {
         userCity: params.userCity,
         userPostalCode: params.userPostalCode,
         userAddress: params.userAddress,
+        userBonusPoints: params.userBonusPoints,
         isAdmin: params.isAdmin)).called(1);
     verifyNoMoreInteractions(repo);
   });

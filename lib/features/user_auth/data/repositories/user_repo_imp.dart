@@ -19,7 +19,9 @@ class UserRepoImp implements  UserRepo{
     required String userCity,
     required String userPostalCode,
     required String userAddress,
-    required bool isAdmin}) async{
+    required bool isAdmin,
+    required int userBonusPoints,
+  }) async{
     try{
       final result = await userFirebaseDataSource.createUser(
           userID: userID,
@@ -31,6 +33,7 @@ class UserRepoImp implements  UserRepo{
           userCity: userCity,
           userPostalCode: userPostalCode,
           userAddress: userAddress,
+          userBonusPoints: userBonusPoints,
           isAdmin: isAdmin);
       return Right(result);
     }catch(error){

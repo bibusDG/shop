@@ -23,8 +23,11 @@ class ProductsInCategoryPage extends GetView<ProductController> {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
                 if(snapshot.hasData){
                   if(snapshot.data.length > 0){
-                    return ListView.builder(
-                        itemExtent: 180,
+                    return GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio:0.6,
+                          crossAxisCount: 2),
+                        // itemExtent: 180,
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index){
                           Product product = snapshot.data[index];
@@ -34,8 +37,25 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                               Get.toNamed('/product_details_page');
                             },
                             child:Card(
-                              color: Colors.red,
-                              child: Center(child:Text(product.productName)),
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: Colors.white
+                                    ),
+                                    width: 180,
+                                    height: 280,
+                                  ),
+                                  const SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Center(child:Text(product.productName)),
+                                ],
+                              ),
                             ),
                           );
                         });

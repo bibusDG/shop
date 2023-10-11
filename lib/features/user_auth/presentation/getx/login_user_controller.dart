@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shop/features/user_auth/domain/usecases/user_login_usecase.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
+import 'package:shop/features/user_auth/presentation/getx/user_status_controller.dart';
 
 import '../../domain/entities/user.dart';
 
@@ -13,6 +14,7 @@ class LoginUserController extends GetxController{
   final loginPasswordTextInput = TextEditingController();
 
   Future<User> loginUser() async{
+    UserStatusController userStatus = Get.put(UserStatusController());
     UserDataController userDataController = Get.put(UserDataController());
     final userData = await loginUserUseCase(
         LoginParams(
@@ -22,6 +24,7 @@ class LoginUserController extends GetxController{
       return Get.snackbar('Login', 'Something went wrong');
     }, (user) async{
       userDataController.userData = user;
+      userStatus.userStatus = true;
     });
     return userDataController.userData;
   }

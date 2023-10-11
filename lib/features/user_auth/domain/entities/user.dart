@@ -11,6 +11,7 @@ class User extends Equatable{
   final String userPostalCode;
   final String userAddress;
   final bool isAdmin;
+  final int userBonusPoints;
 
   const User({
     required this.userID,
@@ -23,6 +24,7 @@ class User extends Equatable{
     required this.userAddress,
     required this.userPostalCode,
     required this.isAdmin,
+    required this.userBonusPoints,
 });
 
   const User.empty() : this(
@@ -36,6 +38,7 @@ class User extends Equatable{
     userMobilePhone: 'empty_userMobilePhone',
     userPostalCode: 'empty_userPostalCode',
     isAdmin: false,
+    userBonusPoints: 0,
   );
 
   @override

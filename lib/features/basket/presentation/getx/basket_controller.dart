@@ -3,6 +3,7 @@ import 'package:shop/features/basket/domain/usecases/add_product_to_basket_useca
 import 'package:shop/features/basket/domain/usecases/remove_product_from_basket_usecase.dart';
 
 import '../../../product/domain/entities/product.dart';
+import '../../domain/entities/basket.dart';
 
 class BasketController extends GetxController{
   final AddProductToBasketUseCase addProductToBasketUseCase;
@@ -13,8 +14,7 @@ class BasketController extends GetxController{
     required this.removeProductFromBasketUseCase});
 
 
-  RxMap<dynamic, dynamic> listOfProducts = {}.obs;
-
+  RxMap<String, Product> listOfProducts = <String, Product>{}.obs;
 
   Future<void> addProductToBasket({required Product product}) async{
     final result = await addProductToBasketUseCase(
@@ -29,19 +29,21 @@ class BasketController extends GetxController{
     result.fold((failure){
         return Get.snackbar('failure', 'message');
         }, (success) async{
+      if(listOfProducts.keys.contains(product.productID)){
+        return Get.snackbar(product.productName, 'produkt jest już w koszyku');
+      }
       listOfProducts[product.productID] = product;
-      return Get.snackbar('success', 'message');
+      return Get.snackbar(product.productName, 'pomyślnie dodano do koszyka');
     });
-    print(listOfProducts);
   }
 
   Future<void> removeProductFromBasket({productID}) async{
     final result = await removeProductFromBasketUseCase(RemoveBasketParams(productID: productID));
     result.fold((failure){
-      return Get.snackbar('failed', 'message');
+      return Get.snackbar('Błąd', 'nie można usunąć produktu');
     }, (success){
       listOfProducts.remove(productID);
-      return Get.snackbar('removed', 'message');
+      return Get.snackbar('Udało się', 'produkt usunięty z koszyka');
     });
   }
 }

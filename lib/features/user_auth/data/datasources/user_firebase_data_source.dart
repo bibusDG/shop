@@ -17,6 +17,7 @@ abstract class UserFirebaseDataSource{
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin,
+    required int userBonusPoints,
 });
 
   Future<UserModel> loginUser({
@@ -47,7 +48,8 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     required String userCity,
     required String userPostalCode,
     required String userAddress,
-    required bool isAdmin}) async{
+    required bool isAdmin,
+    required int userBonusPoints}) async{
       final addUser = await FirebaseFirestore.instance.collection('company').
       doc(COMPANY_NAME).collection('users').
       add(UserModel(
@@ -60,6 +62,7 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
           isAdmin: isAdmin,
           userCity: userCity,
           userPostalCode: userPostalCode,
+          userBonusPoints: userBonusPoints,
           userAddress: userAddress).toJson());
       final userDocID = addUser.id;
       await FirebaseFirestore.instance.collection('company').

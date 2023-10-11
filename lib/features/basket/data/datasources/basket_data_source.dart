@@ -43,7 +43,6 @@ class BasketDataSourceImp implements BasketDataSource{
         productDescription: productDescription,
         productGallery: productGallery,
         productID: productID).toJson();
-    print(dataBase);
     // TODO: implement addProductToBasket
     // throw UnimplementedError();
   }

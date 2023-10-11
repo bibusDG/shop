@@ -12,4 +12,5 @@ const EMPTY_USER = User(
     userCity: '',
     userAddress: '',
     userPostalCode: '',
+    userBonusPoints: 0,
     isAdmin: false);

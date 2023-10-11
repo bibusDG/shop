@@ -24,7 +24,6 @@ class ProductDetailsPage extends GetView<ProductController> {
             body: Center(
                 child: IconButton(
                     onPressed: () async {
-                      Get.toNamed('/basket_page');
                       await basketController.addProductToBasket(
                           product: controller.productData);
                     }, icon: Icon(Icons.add),)

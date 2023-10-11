@@ -32,6 +32,7 @@ void main() {
     const String userPostalCode = 'userPostalCode';
     const String userAddress = 'userAddress';
     const bool isAdmin = false;
+    const int userBonusPoints = 0;
     
     test('should call [UserFirebaseDataSource.createUser] and finish successfuly', () async{
       when(()=>userFirebaseDataSource.createUser(
@@ -44,6 +45,7 @@ void main() {
           userCity: any(named: 'userCity'),
           userPostalCode: any(named: 'userPostalCode'),
           userAddress: any(named: 'userAddress'),
+          userBonusPoints: any(named: 'userBonusPoints'),
           isAdmin: false,)).thenAnswer((_) async => Future.value());
 
       final result = await userRepoImp.createNewUser(
@@ -56,6 +58,7 @@ void main() {
           userCity: userCity,
           userPostalCode: userPostalCode,
           userAddress: userAddress,
+          userBonusPoints: userBonusPoints,
           isAdmin: isAdmin);
 
       expect(result, equals(const Right(null)));
@@ -69,6 +72,7 @@ void main() {
           userCity: userCity,
           userPostalCode: userPostalCode,
           userAddress: userAddress,
+          userBonusPoints: userBonusPoints,
           isAdmin: isAdmin)).called(1);
       verifyNoMoreInteractions(userFirebaseDataSource);
 
@@ -87,6 +91,7 @@ void main() {
         userCity: any(named: 'userCity'),
         userPostalCode: any(named: 'userPostalCode'),
         userAddress: any(named: 'userAddress'),
+        userBonusPoints: any(named: 'userBonusPoints'),
         isAdmin: false,)).thenThrow(createFailureMessage);
 
       final result = await userRepoImp.createNewUser(
@@ -99,6 +104,7 @@ void main() {
           userCity: userCity,
           userPostalCode: userPostalCode,
           userAddress: userAddress,
+          userBonusPoints: userBonusPoints,
           isAdmin: isAdmin);
       
       expect(result, equals(Left(UserCreateFailure(failureMessage: createFailureMessage.failureMessage))));

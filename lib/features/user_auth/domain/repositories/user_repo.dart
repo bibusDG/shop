@@ -17,6 +17,7 @@ abstract class UserRepo {
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin,
+    required int userBonusPoints,
 });
 
   Future<Either<Failure, void>> deleteUser({
