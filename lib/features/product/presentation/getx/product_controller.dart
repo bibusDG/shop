@@ -19,6 +19,7 @@ class ProductController extends GetxController{
   // String productID = '';
   String productCategory = '';
   Product productData = const Product.empty();
+  RxInt availability = 0.obs;
 
 
   Future<Product> getProduct({productID}) async{
@@ -27,6 +28,7 @@ class ProductController extends GetxController{
       return Get.defaultDialog();
     }, (result) async{
       productData = result;
+      availability.value = result.productAvailability;
     });
     return productData;
   }

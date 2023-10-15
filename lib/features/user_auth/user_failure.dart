@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:shop/core/failures/failure.dart';
 
 class UserCreateFailure extends Failure{
@@ -14,4 +15,8 @@ class UserDeleteFailure extends Failure{
 
 class UserModifyFailure extends Failure{
   const UserModifyFailure({required super.failureMessage});
+}
+
+class UserLogOutFailure extends Failure{
+  const UserLogOutFailure({required super.failureMessage});
 }

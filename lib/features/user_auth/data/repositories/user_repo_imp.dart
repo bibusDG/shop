@@ -84,7 +84,12 @@ class UserRepoImp implements  UserRepo{
   }
 
   @override
-  Future<Either<Failure, void>> logOutUser() {
+  Future<Either<Failure, void>> logOutUser() async{
+    try{
+      return const Right(null);
+    }catch(error){
+      return const Left(UserLogOutFailure(failureMessage: 'Unable to logout'));
+    }
     // TODO: implement logOutUser
     throw UnimplementedError();
   }

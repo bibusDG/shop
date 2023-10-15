@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shop/features/basket/domain/usecases/add_product_to_basket_usecase.dart';
 import 'package:shop/features/basket/domain/usecases/remove_product_from_basket_usecase.dart';
+import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import '../../../product/domain/entities/product.dart';
 import '../../domain/entities/basket.dart';
@@ -15,8 +16,9 @@ class BasketController extends GetxController{
 
 
   RxMap<String, Product> listOfProducts = <String, Product>{}.obs;
-
+  
   Future<void> addProductToBasket({required Product product}) async{
+
     final result = await addProductToBasketUseCase(
         AddBasketParams(
         productID: product.productID,

@@ -6,6 +6,7 @@ import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
 import 'package:shop/features/product/presentation/pages/products_in_category_page.dart';
 import 'package:shop/features/product_categories/presentation/pages/product_category_page.dart';
+import 'package:shop/features/user_auth/domain/entities/user.dart';
 import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 import 'package:shop/firebase_options.dart';
 import 'package:responsive_framework/breakpoint.dart';
@@ -15,6 +16,7 @@ import 'core/bindings/product_bindings.dart';
 import 'core/start_page.dart';
 import 'features/basket/presentation/pages/basket_page.dart';
 import 'features/product/presentation/pages/product_details_page.dart';
+import 'features/user_auth/presentation/pages/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,9 +42,10 @@ class Shop extends StatelessWidget {
       ),
       initialRoute: '/start_page',
       getPages: [
+        GetPage(name: '/login_page', page: () => const LoginPage()),
         GetPage(name:'/product_category', page :() => const ProductCategoryPage(), bindings: [ProductCategoryBindings(), ProductBindings()]),
-        GetPage(name: '/start_page', page: () => const StartPage(), binding: BasketBindings()),
-        GetPage(name: '/registration_page', page: () => const RegistrationPage(), binding: UserBindings()),
+        GetPage(name: '/start_page', page: () => const StartPage(), bindings: [BasketBindings(), UserBindings()]),
+        GetPage(name: '/registration_page', page: () => const RegistrationPage()),
         GetPage(name: '/products_in_category_page', page: ()=> const ProductsInCategoryPage(), binding: ProductBindings()),
         GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), binding: ProductBindings()),
         GetPage(name: '/basket_page', page: () => const BasketPage()),

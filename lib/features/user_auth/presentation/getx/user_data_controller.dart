@@ -5,4 +5,5 @@ import '../../domain/entities/user.dart';
 
 class UserDataController extends GetxController{
   User userData = EMPTY_USER;
+  late RxBool userLoginStatus = false.obs;
 }
