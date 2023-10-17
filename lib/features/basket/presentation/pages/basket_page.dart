@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
-
 import '../../../product/domain/entities/product.dart';
 
 
@@ -19,7 +17,7 @@ class BasketPage extends GetView<BasketController> {
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Koszyk')),
         body: Obx(() {
-          if(controller.listOfProducts.isEmpty){
+          if (controller.listOfProducts.isEmpty) {
             return const Center(child: Text('Koszyk jest pusty'),);
           }
           return Column(
@@ -31,45 +29,76 @@ class BasketPage extends GetView<BasketController> {
                     itemBuilder: (BuildContext context, int index) {
                       List listOfKeys = controller.listOfProducts.keys.toList();
                       Product? product = controller.listOfProducts[listOfKeys[index]];
-                      return Card(
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 20.0,),
-                            Container(
-                              width: 150,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,),
-                            ),
-                            const SizedBox(width: 30.0,),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      return Stack(
+                        alignment: AlignmentDirectional.topEnd,
+                        children: [
+                          Card(
+                            child: Row(
                               children: [
-                                Text(product!.productName),
-                                Text('${product.productPrice} PLN'),
-                                Text('Ilość sztuk'),
+                                const SizedBox(width: 20.0,),
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,),
+                                ),
+                                const SizedBox(width: 30.0,),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(product!.productName),
+                                    Text('${product.productPrice} PLN'),
+                                    Text('Dostępność: ${product.productAvailability}'),
+                                    Row(
+                                      children: [
+                                        Obx(() {
+                                          return Text('${controller.productCounter[product.productID]}');
+                                        }),
+                                        const SizedBox(width: 20.0,),
+                                        Column(
+                                          children: [
+                                            GestureDetector(child: const Icon(Icons.add), onTap: () async{
+                                              if(product.productAvailability > controller.productCounter[product.productID]!) {
+                                                controller.productCounter.update(product.productID, (value) => value + 1);
+                                                controller.finalPrice.value += product.productPrice;
+                                              }
+                                            },),
+                                            GestureDetector(child: const Icon(Icons.remove),onTap: () async{
+                                              if(controller.productCounter[product.productID]! > 0){
+                                                controller.productCounter.update(product.productID, (value) => value - 1);
+                                                controller.finalPrice.value -= product.productPrice;
+                                              }
+
+                                            },),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(width: 20.0,),
+                                  ],
+                                ),
                               ],
                             ),
-                            const SizedBox(width: 80.0,),
-                            Center(child: IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  controller.removeProductFromBasket(productID: listOfKeys[index]);
-                                }
-                            )),
-                          ],
-                        ),
+                          ),
+                          IconButton(
+                              icon: const Icon(Icons.cancel, size: 40,),
+                              onPressed: () async {
+                                await controller.removeProductFromBasket(productID: listOfKeys[index]);
+                                controller.finalPrice.value -= controller.productCounter[product.productID]! * product.productPrice;
+                              }
+                          )
+                        ],
                       );
                     }),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const Text('Cena całkowita: 1234 PLN'),
+                  Text('Cena całkowita: ${controller.finalPrice.abs().toStringAsFixed(2)} PLN'),
                   IconButton(
-                    onPressed: (){
+                    onPressed: () {
 
                     }, icon: const Icon(Icons.check_circle_outline_outlined), iconSize: 50,),
                 ],

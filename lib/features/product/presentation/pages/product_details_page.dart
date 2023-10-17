@@ -15,7 +15,6 @@ class ProductDetailsPage extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-
     BasketController basketController = Get.find();
     UserDataController userData = Get.find();
 
@@ -61,37 +60,33 @@ class ProductDetailsPage extends GetView<ProductController> {
                             child: Text(controller.productData.productDescription)),
                         const SizedBox(height: 20.0,),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Obx(() {
-                              return Text(
-                                  controller.productData.productAvailability <= 0 ? 'Produkt niedostępny' :
-                                  'Dostępna ilość: ${controller.availability.value}');
-                            }),
-                            IconButton(
-                              onPressed: controller.productData.productAvailability <= 0 ? null :
-                                  () async {
-                                if(userData.userLoginStatus.value == false){
-                                  Get.defaultDialog(
-                                    title: 'Uwaga',
-                                    content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
-                                  );
-                                }else{
-                                  await basketController.addProductToBasket(product: controller.productData);
-                                  ///update product, add update to controller
-                                }
-                              },
-                              icon: const Icon(Icons.add_shopping_cart),
-                              iconSize: 25,
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                padding: const EdgeInsets.all(20),
-                                backgroundColor: Colors.black, // <-- Button color
-                                foregroundColor: Colors.white, // <-- Splash color
-                              ),
-                            )
-                          ],
-                        ),
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(controller.productData.productAvailability <= 0 ? 'Produkt niedostępny' :
+                              'Dostępna ilość: ${controller.availability.value}'),
+                              IconButton(
+                                onPressed: controller.productData.productAvailability <= 0 ? null :
+                                    () async {
+                                  if (userData.userLoginStatus.value == false) {
+                                    Get.defaultDialog(
+                                        title: 'Uwaga',
+                                        content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
+                                    );
+                                  } else {
+                                    await basketController.addProductToBasket(product: controller.productData);
+                                  }
+                                },
+                                icon: const Icon(Icons.add_shopping_cart),
+                                iconSize: 25,
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  padding: const EdgeInsets.all(20),
+                                  backgroundColor: Colors.black, // <-- Button color
+                                  foregroundColor: Colors.white, // <-- Splash color
+                                ),
+                              )
+                            ],
+                          ),
                       ],
                     ),
                   ),

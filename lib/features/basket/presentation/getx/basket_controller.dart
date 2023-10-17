@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shop/features/basket/domain/usecases/add_product_to_basket_usecase.dart';
 import 'package:shop/features/basket/domain/usecases/remove_product_from_basket_usecase.dart';
+import 'package:shop/features/product/presentation/getx/product_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import '../../../product/domain/entities/product.dart';
@@ -16,6 +17,8 @@ class BasketController extends GetxController{
 
 
   RxMap<String, Product> listOfProducts = <String, Product>{}.obs;
+  RxMap<String, int> productCounter = <String, int>{}.obs;
+  RxDouble finalPrice = 0.0.obs;
   
   Future<void> addProductToBasket({required Product product}) async{
 
@@ -33,9 +36,12 @@ class BasketController extends GetxController{
         }, (success) async{
       if(listOfProducts.keys.contains(product.productID)){
         return Get.snackbar(product.productName, 'produkt jest już w koszyku');
+      }else{
+        listOfProducts[product.productID] = product;
+        productCounter[product.productID] = 0;
+        return Get.snackbar(product.productName, 'pomyślnie dodano do koszyka');
       }
-      listOfProducts[product.productID] = product;
-      return Get.snackbar(product.productName, 'pomyślnie dodano do koszyka');
+
     });
   }
 

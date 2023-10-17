@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:shop/features/product/domain/usecases/create_product_usecase.dart';
 import 'package:shop/features/product/domain/usecases/get_product_usecase.dart';
+import 'package:shop/features/product/domain/usecases/update_product_usecase.dart';
 
 import '../../features/product/data/datasources/product_data_source.dart';
 import '../../features/product/data/repositories/product_repo_imp.dart';
@@ -19,10 +20,11 @@ class ProductBindings implements Bindings{
     Get.lazyPut(() => StreamProductUseCase(productRepo: Get.find()));
     Get.lazyPut(() => GetProductUseCase(productRepo: Get.find()));
     Get.lazyPut(()=> CreateProductUseCase(productRepo: Get.find()));
+    Get.lazyPut(() => UpdateProductUseCase(productRepo: Get.find()));
 
     Get.lazyPut(() => ProductController(
       streamProductUseCase: Get.find(), getProductUseCase: Get.find(),
-      createProductUseCase: Get.find(),
+      createProductUseCase: Get.find(), updateProductUseCase: Get.find(),
     ));
     // TODO: implement dependencies
   }
