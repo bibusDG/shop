@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Order extends Equatable{
+class UserOrder extends Equatable{
   final String orderID;
   final String userEmail;
   final String orderNumber;
@@ -10,7 +10,7 @@ class Order extends Equatable{
   final String paymentMethod;
   final String deliveryAddress;
 
-  const Order({
+  const UserOrder({
     required this.orderID,
     required this.userEmail,
     required this.orderStatus,
@@ -21,7 +21,7 @@ class Order extends Equatable{
     required this.paymentMethod,
 });
 
-  const Order.empty() : this(
+  const UserOrder.empty() : this(
     orderTime: 'orderTime',
     orderStatus: 'orderStatus',
     orderPrice: 0.0,

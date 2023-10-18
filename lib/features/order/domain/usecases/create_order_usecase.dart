@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shop/core/failures/failure.dart';
 import 'package:shop/core/usecases/usecases.dart';
-import 'package:shop/features/order/domain/repositories/order_repo.dart';
+import 'package:shop/features/order/domain/repositories/user_order_repo.dart';
 
 class CreateOrderUseCase implements UseCasesWithParams<void, CreateOrderParams>{
-  final OrderRepo orderRepo;
+  final UserOrderRepo orderRepo;
   const CreateOrderUseCase({required this.orderRepo});
 
   @override

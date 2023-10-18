@@ -7,3 +7,7 @@ class CreateOrderFailure extends Failure{
 class UpdateOrderByAdminFailure extends Failure{
   const UpdateOrderByAdminFailure({required super.failureMessage});
 }
+
+class StreamOrderFailure extends Failure{
+  const StreamOrderFailure({required super.failureMessage});
+}

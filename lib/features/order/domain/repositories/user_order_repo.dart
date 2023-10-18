@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/failures/failure.dart';
+import '../entities/user_order.dart';
 
-abstract class OrderRepo{
-  const OrderRepo();
+abstract class UserOrderRepo{
+  const UserOrderRepo();
 
   Future<Either<Failure, void>> createOrder({
     required String orderID,
@@ -20,6 +21,11 @@ abstract class OrderRepo{
   Future<Either<Failure, void>> modifyOrderByAdmin({
     required String orderStatus,
     required String orderID,
+});
+
+  Future<Either<Failure, Stream<List<UserOrder>>>> streamOrders({
+    required String userEmail,
+    required bool isAdmin,
 });
 
 }

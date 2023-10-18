@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import '../../domain/entities/order.dart';
+import '../../domain/entities/user_order.dart';
 
-class OrderModel extends Order{
-  const OrderModel({
+class UserOrderModel extends UserOrder{
+  const UserOrderModel({
     required super.orderID,
     required super.userEmail,
     required super.orderNumber,
@@ -14,7 +14,7 @@ class OrderModel extends Order{
     required super.orderStatus,
 });
 
-  const OrderModel.empty() : this(
+  const UserOrderModel.empty() : this(
     orderID: 'orderID',
     orderNumber: 'orderNumber',
     paymentMethod: 'paymentMethod',
@@ -25,7 +25,7 @@ class OrderModel extends Order{
     orderTime: 'orderTime'
   );
 
-  OrderModel copyWith({
+  UserOrderModel copyWith({
     String? orderID,
     String? orderNumber,
     String? userEmail,
@@ -35,7 +35,7 @@ class OrderModel extends Order{
     String? orderTime,
     String? deliveryAddress,
   }) =>
-      OrderModel(
+      UserOrderModel(
         orderID: orderID ?? this.orderID,
         orderNumber: orderNumber ?? this.orderNumber,
         userEmail: userEmail ?? this.userEmail,
@@ -46,11 +46,11 @@ class OrderModel extends Order{
         deliveryAddress: deliveryAddress ?? this.deliveryAddress,
       );
 
-  factory OrderModel.fromRawJson(String str) => OrderModel.fromJson(json.decode(str));
+  factory UserOrderModel.fromRawJson(String str) => UserOrderModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
+  factory UserOrderModel.fromJson(Map<String, dynamic> json) => UserOrderModel(
     orderID: json["orderID"],
     orderNumber: json["orderNumber"],
     userEmail: json["userEmail"],

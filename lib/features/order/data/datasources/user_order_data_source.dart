@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/constants/constants.dart';
-import 'package:shop/features/order/data/models/order_model.dart';
+import 'package:shop/features/order/data/models/user_order_model.dart';
 
-abstract class OrderDataSource{
-  const OrderDataSource();
+abstract class UserOrderDataSource{
+  const UserOrderDataSource();
 
   Future<void> createOrder({
     required String orderID,
@@ -22,9 +22,14 @@ abstract class OrderDataSource{
     required String orderID,
 });
 
+  Stream<List<UserOrderModel>> streamOrders({
+    required String userEmail,
+    required bool isAdmin,
+});
+
 }
 
-class OrderDataSourceImp implements OrderDataSource{
+class OrderDataSourceImp implements UserOrderDataSource{
   @override
   Future<void> createOrder({
     required String orderID,
@@ -38,7 +43,7 @@ class OrderDataSourceImp implements OrderDataSource{
 
       final result = await FirebaseFirestore.instance.collection('company').
         doc(COMPANY_NAME).
-        collection('orders').add(OrderModel(
+        collection('orders').add(UserOrderModel(
           orderID: orderID,
           userEmail: userEmail,
           orderNumber: orderNumber,
@@ -70,6 +75,31 @@ class OrderDataSourceImp implements OrderDataSource{
     doc(orderID).
     update({"orderStatus" : orderStatus});
     // TODO: implement modifyOrderByAdmin
+    // throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<UserOrderModel>> streamOrders({
+    required String userEmail,
+    required bool isAdmin
+  }) async* {
+    if(isAdmin == true){
+      yield* FirebaseFirestore.instance.
+      collection('company').
+      doc(COMPANY_NAME).
+      collection('orders').snapshots().map((snapshot){
+        return snapshot.docs.map((doc) => UserOrderModel.fromJson(doc.data())).toList();
+      });
+    }else{
+      yield* FirebaseFirestore.instance.
+      collection('company').
+      doc(COMPANY_NAME).
+      collection('orders').where('userEmail', isEqualTo: userEmail).snapshots().map((snapshot){
+        return snapshot.docs.map((doc) => UserOrderModel.fromJson(doc.data())).toList();
+      });
+    }
+
+    // TODO: implement streamOrders
     // throw UnimplementedError();
   }
 
