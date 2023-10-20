@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop/core/bindings/basket_bindings.dart';
+import 'package:shop/core/bindings/order_bindings.dart';
 import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
 import 'package:shop/features/product/presentation/pages/products_in_category_page.dart';
@@ -15,6 +16,7 @@ import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'core/bindings/product_bindings.dart';
 import 'core/start_page.dart';
 import 'features/basket/presentation/pages/basket_page.dart';
+import 'features/order/presentation/pages/order_page.dart';
 import 'features/product/presentation/pages/product_details_page.dart';
 import 'features/user_auth/presentation/pages/login_page.dart';
 
@@ -48,9 +50,10 @@ class Shop extends StatelessWidget {
         GetPage(name: '/registration_page', page: () => const RegistrationPage()),
         GetPage(name: '/products_in_category_page', page: ()=> const ProductsInCategoryPage(), binding: ProductBindings()),
         GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), binding: ProductBindings()),
-        GetPage(name: '/basket_page', page: () => const BasketPage()),
+        GetPage(name: '/basket_page', page: () => const BasketPage(), binding: OrderBindings()),
+        GetPage(name: '/order_page', page: () => const OrderPage()),
       ],
-      theme: ThemeData.dark(),
+      theme: ThemeData.light(),
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
       //   useMaterial3: true,

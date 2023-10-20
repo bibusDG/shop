@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
+import 'package:shop/features/order/presentation/getx/order_controller.dart';
 import '../../../product/domain/entities/product.dart';
 
 
@@ -11,6 +12,9 @@ class BasketPage extends GetView<BasketController> {
 
   @override
   Widget build(BuildContext context) {
+
+    OrderController orderController = Get.find();
+
     return ResponsiveScaledBox(
       width: 430,
       child: Scaffold(
@@ -98,8 +102,10 @@ class BasketPage extends GetView<BasketController> {
                 children: [
                   Text('Cena całkowita: ${controller.finalPrice.abs().toStringAsFixed(2)} PLN'),
                   IconButton(
-                    onPressed: () {
-
+                    onPressed: () async{
+                      orderController.orderValue.value = controller.finalPrice.value;
+                      orderController.totalValue.value = controller.finalPrice.value;
+                      Get.toNamed('/order_page');
                     }, icon: const Icon(Icons.check_circle_outline_outlined), iconSize: 50,),
                 ],
               ),

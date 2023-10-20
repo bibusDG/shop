@@ -38,7 +38,8 @@ class BasketController extends GetxController{
         return Get.snackbar(product.productName, 'produkt jest już w koszyku');
       }else{
         listOfProducts[product.productID] = product;
-        productCounter[product.productID] = 0;
+        productCounter[product.productID] = 1;
+        finalPrice.value += product.productPrice;
         return Get.snackbar(product.productName, 'pomyślnie dodano do koszyka');
       }
 

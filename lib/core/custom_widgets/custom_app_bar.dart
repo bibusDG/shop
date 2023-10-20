@@ -70,6 +70,9 @@ class CustomAppBar extends StatelessWidget {
             if (value == 2) {
               Get.toNamed('/registration_page');
             }
+            if (value == 4){
+
+            }
           },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -84,7 +87,13 @@ class CustomAppBar extends StatelessWidget {
                   child: Text('Wyloguj się')),
               const PopupMenuItem(
                   value: 2,
-                  child: Text('Zarejestruj sie'))
+                  child: Text('Zarejestruj sie')),
+              PopupMenuItem(value: 3,
+                enabled: userDataController.userLoginStatus.value == true? true : false,
+                child: const Text('Mój profil'),),
+              PopupMenuItem(value: 4,
+                enabled: userDataController.userLoginStatus.value == true? true : false,
+                child: const Text('Zamówienia'),)
             ];
           },
           child: ClipRect(

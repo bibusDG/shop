@@ -14,3 +14,5 @@ const EMPTY_USER = User(
     userPostalCode: '',
     userBonusPoints: 0,
     isAdmin: false);
+
+const double COURIER_COST = 20;
