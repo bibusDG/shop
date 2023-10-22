@@ -45,8 +45,9 @@ class OrderPage extends GetView<OrderController> {
                             const SizedBox(height: 10.0,),
                             Text('${userDataController.userData.userName} ${userDataController.userData.userSurname}', style: const TextStyle(
                                 fontSize: 20.0, fontWeight: FontWeight.w800),),
-                            Text('${userDataController.userData.userPostalCode} ${userDataController.userData.userCity}'),
-                            Text('ul. ${userDataController.userData.userAddress}')
+                            Obx(() {
+                              return Text(controller.deliveryData.value);
+                            }),
                           ],
                         ),
                         Text('Zmień'),
@@ -150,7 +151,12 @@ class OrderPage extends GetView<OrderController> {
                     ],
                   ),
                   const SizedBox(height: 20.0,),
-                  ElevatedButton(onPressed: (){}, child: const Text('Zamawiam')),
+                  ElevatedButton(onPressed: () async{
+                    await controller.createNewOrder();
+                    basketController.listOfProducts.value = {};
+                    basketController.finalPrice.value = 0.0;
+                    Get.toNamed('/start_page');
+                  }, child: const Text('Zamawiam')),
                 ],
               ),
 

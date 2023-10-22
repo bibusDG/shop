@@ -1,9 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/order/presentation/getx/order_controller.dart';
+import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 import '../../../product/domain/entities/product.dart';
 
 
@@ -14,6 +16,7 @@ class BasketPage extends GetView<BasketController> {
   Widget build(BuildContext context) {
 
     OrderController orderController = Get.find();
+    UserDataController userDataController = Get.find();
 
     return ResponsiveScaledBox(
       width: 430,
@@ -70,7 +73,7 @@ class BasketPage extends GetView<BasketController> {
                                               }
                                             },),
                                             GestureDetector(child: const Icon(Icons.remove),onTap: () async{
-                                              if(controller.productCounter[product.productID]! > 0){
+                                              if(controller.productCounter[product.productID]! > 1){
                                                 controller.productCounter.update(product.productID, (value) => value - 1);
                                                 controller.finalPrice.value -= product.productPrice;
                                               }
@@ -103,8 +106,12 @@ class BasketPage extends GetView<BasketController> {
                   Text('Cena całkowita: ${controller.finalPrice.abs().toStringAsFixed(2)} PLN'),
                   IconButton(
                     onPressed: () async{
+                      orderController.deliveryData.value = ''
+                          '${userDataController.userData.userName} ${userDataController.userData.userSurname}, '
+                          '${userDataController.userData.userPostalCode}, ${userDataController.userData.userCity}\n'
+                          'ul. ${userDataController.userData.userAddress}';
                       orderController.orderValue.value = controller.finalPrice.value;
-                      orderController.totalValue.value = controller.finalPrice.value;
+                      orderController.totalValue.value = controller.finalPrice.value + orderController.deliveryCost.value;
                       Get.toNamed('/order_page');
                     }, icon: const Icon(Icons.check_circle_outline_outlined), iconSize: 50,),
                 ],
