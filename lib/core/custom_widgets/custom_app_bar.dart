@@ -71,7 +71,7 @@ class CustomAppBar extends StatelessWidget {
               Get.toNamed('/registration_page');
             }
             if (value == 4){
-
+              Get.toNamed('/allOrders_page');
             }
           },
           shape: RoundedRectangleBorder(

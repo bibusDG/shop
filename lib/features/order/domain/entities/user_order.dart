@@ -1,6 +1,13 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../basket/domain/entities/basket.dart';
+
 class UserOrder extends Equatable{
+  final String userMobile;
+  final String deliveryMethod;
+  final List<String> orderedProducts;
+
+
   final String orderID;
   final String userEmail;
   final String orderNumber;
@@ -11,6 +18,11 @@ class UserOrder extends Equatable{
   final String deliveryAddress;
 
   const UserOrder({
+    required this.userMobile,
+    required this.deliveryMethod,
+    required this.orderedProducts,
+
+
     required this.orderID,
     required this.userEmail,
     required this.orderStatus,
@@ -29,7 +41,12 @@ class UserOrder extends Equatable{
     orderID: 'orderID',
     paymentMethod: 'paymentMethod',
     deliveryAddress: 'deliveryAddress',
-    userEmail: 'userEmail'
+    userEmail: 'userEmail',
+
+
+    userMobile: 'userMobile',
+    deliveryMethod: 'deliveryMethod',
+    orderedProducts: const [],
   );
 
   @override

@@ -4,6 +4,8 @@ import 'package:shop/core/failures/failure.dart';
 import 'package:shop/core/usecases/usecases.dart';
 import 'package:shop/features/order/domain/repositories/user_order_repo.dart';
 
+import '../../../basket/domain/entities/basket.dart';
+
 class CreateOrderUseCase implements UseCasesWithParams<void, CreateOrderParams>{
   final UserOrderRepo orderRepo;
   const CreateOrderUseCase({required this.orderRepo});
@@ -11,6 +13,10 @@ class CreateOrderUseCase implements UseCasesWithParams<void, CreateOrderParams>{
   @override
   Future<Either<Failure, void>> call(params) async{
     return await orderRepo.createOrder(
+        deliveryMethod: params.deliveryMethod,
+        userMobile: params.userMobile,
+        orderedProducts: params.orderedProducts,
+
         orderID: params.orderID,
         userEmail: params.userEmail,
         orderNumber: params.orderNumber,
@@ -25,6 +31,11 @@ class CreateOrderUseCase implements UseCasesWithParams<void, CreateOrderParams>{
 }
 
 class CreateOrderParams extends Equatable{
+
+  final String userMobile;
+  final String deliveryMethod;
+  final List<String> orderedProducts;
+
   final String orderNumber;
   final String orderID;
   final String orderTime;
@@ -34,6 +45,11 @@ class CreateOrderParams extends Equatable{
   final String paymentMethod;
   final String deliveryAddress;
   const CreateOrderParams({
+
+    required this.orderedProducts,
+    required this.deliveryMethod,
+    required this.userMobile,
+
     required this.orderNumber,
     required this.orderStatus,
     required this.orderID,
@@ -53,6 +69,9 @@ class CreateOrderParams extends Equatable{
     paymentMethod: 'paymentMethod',
     userEmail: 'userEmail',
     deliveryAddress: 'deliveryAddress',
+    deliveryMethod: 'deliveryMethod',
+    userMobile: 'userMobile',
+    orderedProducts: const [],
   );
 
   @override

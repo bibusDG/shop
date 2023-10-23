@@ -1,9 +1,14 @@
 import 'dart:convert';
 
+import '../../../basket/data/models/basket_model.dart';
 import '../../domain/entities/user_order.dart';
 
 class UserOrderModel extends UserOrder{
   const UserOrderModel({
+    required super.deliveryMethod,
+    required super.userMobile,
+    required super.orderedProducts,
+
     required super.orderID,
     required super.userEmail,
     required super.orderNumber,
@@ -22,7 +27,11 @@ class UserOrderModel extends UserOrder{
     deliveryAddress: 'deliveryAddress',
     orderStatus: 'orderStatus',
     userEmail: 'userEmail',
-    orderTime: 'orderTime'
+    orderTime: 'orderTime',
+
+    userMobile: 'userMobile',
+    deliveryMethod: 'deliveryMethod',
+    orderedProducts: const []
   );
 
   UserOrderModel copyWith({
@@ -34,6 +43,10 @@ class UserOrderModel extends UserOrder{
     double? orderPrice,
     String? orderTime,
     String? deliveryAddress,
+
+    String? deliveryMethod,
+    String? userMobile,
+    List<String>? orderedProducts,
   }) =>
       UserOrderModel(
         orderID: orderID ?? this.orderID,
@@ -44,6 +57,10 @@ class UserOrderModel extends UserOrder{
         orderPrice: orderPrice ?? this.orderPrice,
         orderTime: orderTime ?? this.orderTime,
         deliveryAddress: deliveryAddress ?? this.deliveryAddress,
+
+        deliveryMethod: deliveryMethod ?? this.deliveryMethod,
+        userMobile: userMobile ?? this.userMobile,
+        orderedProducts: orderedProducts ?? this.orderedProducts,
       );
 
   factory UserOrderModel.fromRawJson(String str) => UserOrderModel.fromJson(json.decode(str));
@@ -59,7 +76,11 @@ class UserOrderModel extends UserOrder{
     orderPrice: json["orderPrice"],
     orderTime: json["orderTime"],
     deliveryAddress: json["deliveryAddress"],
-  );
+
+    userMobile: json["userMobile"],
+    deliveryMethod: json["deliveryMethod"],
+    orderedProducts: List<String>.from(json["orderedProducts"].map((x) => x)),
+  );  
 
   Map<String, dynamic> toJson() => {
     "orderID" : orderID,
@@ -70,6 +91,12 @@ class UserOrderModel extends UserOrder{
     "orderPrice": orderPrice,
     "orderTime": orderTime,
     "deliveryAddress": deliveryAddress,
+
+    "deliveryMethod": deliveryMethod,
+    "userMobile":  userMobile,
+    "orderedProducts": List<dynamic>.from(orderedProducts.map((x) => x)),
   };
 
 }
+
+// List<dynamic>.from(articlesList.map((x) => x)),

@@ -5,6 +5,7 @@ import 'package:shop/core/bindings/basket_bindings.dart';
 import 'package:shop/core/bindings/order_bindings.dart';
 import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
+import 'package:shop/features/order/presentation/pages/allOrders_page.dart';
 import 'package:shop/features/product/presentation/pages/products_in_category_page.dart';
 import 'package:shop/features/product_categories/presentation/pages/product_category_page.dart';
 import 'package:shop/features/user_auth/domain/entities/user.dart';
@@ -52,6 +53,7 @@ class Shop extends StatelessWidget {
         GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), binding: ProductBindings()),
         GetPage(name: '/basket_page', page: () => const BasketPage(), binding: OrderBindings()),
         GetPage(name: '/order_page', page: () => const OrderPage()),
+        GetPage(name: '/allOrders_page', page: () => const AllOrdersPage(), binding: OrderBindings()),
       ],
       theme: ThemeData.light(),
       // theme: ThemeData(

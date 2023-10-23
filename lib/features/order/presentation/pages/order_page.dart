@@ -153,8 +153,6 @@ class OrderPage extends GetView<OrderController> {
                   const SizedBox(height: 20.0,),
                   ElevatedButton(onPressed: () async{
                     await controller.createNewOrder();
-                    basketController.listOfProducts.value = {};
-                    basketController.finalPrice.value = 0.0;
                     Get.toNamed('/start_page');
                   }, child: const Text('Zamawiam')),
                 ],

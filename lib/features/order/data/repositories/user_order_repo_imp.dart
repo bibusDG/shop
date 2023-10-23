@@ -5,12 +5,20 @@ import 'package:shop/features/order/domain/repositories/user_order_repo.dart';
 import 'package:shop/features/order/order_failures.dart';
 import 'package:shop/features/order/domain/entities/user_order.dart';
 
+import '../../../basket/data/models/basket_model.dart';
+import '../../../basket/domain/entities/basket.dart';
+
 class UserOrderRepoImp implements UserOrderRepo{
   final UserOrderDataSource dataSource;
   UserOrderRepoImp({required this.dataSource});
 
   @override
   Future<Either<Failure, void>> createOrder({
+
+    required String userMobile,
+    required String deliveryMethod,
+    required List<String> orderedProducts,
+
     required String orderID,
     required String userEmail,
     required String orderNumber,
@@ -21,6 +29,11 @@ class UserOrderRepoImp implements UserOrderRepo{
     required String deliveryAddress}) async{
     try{
       final result = await dataSource.createOrder(
+
+          userMobile: userMobile,
+          deliveryMethod: deliveryMethod,
+          orderedProducts: orderedProducts,
+
           orderID: orderID,
           userEmail: userEmail,
           orderNumber: orderNumber,

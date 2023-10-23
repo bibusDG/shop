@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/product/domain/usecases/stream_product_usecase.dart';
 import 'package:shop/features/product/domain/usecases/update_product_usecase.dart';
-
 import '../../domain/entities/product.dart';
 import '../../domain/usecases/create_product_usecase.dart';
 import '../../domain/usecases/get_product_usecase.dart';
@@ -65,21 +64,24 @@ class ProductController extends GetxController{
     });
   }
 
-  Future<void> updateAvailability({required bool add}) async{
-    final result = await updateProductUseCase(
-        UpdateProductParams(
-            productID: productData.productID,
-            productName: productData.productName,
-            productDescription: productData.productDescription,
-            productPrice: productData.productPrice,
-            productAvailability: add == true? productData.productAvailability + 1 : productData.productAvailability - 1,
-            productGallery: productData.productGallery,
-            productCategory: productData.productCategory));
-    result.fold((error) async{
-
-    }, (update) async{
-
-    });
+  ///function, that updates product availability
+  ///(existing availability - chosen amount of product in basket)
+  ///after final order (based on list of products in basket controller)
+  Future<void> updateAvailability() async{
+    BasketController basketController = Get.find();
+    for(var item in basketController.listOfProducts.values){
+        final result = await updateProductUseCase(
+            UpdateProductParams(
+                productID: item.productID,
+                productName: item.productName,
+                productDescription: item.productDescription,
+                productPrice: item.productPrice,
+                productAvailability: item.productAvailability - basketController.productCounter[item.productID]!,
+                productGallery: item.productGallery,
+                productCategory: item.productCategory));
+        result.fold((error) async{
+        }, (update) async{
+        });
+    }
   }
-
 }
