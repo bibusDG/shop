@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/bindings_interface.dart';
 import 'package:shop/features/basket/data/datasources/local_data_base.dart';
 import 'package:shop/features/basket/data/repositories/basket_repo_imp.dart';
 import 'package:shop/features/basket/domain/repositories/basket_repo.dart';

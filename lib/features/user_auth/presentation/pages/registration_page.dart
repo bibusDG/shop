@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
+import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import '../../../../core/custom_widgets/custom_text_form_field.dart';
 
 class RegistrationPage extends GetView<CreateUserController> {
@@ -11,12 +12,15 @@ class RegistrationPage extends GetView<CreateUserController> {
 
   @override
   Widget build(BuildContext context) {
+
+    ModifyUserController modifyUserController = Get.find();
+
     return ResponsiveScaledBox(
       width: 430,
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70.0),
-          child: CustomAppBar(appBarTitle: 'REJESTRACJA',),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(70.0),
+          child: CustomAppBar(appBarTitle: controller.registrationPage == true ? 'REJESTRACJA' : 'ZMIANA DANYCH',),
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -113,10 +117,15 @@ class RegistrationPage extends GetView<CreateUserController> {
                   keyboardType: TextInputType.text,),
                 const SizedBox(height: 5,),
                 Obx(() {
-                  return CupertinoButton(child: const Text('Zarejestruj'),
-                      onPressed: controller.activateRegistrationButton.value ? () async {
-                    await controller.createUser();
-                      } : null);
+                  if(controller.registrationPage == true){
+                    return CupertinoButton(onPressed: controller.activateRegistrationButton.value ? () async {
+                      await controller.createUser();
+                    } : null ,child: Text('Zarejestruj'),);
+                  } else{
+                    return CupertinoButton(onPressed: controller.activateRegistrationButton.value ? () async{
+                      await modifyUserController.modifyUser();
+                    } : null, child: Text('Zmień'));
+                  }
                 })
 
               ],

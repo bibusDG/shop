@@ -10,6 +10,8 @@ class CreateUserController extends GetxController{
 
   // User? user;
 
+  bool registrationPage = true;
+
   ///text fields for inserting user data
 
   final userNameTextField = TextEditingController();
@@ -27,6 +29,7 @@ class CreateUserController extends GetxController{
   ///create user controller function
 
   Future<void> createUser() async{
+
     final user = await createUserUseCase(
         CreateUserParams(
             userID: "",
@@ -64,6 +67,18 @@ class CreateUserController extends GetxController{
     }else{
       activateRegistrationButton.value = false;
     }
+  }
+
+  clearTextFields(){
+    userNameTextField.clear();
+    userSurnameTextField.clear();
+    userEmailTextField.clear();
+    userCityTextField.clear();
+    userPostalCodeTextField.clear();
+    userAddressTextField.clear();
+    userMobilePhoneTextField.clear();
+    userPasswordTextField.clear();
+
   }
 
 }

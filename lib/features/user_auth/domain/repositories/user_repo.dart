@@ -31,7 +31,17 @@ abstract class UserRepo {
     required String userPassword,
 });
 
-  Future<Either<Failure, void>> modifyUserData();
+  Future<Either<Failure, void>> modifyUserData({
+    required String userID,
+    required String userName,
+    required String userSurname,
+    required String userEmail,
+    required String userPassword,
+    required String userMobilePhone,
+    required String userCity,
+    required String userPostalCode,
+    required String userAddress,
+});
 
   Future<Either<Failure, void>> logOutUser();
 

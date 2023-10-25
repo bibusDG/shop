@@ -30,13 +30,11 @@ class AllOrdersPage extends GetView<OrderController> {
                           children: [
                             SizedBox(height: 180,),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 15.0,
-                                ),
                                 Container(
-                                  width: 30,
-                                  height: 30,
+                                  width: 20,
+                                  height: 20,
                                   decoration: BoxDecoration(
                                     color: Colors.amber,
                                     shape: BoxShape.circle
@@ -46,14 +44,14 @@ class AllOrdersPage extends GetView<OrderController> {
                                 Container(
                                   height: 3.0,
                                   width: 110,
-                                  color: Colors.amber,
+                                  color: Colors.grey,
                                 ),
                                 SizedBox(width: 10.0,),
                                 Container(
                                   width: 20,
                                   height: 20,
                                   decoration: BoxDecoration(
-                                      color: Colors.amber,
+                                      color: Colors.grey,
                                       shape: BoxShape.circle
                                   ),
                                 ),
@@ -61,14 +59,14 @@ class AllOrdersPage extends GetView<OrderController> {
                                 Container(
                                   height: 3.0,
                                   width: 110,
-                                  color: Colors.amber,
+                                  color: Colors.grey,
                                 ),
                                 SizedBox(width: 10.0,),
                                 Container(
                                   width: 20,
                                   height: 20,
                                   decoration: BoxDecoration(
-                                      color: Colors.amber,
+                                      color: Colors.grey,
                                       shape: BoxShape.circle
                                   ),
                                 ),

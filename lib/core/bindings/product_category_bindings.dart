@@ -12,7 +12,6 @@ class ProductCategoryBindings implements Bindings{
     Get.lazyPut<ProductCategoryDataSource>(() => ProductCategoryDataSourceImp());
     Get.lazyPut<ProductCategoryRepo>(() => ProductCategoryRepoImp(productCategoryDataSource: Get.find()));
     Get.lazyPut(() => StreamProductCategoryUseCase(productCategoryRepo: Get.find()));
-
     Get.lazyPut(() => ProductCategoryController(
       streamProductCategoryUseCase: Get.find(),
     ));

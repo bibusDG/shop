@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore:
   responsive_framework:
   flutter_bloc:
+  flutter_rating_bar:
 #  bloc:
 
 

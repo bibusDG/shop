@@ -9,7 +9,6 @@ import 'package:shop/features/user_auth/presentation/getx/create_user_controller
 import 'package:shop/features/user_auth/presentation/getx/login_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/logout_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
-import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 
 class UserBindings implements Bindings{
   @override
@@ -22,7 +21,7 @@ class UserBindings implements Bindings{
     Get.lazyPut(() => CreateUserController(createUserUseCase: Get.find()),);
     Get.lazyPut(() => LoginUserController(loginUserUseCase: Get.find()));
     Get.lazyPut(() => LogOutUserController(useCase: Get.find()));
-    Get.lazyPut(()=> UserDataController());
+    Get.lazyPut(() => UserDataController());
     // TODO: implement dependencies
   }
 

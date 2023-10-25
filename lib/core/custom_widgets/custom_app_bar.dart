@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     BasketController controller = Get.find();
     UserDataController userDataController = Get.find();
 
@@ -59,15 +60,20 @@ class CustomAppBar extends StatelessWidget {
     CreateUserController createUser = Get.find();
 
     return PopupMenuButton(
-          onSelected: (value) {
+          onSelected: (value) async{
             if (value == 0) {
               Get.toNamed('/login_page');
             }
             if (value == 1){
-              logOut.logOutUser();
+              await logOut.logOutUser();
               Get.toNamed('/start_page');
             }
+            if (value == 3) {
+              Get.toNamed('/user_profile_page');
+            }
             if (value == 2) {
+              createUser.registrationPage = true;
+              createUser.clearTextFields();
               Get.toNamed('/registration_page');
             }
             if (value == 4){
@@ -79,14 +85,17 @@ class CustomAppBar extends StatelessWidget {
           ),
           itemBuilder: (BuildContext context) {
             return [
-              const PopupMenuItem(
+              PopupMenuItem(
                   value: 0,
+                  enabled: userDataController.userLoginStatus.value == true? false : true,
                   child: Text('Zaloguj się')),
-              const PopupMenuItem(
+              PopupMenuItem(
+                  enabled: userDataController.userLoginStatus.value == true? true : false,
                   value: 1,
                   child: Text('Wyloguj się')),
-              const PopupMenuItem(
+              PopupMenuItem(
                   value: 2,
+                  enabled: userDataController.userLoginStatus.value == true? false : true,
                   child: Text('Zarejestruj sie')),
               PopupMenuItem(value: 3,
                 enabled: userDataController.userLoginStatus.value == true? true : false,

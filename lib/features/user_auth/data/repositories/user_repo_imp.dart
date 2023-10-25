@@ -78,7 +78,32 @@ class UserRepoImp implements  UserRepo{
   }
 
   @override
-  Future<Either<Failure, void>> modifyUserData() {
+  Future<Either<Failure, void>> modifyUserData({
+    required String userID,
+    required String userName,
+    required String userSurname,
+    required String userEmail,
+    required String userPassword,
+    required String userMobilePhone,
+    required String userCity,
+    required String userPostalCode,
+    required String userAddress}) async{
+    try{
+      final result = await userFirebaseDataSource.modifyUser(
+          userID: userID,
+          userName: userName,
+          userSurname: userSurname,
+          userEmail: userEmail,
+          userPassword: userPassword,
+          userMobilePhone: userMobilePhone,
+          userCity: userCity,
+          userPostalCode: userPostalCode,
+          userAddress: userAddress);
+      return Right(result);
+    }catch(error){
+      return const Left(UserModifyFailure(failureMessage: "Unable to update user data"));
+    }
+
     // TODO: implement modifyUserData
     throw UnimplementedError();
   }

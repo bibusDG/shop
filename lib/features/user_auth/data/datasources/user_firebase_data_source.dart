@@ -31,6 +31,18 @@ abstract class UserFirebaseDataSource{
     required String userEmail,
 });
 
+  Future<void> modifyUser({
+    required String userID,
+    required String userName,
+    required String userSurname,
+    required String userEmail,
+    required String userPassword,
+    required String userMobilePhone,
+    required String userCity,
+    required String userPostalCode,
+    required String userAddress,
+});
+
 }
 
 
@@ -106,6 +118,38 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     return user;
     // TODO: implement loginUser
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> modifyUser({
+    required String userID,
+    required String userName,
+    required String userSurname,
+    required String userEmail,
+    required String userPassword,
+    required String userMobilePhone,
+    required String userCity,
+    required String userPostalCode,
+    required String userAddress}) async{
+    await FirebaseFirestore.instance.
+    collection('company').
+    doc(COMPANY_NAME).
+    collection('users').
+    doc(userID).
+    update(
+      {
+        "userName": userName,
+        "userSurname": userSurname,
+        "userEmail": userEmail,
+        "userMobilePhone": userMobilePhone,
+        "userCity": userCity,
+        "userPostalCode": userPostalCode,
+        "userAddress": userAddress,
+        "userPassword": userPassword,
+      }
+    );
+    // TODO: implement modifyUser
+    // throw UnimplementedError();
   }
   
 }
