@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/order/presentation/getx/order_controller.dart';
+import 'package:shop/features/order/presentation/pages/order_detail_page.dart';
+
+import '../../data/models/user_order_model.dart';
 
 class AllOrdersPage extends GetView<OrderController> {
   const AllOrdersPage({Key? key}) : super(key: key);
@@ -22,77 +24,99 @@ class AllOrdersPage extends GetView<OrderController> {
                   return ListView.builder(
                       itemExtent: 250,
                       itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, int amount){
+                      itemBuilder: (BuildContext context, int index){
+
+                        UserOrderModel order = snapshot.data[index];
+
                     return Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                      child: Card(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 180,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    shape: BoxShape.circle
-                                  ),
-                                ),
-                                SizedBox(width: 10.0,),
-                                Container(
-                                  height: 3.0,
-                                  width: 110,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(width: 10.0,),
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      shape: BoxShape.circle
-                                  ),
-                                ),
-                                SizedBox(width: 10.0,),
-                                Container(
-                                  height: 3.0,
-                                  width: 110,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(width: 10.0,),
-                                Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      shape: BoxShape.circle
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text('Zamówione'),
-                                Text('W przygotowaniu'),
-                                Text('Gotowe'),
-                              ],
-                            ),
-                          ],
+                      child: GestureDetector(
+                        onTap: () async{
+
+                          Get.to(const OrderDetailPage(), arguments: order);
+                        },
+                        child: Card(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 180,),
+                              OrderStatusWidget(order: order),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text('Zamówione'),
+                                  Text('W przygotowaniu'),
+                                  Text('Gotowe'),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        color: Colors.white,
                       ),
                     );
                   });
-                }return CircularProgressIndicator();
+                }return const CircularProgressIndicator();
 
               }else{
                 return const Center(child: Text('Brak zamówień'));
               }
             }),
       ),
+    );
+  }
+}
+
+class OrderStatusWidget extends StatelessWidget {
+  final UserOrderModel order;
+  const OrderStatusWidget({
+    required this.order,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          decoration: const BoxDecoration(
+            color: Colors.amber,
+            shape: BoxShape.circle
+          ),
+        ),
+        const SizedBox(width: 10.0,),
+        Container(
+          height: 3.0,
+          width: 110,
+          color: order.orderStatus == 'W przygotowaniu' || order.orderStatus == 'Gotowe' ? Colors.amber : Colors.grey,
+        ),
+        const SizedBox(width: 10.0,),
+        Container(
+          width: 20,
+          height: 20,
+          decoration: BoxDecoration(
+              color: order.orderStatus == 'W przygotowaniu' || order.orderStatus == 'Gotowe' ? Colors.amber : Colors.grey,
+              shape: BoxShape.circle
+          ),
+        ),
+        const SizedBox(width: 10.0,),
+        Container(
+          height: 3.0,
+          width: 110,
+          color: order.orderStatus == 'Gotowe'? Colors.amber : Colors.grey,
+        ),
+        const SizedBox(width: 10.0,),
+        Container(
+          width: 20,
+          height: 20,
+          decoration: BoxDecoration(
+              color: order.orderStatus == 'Gotowe'? Colors.amber : Colors.grey,
+              shape: BoxShape.circle
+          ),
+        ),
+      ],
     );
   }
 }

@@ -69,6 +69,7 @@ class CustomAppBar extends StatelessWidget {
               Get.toNamed('/start_page');
             }
             if (value == 3) {
+              await logIn.loginUser();
               Get.toNamed('/user_profile_page');
             }
             if (value == 2) {

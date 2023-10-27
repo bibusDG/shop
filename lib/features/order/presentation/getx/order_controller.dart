@@ -30,6 +30,7 @@ class OrderController extends GetxController{
   RxString deliveryMethod = 'own_transport'.obs;
   RxString deliveryData = ''.obs;
   List<String> listOfProducts = [];
+  RxString orderStatus = ''.obs;
 
 
 

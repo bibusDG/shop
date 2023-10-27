@@ -24,8 +24,13 @@ class LoginUserController extends GetxController{
       userDataController.userData = user;
       userDataController.userLoginStatus.value = true;
     });
-    Get.back();
-    Get.snackbar('Witaj ${userDataController.userData.userName}', 'Logowanie pomyślne');
-    return userDataController.userData;
+    if(Get.currentRoute == '/login_page'){
+      Get.back();
+      Get.snackbar('Witaj ${userDataController.userData.userName}', 'Logowanie pomyślne');
+      return userDataController.userData;
+    }else{
+      return userDataController.userData;
+    }
+
   }
 }

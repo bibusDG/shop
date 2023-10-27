@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/product_categories/presentation/getx/product_category_controller.dart';
+import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import '../../../product/presentation/getx/product_controller.dart';
 import '../../domain/entities/product_category.dart';
@@ -14,10 +15,14 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
   Widget build(BuildContext context) {
 
     ProductController productController = Get.find();
+    UserDataController userDataController = Get.find();
 
     return ResponsiveScaledBox(
       width: 430,
       child: Scaffold(
+        bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){},
+            icon: const Icon(Icons.add, size: 60,))
+        : const SizedBox(),
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(70.0),
             child: CustomAppBar(appBarTitle: 'Kategorie')),
@@ -42,27 +47,42 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                           productController.productCategory = productCategory.productCategoryName;
                           Get.toNamed('/products_in_category_page');
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 20),
-                          child: Card(
-                            // color: Colors.red,
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 20.0,
+                        child: Stack(
+                          alignment: AlignmentDirectional.bottomStart,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 20),
+                              child:
+                              Card(
+                                color: Colors.white30,
+                                child: Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(10.0)),
+                                      height: 300,
+                                      width: 300,
+                                    ),
+                                    const SizedBox(height: 20.0,),
+                                    Center(child: Text(productCategory.productCategoryName)),
+                                  ],
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                  height: 300,
-                                  width: 300,
-                                ),
-                                const SizedBox(height: 20.0,),
-                                Center(child: Text(productCategory.productCategoryName)),
-                              ],
+                              ),
                             ),
-                          ),
+                            userDataController.userData.isAdmin == true?
+                            Row(
+                              children: [
+                                const SizedBox(width: 30.0,),
+                                IconButton(onPressed: (){}, icon: const Icon(Icons.delete, size: 40,)),
+                                IconButton(onPressed: (){}, icon: const Icon(Icons.image, size: 40,)),
+
+                              ],
+                            ) : const SizedBox(),
+                          ],
                         ),
                       );
                     });
