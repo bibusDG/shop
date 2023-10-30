@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -18,7 +19,9 @@ class ProductsInCategoryPage extends GetView<ProductController> {
     return ResponsiveScaledBox(
         width: 430,
         child: Scaffold(
-          bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){},
+          bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: () {
+            Get.toNamed('/create_product_page');
+          },
               icon: const Icon(Icons.add, size: 60,))
               : const SizedBox(),
           appBar: const PreferredSize(
@@ -43,7 +46,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                               Get.toNamed('/product_details_page');
                             },
                             child: Stack(
-                              alignment: AlignmentDirectional.bottomStart,
+                              alignment: Alignment.center,
                               children: [
                                 Card(
                                   child: Column(
@@ -68,9 +71,34 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                                 ),
                                 userDataController.userData.isAdmin == true?
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    IconButton(onPressed: (){}, icon: const Icon(Icons.delete, size: 25,)),
-                                    IconButton(onPressed: (){}, icon: const Icon(Icons.edit, size: 25,)),
+                                    IconButton(onPressed: () async{
+                                      await Get.defaultDialog(
+                                        title: 'Uwaga',
+                                        content: Column(
+                                          children: [
+                                            Text('Czy na pewno chcesz usunąć ten produkt ?'),
+                                            SizedBox(height: 30.0,),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                              CupertinoButton(child: Text('Usuń'), onPressed: () async{
+                                                Get.back();
+                                                await controller.deleteProduct(productID: product.productID);
+
+                                              }),
+                                                CupertinoButton(child: Text('Anuluj'), onPressed: (){
+                                                  Get.back();
+                                                })
+                                            ],),
+                                          ],
+                                        ),
+                                      );
+
+
+                                    }, icon: const Icon(Icons.delete, size: 55,)),
+                                    IconButton(onPressed: (){}, icon: const Icon(Icons.edit, size: 55,)),
 
                                   ],
                                 ) : const SizedBox(),

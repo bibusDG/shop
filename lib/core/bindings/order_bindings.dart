@@ -18,7 +18,7 @@ class OrderBindings implements Bindings{
     Get.lazyPut(() => StreamOrdersUseCase(repo: Get.find()));
     Get.lazyPut(() => OrderController(
         streamOrdersUseCase: Get.find(),
-        orderByAdminUseCase: Get.find(),
+        updateOrderByAdminUseCase: Get.find(),
         createOrderUseCase: Get.find()));
 
   }

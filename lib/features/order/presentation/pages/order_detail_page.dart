@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -20,7 +21,7 @@ class OrderDetailPage extends GetView<OrderController> {
     return ResponsiveScaledBox(width: 430,
         child: Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true ?
-          OrderModificationWidget(controller: controller,) : const SizedBox(),
+          OrderModificationWidget(controller: controller, order: order,) : const SizedBox(),
           appBar: const PreferredSize(
               preferredSize: Size.fromHeight(70),
               child: CustomAppBar(appBarTitle: 'Szczegóły zamówienia')),
@@ -80,14 +81,19 @@ class OrderDetailPage extends GetView<OrderController> {
 
 class OrderModificationWidget extends StatelessWidget {
   final OrderController controller;
+  final UserOrderModel order;
 
   const OrderModificationWidget({
     required this.controller,
+    required this.order,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+
+    OrderController orderController = Get.find();
+
     return SizedBox(
       height: 100,
       child: Obx(() {
@@ -120,7 +126,9 @@ class OrderModificationWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(Icons.save_alt, size: 40,)
+            CupertinoButton(child: Text('Zapisz zmiany'), onPressed: (){
+              orderController.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+            }),
           ],
         );
       }),

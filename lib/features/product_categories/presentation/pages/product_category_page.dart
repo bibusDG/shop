@@ -20,7 +20,10 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
     return ResponsiveScaledBox(
       width: 430,
       child: Scaffold(
-        bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){},
+        bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){
+          Get.toNamed('/create_new_category_page');
+
+        },
             icon: const Icon(Icons.add, size: 60,))
         : const SizedBox(),
         appBar: const PreferredSize(
@@ -48,7 +51,7 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                           Get.toNamed('/products_in_category_page');
                         },
                         child: Stack(
-                          alignment: AlignmentDirectional.bottomStart,
+                          alignment: AlignmentDirectional.center,
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 20),
@@ -75,10 +78,13 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                             ),
                             userDataController.userData.isAdmin == true?
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const SizedBox(width: 30.0,),
-                                IconButton(onPressed: (){}, icon: const Icon(Icons.delete, size: 40,)),
-                                IconButton(onPressed: (){}, icon: const Icon(Icons.image, size: 40,)),
+                                IconButton(onPressed: () async{
+                                  await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
+                                }, icon: const Icon(Icons.delete, size: 65,)),
+                                IconButton(onPressed: (){}, icon: const Icon(Icons.image, size: 65,)),
 
                               ],
                             ) : const SizedBox(),

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shop/core/classes/string_to_image.dart';
+import 'package:shop/core/custom_widgets/custom_photo_view.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/product/presentation/getx/product_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
@@ -18,6 +20,10 @@ class ProductDetailsPage extends GetView<ProductController> {
     BasketController basketController = Get.find();
     UserDataController userData = Get.find();
 
+    // Image myImage = StringToImage().getSingleImage(image: );
+    List<Image> myImages = const StringToImage().getListOfImage(listOfImage: controller.productData.productGallery);
+
+
     return ResponsiveScaledBox(
         width: 430,
         child: Scaffold(
@@ -31,6 +37,7 @@ class ProductDetailsPage extends GetView<ProductController> {
                     flex: 2,
                     child: Container(
                       color: Colors.transparent,
+                      child: CustomPhotoView(galleryItems: myImages),
                     )),
                 Expanded(
                   flex: 3,
@@ -57,7 +64,8 @@ class ProductDetailsPage extends GetView<ProductController> {
                         const SizedBox(height: 50.0,),
                         SizedBox(
                             height: 260,
-                            child: Text(controller.productData.productDescription)),
+                            child: SingleChildScrollView(
+                                child: Text(controller.productData.productDescription))),
                         const SizedBox(height: 20.0,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

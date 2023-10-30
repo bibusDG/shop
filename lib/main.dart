@@ -8,7 +8,9 @@ import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
 import 'package:shop/features/order/presentation/pages/allOrders_page.dart';
 import 'package:shop/features/order/presentation/pages/order_detail_page.dart';
+import 'package:shop/features/product/presentation/pages/create_product_page.dart';
 import 'package:shop/features/product/presentation/pages/products_in_category_page.dart';
+import 'package:shop/features/product_categories/presentation/pages/create_new_category_page.dart';
 import 'package:shop/features/product_categories/presentation/pages/product_category_page.dart';
 import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 import 'package:shop/features/user_auth/presentation/pages/user_profile_page.dart';
@@ -58,6 +60,8 @@ class Shop extends StatelessWidget {
         GetPage(name: '/allOrders_page', page: () => const AllOrdersPage(), binding: OrderBindings()),
         GetPage(name: '/user_profile_page', page: () => const UserProfilePage(), binding: ModifyUserBindings()),
         GetPage(name: '/order_detail_page', page: () => const OrderDetailPage()),
+        GetPage(name: '/create_product_page', page: () => const CreateProductPage()),
+        GetPage(name: '/create_new_category_page', page: () => const CreateNewCategoryPage()),
       ],
       theme: ThemeData.light(),
       // theme: ThemeData(

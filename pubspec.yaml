@@ -43,6 +43,8 @@ dependencies:
   responsive_framework:
   flutter_bloc:
   flutter_rating_bar:
+  photo_view:
+  image_picker:
 #  bloc:
 
 

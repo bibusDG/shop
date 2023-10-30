@@ -11,11 +11,11 @@ import '../../domain/entities/user_order.dart';
 
 class OrderController extends GetxController{
   final CreateOrderUseCase createOrderUseCase;
-  final UpdateOrderByAdminUseCase orderByAdminUseCase;
+  final UpdateOrderByAdminUseCase updateOrderByAdminUseCase;
   final StreamOrdersUseCase streamOrdersUseCase;
   OrderController({
     required this.streamOrdersUseCase,
-    required this.orderByAdminUseCase,
+    required this.updateOrderByAdminUseCase,
     required this.createOrderUseCase,
 });
 
@@ -33,6 +33,16 @@ class OrderController extends GetxController{
   RxString orderStatus = ''.obs;
 
 
+
+  Future<void> modifyOrderByAdmin({orderID, orderStatus}) async{
+    final result = await updateOrderByAdminUseCase(
+        UpdateOrderParams(orderID: orderID, orderStatus: orderStatus));
+    result.fold((failure){
+      return Get.snackbar('Uwaga', 'Coś poszło nie tak');
+    }, (update){
+      return Get.snackbar('Udało się', 'pomyślnie zauktualizowano status');
+    });
+  }
 
   Future<void> createNewOrder() async{
 
