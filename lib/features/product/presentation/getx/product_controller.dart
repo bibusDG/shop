@@ -23,10 +23,12 @@ class ProductController extends GetxController{
 });
 
   // String productID = '';
+  String productID = '';
   String productCategory = '';
   Product productData = const Product.empty();
   RxInt availability = 0.obs;
-  RxList<String> listOfImages = <String>[].obs;
+  RxList<String> listOfImageString = <String>[].obs;
+  bool editProduct = false;
 
   ///TextFields for product
   TextEditingController productName = TextEditingController();
@@ -73,7 +75,7 @@ class ProductController extends GetxController{
         CreateProductParams(
             productCategory: productCategory,
             productID: '',
-            productGallery: listOfImages,
+            productGallery: listOfImageString,
             productAvailability: int.parse(productAvailability.text),
             productPrice: double.parse(productPrice.text),
             productDescription: productDescription.text,
@@ -106,4 +108,45 @@ class ProductController extends GetxController{
         });
     }
   }
+
+  Future<void> updateProduct() async{
+    final result = await updateProductUseCase(
+        UpdateProductParams(
+            productID: productID,
+            productName: productName.text,
+            productDescription: productDescription.text,
+            productPrice: double.parse(productPrice.text),
+            productAvailability: int.parse(productAvailability.text),
+            productGallery: listOfImageString,
+            productCategory: productCategory));
+      result.fold((error) async{
+        return Get.snackbar('Uwaga', 'nie można zmienić danych');
+      }, (update) async{
+        Get.back();
+        return Get.snackbar('Udało się', 'dane produktu pomyślnie zmienione');
+      });
+    }
+
+
+  Future<void> setEditProductData({required Product product}) async{
+    productID = product.productID;
+    productName.text = product.productName;
+    productAvailability.text = product.productAvailability.toString();
+    productPrice.text = product.productPrice.toString();
+    productDescription.text = product.productDescription;
+    listOfImageString.value = product.productGallery;
+    editProduct = true;
+  }
+
+  Future<void> resetCreateProductTextFields() async {
+    productID = '';
+    productDescription.text = '';
+    productName.text = '';
+    productPrice.text = '';
+    productAvailability.text = '';
+    // productCategory = '';
+    listOfImageString.value = [];
+    editProduct = false;
+  }
+
 }

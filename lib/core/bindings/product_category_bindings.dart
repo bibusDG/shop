@@ -4,6 +4,7 @@ import 'package:shop/features/product_categories/data/repositories/product_categ
 import 'package:shop/features/product_categories/domain/repositories/product_category_repo.dart';
 import 'package:shop/features/product_categories/domain/usecases/create_product_category_usecase.dart';
 import 'package:shop/features/product_categories/domain/usecases/delete_product_category_usecase.dart';
+import 'package:shop/features/product_categories/domain/usecases/modify_product_category_usecase.dart';
 import 'package:shop/features/product_categories/domain/usecases/stream_product_category_usecase.dart';
 import 'package:shop/features/product_categories/presentation/getx/product_category_controller.dart';
 
@@ -16,7 +17,9 @@ class ProductCategoryBindings implements Bindings{
     Get.lazyPut(() => StreamProductCategoryUseCase(productCategoryRepo: Get.find()));
     Get.lazyPut(() => CreateProductCategoryUseCase(productCategoryRepo: Get.find()));
     Get.lazyPut(() => DeleteProductCategoryUseCase(productCategoryRepo: Get.find()));
+    Get.lazyPut(() => ModifyProductCategoryUseCase(productCategoryRepo: Get.find()));
     Get.lazyPut(() => ProductCategoryController(
+      modifyProductCategoryUseCase: Get.find(),
       deleteProductCategoryUseCase: Get.find(),
       createProductCategoryUseCase: Get.find(),
       streamProductCategoryUseCase: Get.find(),

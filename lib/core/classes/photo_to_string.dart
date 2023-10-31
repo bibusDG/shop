@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -19,10 +18,6 @@ class PhotoToString{
       final bytes = File(pickedFile.path).readAsBytesSync();
       final picture = base64.encode(bytes);
       return picture;
-      // if(photoOf == 'Equipment'){
-      //   equipmentController.equipmentByteImage = base64.encode(bytes);
-      // }
-
     }
   }
 
@@ -36,7 +31,7 @@ class PhotoToString{
     for(var image in images){
       final bytes = File(image.path).readAsBytesSync();
       final picture = base64.encode(bytes);
-      productController.listOfImages.add(picture);
+      productController.listOfImageString.add(picture);
     }
     }
 

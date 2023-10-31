@@ -35,7 +35,7 @@ class CustomPhotoView extends StatelessWidget{
         // onPageChanged: onPageChanged,
       );
     }else{
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: Text('Brak zdjęć'));
     }
 
   }

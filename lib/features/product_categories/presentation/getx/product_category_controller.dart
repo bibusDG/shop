@@ -5,18 +5,22 @@ import 'package:shop/features/product_categories/domain/usecases/stream_product_
 
 import '../../domain/usecases/create_product_category_usecase.dart';
 import '../../domain/usecases/delete_product_category_usecase.dart';
+import '../../domain/usecases/modify_product_category_usecase.dart';
 
 class ProductCategoryController extends GetxController{
   final StreamProductCategoryUseCase streamProductCategoryUseCase;
   final CreateProductCategoryUseCase createProductCategoryUseCase;
   final DeleteProductCategoryUseCase deleteProductCategoryUseCase;
+  final ModifyProductCategoryUseCase modifyProductCategoryUseCase;
   ProductCategoryController ({
     required this.streamProductCategoryUseCase,
     required this.createProductCategoryUseCase,
     required this.deleteProductCategoryUseCase,
+    required this.modifyProductCategoryUseCase,
   });
 
   TextEditingController productCategoryName = TextEditingController();
+  bool editCategory = false;
 
 
    Stream<List<ProductCategory>> streamProductCategory() async*{
@@ -50,6 +54,19 @@ class ProductCategoryController extends GetxController{
        return Get.snackbar('Uwaga', 'nie można usunąć kategorii');
      }, (result){
        return Get.snackbar('Udało się', 'kategoria usunięta');
+     });
+  }
+
+  Future<void> modifyCategory({required ProductCategory category, required String image}) async{
+     final result = await modifyProductCategoryUseCase(
+         ModifyProductCategoryParams(
+             productCategoryID: category.productCategoryID,
+             productCategoryPicture: image,
+             productCategoryName: category.productCategoryName));
+     result.fold((failure){
+       return Get.snackbar('Uwaga', 'nie można zmienić zdjęcia');
+     }, (result){
+       return Get.snackbar('Udało się', 'usawiono nowe zdjęcie kategorii');
      });
   }
 

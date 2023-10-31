@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shop/core/classes/string_to_image.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 import '../../../product/presentation/getx/product_controller.dart';
@@ -20,6 +21,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
         width: 430,
         child: Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: () {
+            controller.resetCreateProductTextFields();
             Get.toNamed('/create_product_page');
           },
               icon: const Icon(Icons.add, size: 60,))
@@ -49,6 +51,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                               alignment: Alignment.center,
                               children: [
                                 Card(
+                                  color: Colors.black,
                                   child: Column(
                                     children: [
                                       const SizedBox(
@@ -61,11 +64,16 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                                         ),
                                         width: 180,
                                         height: 280,
+                                        child: product.productGallery.isNotEmpty?
+                                        Image(
+                                          fit: BoxFit.fill,
+                                            image: const StringToImage().getSingleImage(image: product.productGallery[0]).image):
+                                        const Center(child:Text('Brakzdjęcia')),
                                       ),
                                       const SizedBox(
                                         height: 20.0,
                                       ),
-                                      Center(child:Text(product.productName)),
+                                      Center(child:Text(product.productName, style: const TextStyle(color: Colors.white),)),
                                     ],
                                   ),
                                 ),
@@ -78,17 +86,17 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                                         title: 'Uwaga',
                                         content: Column(
                                           children: [
-                                            Text('Czy na pewno chcesz usunąć ten produkt ?'),
-                                            SizedBox(height: 30.0,),
+                                            const Text('Czy na pewno chcesz usunąć ten produkt ?'),
+                                            const SizedBox(height: 30.0,),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                              CupertinoButton(child: Text('Usuń'), onPressed: () async{
+                                              CupertinoButton(child: const Text('Usuń'), onPressed: () async{
                                                 Get.back();
                                                 await controller.deleteProduct(productID: product.productID);
 
                                               }),
-                                                CupertinoButton(child: Text('Anuluj'), onPressed: (){
+                                                CupertinoButton(child: const Text('Anuluj'), onPressed: (){
                                                   Get.back();
                                                 })
                                             ],),
@@ -97,9 +105,11 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                                       );
 
 
-                                    }, icon: const Icon(Icons.delete, size: 55,)),
-                                    IconButton(onPressed: (){}, icon: const Icon(Icons.edit, size: 55,)),
-
+                                    }, icon: const Icon(Icons.delete, size: 55, color: Colors.blue,)),
+                                    IconButton(onPressed: () async{
+                                      await controller.setEditProductData(product: product);
+                                      Get.toNamed('/create_product_page');
+                                    }, icon: const Icon(Icons.edit, size: 55, color: Colors.blue,)),
                                   ],
                                 ) : const SizedBox(),
                               ],

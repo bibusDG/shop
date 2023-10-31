@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shop/core/classes/photo_to_string.dart';
+import 'package:shop/core/classes/string_to_image.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/product_categories/presentation/getx/product_category_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
@@ -22,7 +24,6 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
       child: Scaffold(
         bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){
           Get.toNamed('/create_new_category_page');
-
         },
             icon: const Icon(Icons.add, size: 60,))
         : const SizedBox(),
@@ -57,7 +58,7 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                               padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 20),
                               child:
                               Card(
-                                color: Colors.white30,
+                                color: Colors.black,
                                 child: Column(
                                   children: [
                                     const SizedBox(
@@ -69,9 +70,14 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                                           borderRadius: BorderRadius.circular(10.0)),
                                       height: 300,
                                       width: 300,
+                                      child: productCategory.productCategoryPicture.isNotEmpty?
+                                      Image(
+                                        fit: BoxFit.fill,
+                                        image: const StringToImage().getSingleImage(image: productCategory.productCategoryPicture).image,) :
+                                      const Center(child:Text('Brak zdjęcia')),
                                     ),
                                     const SizedBox(height: 20.0,),
-                                    Center(child: Text(productCategory.productCategoryName)),
+                                    Center(child: Text(productCategory.productCategoryName, style: const TextStyle(color: Colors.white),)),
                                   ],
                                 ),
                               ),
@@ -83,8 +89,12 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                                 const SizedBox(width: 30.0,),
                                 IconButton(onPressed: () async{
                                   await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
-                                }, icon: const Icon(Icons.delete, size: 65,)),
-                                IconButton(onPressed: (){}, icon: const Icon(Icons.image, size: 65,)),
+                                }, icon: const Icon(Icons.delete, size: 65, color: Colors.blue,)),
+                                IconButton(onPressed: () async{
+                                  String categoryImage = await PhotoToString().takeAPhotoFromGallery();
+                                  controller.modifyCategory(category: productCategory, image: categoryImage);
+
+                                }, icon: const Icon(Icons.image, size: 65, color: Colors.blue,)),
 
                               ],
                             ) : const SizedBox(),
