@@ -18,6 +18,7 @@ abstract class UserFirebaseDataSource{
     required String userAddress,
     required bool isAdmin,
     required int userBonusPoints,
+    required double voucherValue,
 });
 
   Future<UserModel> loginUser({
@@ -41,7 +42,14 @@ abstract class UserFirebaseDataSource{
     required String userCity,
     required String userPostalCode,
     required String userAddress,
+    required double voucherValue,
 });
+  
+//   Future<void> modifyUserVoucherValue({
+//     required String userEmail,
+//     required String userMobilePhone,
+//     required double voucherValue,
+// });
 
 }
 
@@ -61,10 +69,12 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     required String userPostalCode,
     required String userAddress,
     required bool isAdmin,
+    required double voucherValue,
     required int userBonusPoints}) async{
       final addUser = await FirebaseFirestore.instance.collection('company').
       doc(COMPANY_NAME).collection('users').
       add(UserModel(
+          voucherValue: voucherValue,
           userID: userID,
           userName: userName,
           userSurname: userSurname,
@@ -122,6 +132,7 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
 
   @override
   Future<void> modifyUser({
+    required double voucherValue,
     required String userID,
     required String userName,
     required String userSurname,
@@ -146,10 +157,29 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
         "userPostalCode": userPostalCode,
         "userAddress": userAddress,
         "userPassword": userPassword,
+        "voucherValue": voucherValue,
       }
     );
     // TODO: implement modifyUser
     // throw UnimplementedError();
   }
+
+  // @override
+  // Future<void> modifyUserVoucherValue({
+  //   required String userEmail,
+  //   required String userMobilePhone,
+  //   required double voucherValue}) async{
+  //   print('dd');
+  //   await FirebaseFirestore.instance.collection('company').
+  //   doc(COMPANY_NAME).
+  //   collection('users').
+  //   where('userEmail', isEqualTo: userEmail).
+  //   where('userMobilePhone', isEqualTo: userMobilePhone).get().
+  //   then((value){
+  //     value.docs[0].data().update('voucherValue', (value) => voucherValue);
+  //   });
+  //   // TODO: implement modifyUserVoucherValue
+  //   // throw UnimplementedError();
+  // }
   
 }

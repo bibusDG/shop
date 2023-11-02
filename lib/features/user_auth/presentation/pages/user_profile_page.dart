@@ -33,7 +33,7 @@ class UserProfilePage extends GetView<ModifyUserController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(width: 5.0,),
+                        const SizedBox(width: 5.0,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,8 +53,8 @@ class UserProfilePage extends GetView<ModifyUserController> {
                             createUserController.registrationPage = false;
                             await Get.toNamed('/registration_page');
                           },
-                            child: Text('Zmień')),
-                        SizedBox(width: 5.0,)
+                            child: const Text('Zmień')),
+                        const SizedBox(width: 5.0,)
 
                       ],
                     ),
@@ -73,6 +73,24 @@ class UserProfilePage extends GetView<ModifyUserController> {
                     color: Colors.amber,
                   ),
                   ),
+              SizedBox(height: 20.0,),
+              const Text('Vouchery'),
+              const SizedBox(height: 20.0,),
+              SizedBox(
+                width: 250,
+                height: 150,
+                child: Card(
+                  color: Colors.teal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('${userDataController.userData.voucherValue.toString()} PLN' ,
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35))
+                    ],
+                  ),
+                ),
+
+              ),
             ],
           ),
         )

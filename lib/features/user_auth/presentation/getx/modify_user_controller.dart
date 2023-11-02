@@ -1,12 +1,19 @@
 import 'package:get/get.dart';
+import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/user_auth/domain/usecases/modify_user_usecase.dart';
 import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/logout_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
+import '../../domain/usecases/modify_user_voucher_value_usecase.dart';
+
 class ModifyUserController extends GetxController{
   ModifyUserUseCase modifyUserUseCase;
-  ModifyUserController({required this.modifyUserUseCase});
+  // ModifyUserVoucherValueUseCase modifyUserVoucherValueUseCase;
+  ModifyUserController({
+    required this.modifyUserUseCase,
+    // required this.modifyUserVoucherValueUseCase,
+  });
 
   Future<void> setTextValues() async{
 
@@ -31,6 +38,7 @@ class ModifyUserController extends GetxController{
 
     final result = await modifyUserUseCase(
         ModifyUserParams(
+        voucherValue: 0,
         userAddress: createUserController.userAddressTextField.text,
         userPostalCode: createUserController.userPostalCodeTextField.text,
         userMobilePhone: createUserController.userMobilePhoneTextField.text,
@@ -49,5 +57,19 @@ class ModifyUserController extends GetxController{
     });
 
   }
+
+  // Future<void> modifyUserVoucher({userMobilePhone, userEmail, voucherValue}) async{
+  //   final result = await modifyUserVoucherValueUseCase(
+  //       UserVoucherParams(
+  //           voucherValue: voucherValue,
+  //           userMobilePhone: userMobilePhone,
+  //           userEmail: userEmail));
+  //   result.fold((failure){
+  //     return Get.snackbar('title', 'message');
+  //   }, (result){
+  //     return Get.snackbar('Success', 'message');
+  //   });
+  // }
+
 
 }

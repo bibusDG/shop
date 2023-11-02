@@ -32,6 +32,7 @@ class CreateUserController extends GetxController{
 
     final user = await createUserUseCase(
         CreateUserParams(
+            voucherValue: 0,
             userID: "",
             userName: userNameTextField.text,
             userSurname: userSurnameTextField.text,

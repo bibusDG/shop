@@ -81,8 +81,9 @@ class ProductDetailsPage extends GetView<ProductController> {
                                         content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
                                     );
                                   } else {
-                                    await basketController.addProductToBasket(product: controller.productData);
-                                  }
+                                    checkBasketProducts(basketController, controller);
+                                      // await basketController.addProductToBasket(product: controller.productData);
+                                    }
                                 },
                                 icon: const Icon(Icons.add_shopping_cart),
                                 iconSize: 25,
@@ -105,6 +106,40 @@ class ProductDetailsPage extends GetView<ProductController> {
 
         ));
   }
+
+  Future<void> checkBasketProducts(BasketController basketController, ProductController productController) async{
+
+    basketController.listOfProducts.isEmpty? basketController.voucherInBasket = false : null;
+
+    if(basketController.voucherInBasket == false && basketController.listOfProducts.isEmpty){
+      await basketController.addProductToBasket(product: controller.productData);
+      if(productController.productData.productName.contains('Voucher')){
+        basketController.voucherInBasket = true;
+      }else{
+        basketController.voucherInBasket = false;
+      }
+    }else if(basketController.voucherInBasket == false && productController.productData.productName.contains('Voucher')){
+      Get.defaultDialog(
+        title: 'Uwaga',
+        content: const Text('Zakup voucherów zrealizuj w osobnym zamówieniu')
+      );
+
+    }else if(basketController.voucherInBasket == true && !productController.productData.productName.contains('Voucher')){
+      Get.defaultDialog(
+          title: 'Uwaga',
+          content: const Text('Zamów vouchery, a resztę zrealizuj w innym zamówieniu')
+      );
+    }else if(basketController.voucherInBasket == false && !productController.productData.productName.contains('Voucher')){
+      await basketController.addProductToBasket(product: controller.productData);
+      basketController.voucherInBasket = false;
+    }else if(basketController.voucherInBasket == true && productController.productData.productName.contains('Voucher')){
+      await basketController.addProductToBasket(product: controller.productData);
+      basketController.voucherInBasket = true;
+    }
+
+
+  }
+
 }
 
 // IconButton(
@@ -119,3 +154,4 @@ class ProductDetailsPage extends GetView<ProductController> {
 // product: controller.productData);
 // }
 // }, icon: Icon(Icons.add),)
+

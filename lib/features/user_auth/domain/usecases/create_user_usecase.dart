@@ -11,6 +11,7 @@ class CreateUserUseCase implements UseCasesWithParams<void, CreateUserParams>{
   @override
   Future<Either<Failure, void>> call(CreateUserParams params) async{
     return await userRepo.createNewUser(
+        voucherValue: params.voucherValue,
         userID: params.userID,
         userName: params.userName,
         userSurname: params.userSurname,
@@ -39,6 +40,7 @@ class CreateUserParams extends Equatable{
   final String userAddress;
   final bool isAdmin;
   final int userBonusPoints;
+  final double voucherValue;
 
   const CreateUserParams.empty() : this(
     userID: 'empty_userID',
@@ -52,6 +54,7 @@ class CreateUserParams extends Equatable{
     userPostalCode: 'empty_userPostalCode',
     isAdmin: false,
     userBonusPoints: 0,
+    voucherValue: 0.0,
   );
 
   const CreateUserParams({
@@ -66,6 +69,7 @@ class CreateUserParams extends Equatable{
     required this.userPostalCode,
     required this.isAdmin,
     required this.userBonusPoints,
+    required this.voucherValue,
 
   });
   @override

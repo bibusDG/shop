@@ -39,9 +39,9 @@ class AllOrdersPage extends GetView<OrderController> {
                           color: Colors.white,
                           child: Column(
                             children: [
-                              SizedBox(height: 180,),
+                              const SizedBox(height: 180,),
                               OrderStatusWidget(order: order),
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Text('Zamówione'),

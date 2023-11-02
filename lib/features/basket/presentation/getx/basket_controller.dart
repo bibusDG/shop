@@ -19,6 +19,7 @@ class BasketController extends GetxController{
   RxMap<String, Product> listOfProducts = <String, Product>{}.obs;
   RxMap<String, int> productCounter = <String, int>{}.obs;
   RxDouble finalPrice = 0.0.obs;
+  bool voucherInBasket = false;
   
   Future<void> addProductToBasket({required Product product}) async{
 

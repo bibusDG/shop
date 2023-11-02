@@ -11,6 +11,7 @@ class ModifyUserUseCase implements UseCasesWithParams<void, ModifyUserParams>{
   @override
   Future<Either<Failure, void>> call(ModifyUserParams params) async{
     return await userRepo.modifyUserData(
+        voucherValue: params.voucherValue,
         userID: params.userID,
         userName: params.userName,
         userSurname: params.userSurname,
@@ -35,6 +36,7 @@ class ModifyUserParams extends Equatable{
   final String userPassword;
   final String userMobilePhone;
   final String userCity;
+  final double voucherValue;
   const ModifyUserParams({
     required this.userAddress,
     required this.userPostalCode,
@@ -45,6 +47,7 @@ class ModifyUserParams extends Equatable{
     required this.userPassword,
     required this.userCity,
     required this.userID,
+    required this.voucherValue,
 
 });
 
@@ -57,7 +60,8 @@ class ModifyUserParams extends Equatable{
     userMobilePhone: 'userMobilePhone',
     userPostalCode: 'userPostalCode',
     userCity: 'userCity',
-    userID: "userID"
+    userID: "userID",
+    voucherValue: 0.0,
   );
 
   @override

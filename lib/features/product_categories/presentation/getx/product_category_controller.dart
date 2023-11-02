@@ -21,6 +21,7 @@ class ProductCategoryController extends GetxController{
 
   TextEditingController productCategoryName = TextEditingController();
   bool editCategory = false;
+  RxString categoryImage = ''.obs;
 
 
    Stream<List<ProductCategory>> streamProductCategory() async*{
@@ -37,12 +38,13 @@ class ProductCategoryController extends GetxController{
      final result = await createProductCategoryUseCase(
          CreateProductCategoryUseCaseParams(
              productCategoryName: productCategoryName.text,
-             productCategoryPicture: '',
+             productCategoryPicture: categoryImage.value,
              productCategoryID: ''));
      result.fold((failure){
        return Get.snackbar('Uwaga', 'Nie można utworzyć nowej kategorii');
      }, (result){
        Get.back();
+       deleteControllerWhenSaved();
        return Get.snackbar('Udało się', 'nowa kategoria utworzona');
      });
   }
@@ -53,6 +55,7 @@ class ProductCategoryController extends GetxController{
      result.fold((l){
        return Get.snackbar('Uwaga', 'nie można usunąć kategorii');
      }, (result){
+       Get.back();
        return Get.snackbar('Udało się', 'kategoria usunięta');
      });
   }
@@ -68,6 +71,11 @@ class ProductCategoryController extends GetxController{
      }, (result){
        return Get.snackbar('Udało się', 'usawiono nowe zdjęcie kategorii');
      });
+  }
+
+  Future<void> deleteControllerWhenSaved() async{
+     productCategoryName.text = '';
+     categoryImage.value = '';
   }
 
 }

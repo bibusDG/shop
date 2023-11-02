@@ -13,6 +13,16 @@ const EMPTY_USER = User(
     userAddress: '',
     userPostalCode: '',
     userBonusPoints: 0,
-    isAdmin: false);
+    isAdmin: false,
+    voucherValue: 0,
+);
 
 const double COURIER_COST = 20;
+
+const String deleteCategoryInfo =
+    'Przed usunięciem danej kategorii naciśnij "Anuluj", przejdź do produktów'
+    'i usuń wszystkie elemnty znajdujące się w tej kategorii.'
+    'Jeśli wiesz, że w przyszłości stworzysz na nowo kategorię'
+    'o tej samej nazwie i chcesz pozostawić jej produktu na później'
+    'naciśnij "Usuń".\nKategoria zostanie usunięta ale produkty znajdujące się w niej '
+    'będą mogły być w przyszłości powiązane z tą kategorią na nowo.';

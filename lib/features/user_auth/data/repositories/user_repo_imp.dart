@@ -21,9 +21,11 @@ class UserRepoImp implements  UserRepo{
     required String userAddress,
     required bool isAdmin,
     required int userBonusPoints,
+    required double voucherValue,
   }) async{
     try{
       final result = await userFirebaseDataSource.createUser(
+          voucherValue: voucherValue,
           userID: userID,
           userName: userName,
           userSurname: userSurname,
@@ -79,6 +81,7 @@ class UserRepoImp implements  UserRepo{
 
   @override
   Future<Either<Failure, void>> modifyUserData({
+    required double voucherValue,
     required String userID,
     required String userName,
     required String userSurname,
@@ -90,6 +93,7 @@ class UserRepoImp implements  UserRepo{
     required String userAddress}) async{
     try{
       final result = await userFirebaseDataSource.modifyUser(
+          voucherValue: voucherValue,
           userID: userID,
           userName: userName,
           userSurname: userSurname,
@@ -118,5 +122,19 @@ class UserRepoImp implements  UserRepo{
     // TODO: implement logOutUser
     throw UnimplementedError();
   }
+
+  // @override
+  // Future<Either<Failure, void>> modifyUserVoucherValue({
+  //   required String userEmail,
+  //   required String userMobilePhone,
+  //   required double voucherValue}) async{
+  //   try{
+  //     return const Right(null);
+  //   }catch(error){
+  //     return const Left(UserModifyFailure(failureMessage: 'Unable to modify user'));
+  //   }
+  //   // TODO: implement modifyUserVoucherValue
+  //   throw UnimplementedError();
+  // }
   
 }

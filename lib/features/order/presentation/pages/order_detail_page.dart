@@ -5,6 +5,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/order/data/models/user_order_model.dart';
 import 'package:shop/features/order/presentation/getx/order_controller.dart';
+import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 class OrderDetailPage extends GetView<OrderController> {
@@ -12,6 +13,7 @@ class OrderDetailPage extends GetView<OrderController> {
 
   @override
   Widget build(BuildContext context) {
+
     UserDataController userDataController = Get.find();
 
     UserOrderModel order = Get.arguments;
@@ -126,8 +128,8 @@ class OrderModificationWidget extends StatelessWidget {
                 ),
               ],
             ),
-            CupertinoButton(child: Text('Zapisz zmiany'), onPressed: (){
-              orderController.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+            CupertinoButton(child: Text('Zapisz zmiany'), onPressed: () async{
+                orderController.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
             }),
           ],
         );

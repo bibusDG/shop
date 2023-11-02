@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/classes/photo_to_string.dart';
 import 'package:shop/core/classes/string_to_image.dart';
+import 'package:shop/core/constants/constants.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/product_categories/presentation/getx/product_category_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
@@ -87,8 +89,31 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const SizedBox(width: 30.0,),
-                                IconButton(onPressed: () async{
-                                  await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
+                                IconButton(
+                                  onPressed: () async{
+                                    Get.defaultDialog(
+                                      title: 'Uwaga',
+                                      content: Column(
+                                        children: [
+                                          const Text(deleteCategoryInfo),
+                                          const SizedBox(height: 20.0,),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              CupertinoButton(
+                                                  onPressed: () async{
+                                                await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
+                                              },
+                                                  child: const Text('Usuń'),),
+                                              CupertinoButton(
+                                                  onPressed: (){Get.back();},
+                                                  child: const Text('Anuluj'),)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+
                                 }, icon: const Icon(Icons.delete, size: 65, color: Colors.blue,)),
                                 IconButton(onPressed: () async{
                                   String categoryImage = await PhotoToString().takeAPhotoFromGallery();

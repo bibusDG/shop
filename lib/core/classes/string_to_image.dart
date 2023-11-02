@@ -10,7 +10,8 @@ class StringToImage{
 });
 
   Image getSingleImage({image}){
-    return Image(image: Image.memory(const Base64Decoder().convert(image)).image,);
+    final myImage = Image(image: Image.memory(const Base64Decoder().convert(image)).image,);
+    return myImage;
   }
 
   List<Image> getListOfImage({listOfImage}){
