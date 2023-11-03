@@ -16,10 +16,9 @@ class ProductsInCategoryPage extends GetView<ProductController> {
   Widget build(BuildContext context) {
 
     UserDataController userDataController = Get.find();
+    
 
-    return ResponsiveScaledBox(
-        width: 430,
-        child: Scaffold(
+    return Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: () {
             controller.resetCreateProductTextFields();
             Get.toNamed('/create_product_page');
@@ -124,6 +123,6 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                 }
 
               }),
-        ));
+        );
   }
 }

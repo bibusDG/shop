@@ -18,9 +18,7 @@ class OrderPage extends GetView<OrderController> {
     UserDataController userDataController = Get.find();
     BasketController basketController = Get.find();
 
-    return ResponsiveScaledBox(
-        width: 430,
-        child: Scaffold(
+    return Scaffold(
           appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Zamówienie',),),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +150,7 @@ class OrderPage extends GetView<OrderController> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       // const SizedBox(width: 20.0,),
-                      Text('Całkowity koszt'),
+                      const Text('Całkowity koszt'),
                       Obx(() {
                         return Text(controller.totalValue.value.toStringAsFixed(2));
                       }),
@@ -163,11 +161,19 @@ class OrderPage extends GetView<OrderController> {
                     ModifyUserController modifyUserController = Get.find();
                     if(controller.paymentMethod.value == 'voucher'){
                       await controller.createNewOrder();
-                      await modifyUserController.modifyUserVoucher(userID: userDataController.userData.userID, voucherValue: -controller.totalValue);
+                      await modifyUserController.modifyUserValue(
+                          userID: userDataController.userData.userID,
+                          value: -controller.totalValue,
+                          valueID: 'voucherValue');
                       userDataController.voucherValue.value -= controller.totalValue.value;
                     }else{
                       await controller.createNewOrder();
                     }
+                    modifyUserController.modifyUserValue(
+                      userID: userDataController.userData.userID,
+                      valueID: 'userBonusPoints',
+                      value: userDataController.userData.userBonusPoints + 1
+                    );
                     Get.toNamed('/start_page');
                   }, child: const Text('Zamawiam')),
                 ],
@@ -175,7 +181,6 @@ class OrderPage extends GetView<OrderController> {
 
             ],
           ),
-        )
     );
   }
 }

@@ -21,9 +21,7 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
     ProductController productController = Get.find();
     UserDataController userDataController = Get.find();
 
-    return ResponsiveScaledBox(
-      width: 430,
-      child: Scaffold(
+    return Scaffold(
         bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){
           Get.toNamed('/create_new_category_page');
         },
@@ -135,6 +133,6 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
             }
 
       }),
-    ));
+    );
   }
 }

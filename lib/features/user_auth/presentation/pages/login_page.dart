@@ -11,15 +11,14 @@ class LoginPage extends GetView<LoginUserController> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaledBox(
-      width: 430,
-      child: Scaffold(
+    return Scaffold(
         appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: CustomAppBar(appBarTitle: 'Strona logowania',),),
         body: Center(
             child: Column(
               children: [
+                const SizedBox(height: 20.0,),
                 CustomTextForm(
                     key: const Key('email'),
                     textEditingController: controller.loginEmailTextInput,
@@ -46,8 +45,6 @@ class LoginPage extends GetView<LoginUserController> {
                 }),
               ],
             )),
-
-        ),
       );
   }
 }

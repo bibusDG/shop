@@ -14,9 +14,7 @@ class CreateNewCategoryPage extends GetView<ProductCategoryController> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaledBox(
-        width: 430,
-        child: Scaffold(
+    return Scaffold(
           appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Nowa kategoria',)),
           body: Center(
             child: Obx(() {
@@ -67,6 +65,6 @@ class CreateNewCategoryPage extends GetView<ProductCategoryController> {
               );
             }),
           ),
-        ));
+        );
   }
 }

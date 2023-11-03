@@ -20,8 +20,7 @@ class OrderDetailPage extends GetView<OrderController> {
     controller.orderStatus.value = order.orderStatus;
     var deliveryAddress = order.deliveryAddress.split(',').join(' ');
 
-    return ResponsiveScaledBox(width: 430,
-        child: Scaffold(
+    return Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true ?
           OrderModificationWidget(controller: controller, order: order,) : const SizedBox(),
           appBar: const PreferredSize(
@@ -77,7 +76,7 @@ class OrderDetailPage extends GetView<OrderController> {
                   ))
             ],
           ),
-        ));
+        );
   }
 }
 
@@ -135,7 +134,7 @@ class OrderModificationWidget extends StatelessWidget {
             ),
             CupertinoButton(child: Text('Zapisz zmiany'), onPressed: () async{
               if(order.orderedProducts[0].contains('Voucher')){
-                await modifyUserController.modifyUserVoucher(voucherValue: order.orderPrice, userID: order.userID);
+                await modifyUserController.modifyUserValue(valueID: 'voucherValue', value: order.orderPrice, userID: order.userID);
                 controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
               }else{
                 controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);

@@ -24,9 +24,7 @@ class ProductDetailsPage extends GetView<ProductController> {
     List<Image> myImages = const StringToImage().getListOfImage(listOfImage: controller.productData.productGallery);
 
 
-    return ResponsiveScaledBox(
-        width: 430,
-        child: Scaffold(
+    return Scaffold(
           appBar: PreferredSize(
               preferredSize: const Size.fromHeight(70.0),
               child: CustomAppBar(appBarTitle: controller.productData.productName)),
@@ -50,7 +48,7 @@ class ProductDetailsPage extends GetView<ProductController> {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(height: 30.0,),
+                        const SizedBox(height: 20.0,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -61,7 +59,7 @@ class ProductDetailsPage extends GetView<ProductController> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 50.0,),
+                        const SizedBox(height: 20.0,),
                         SizedBox(
                             height: 260,
                             child: SingleChildScrollView(
@@ -69,7 +67,7 @@ class ProductDetailsPage extends GetView<ProductController> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(controller.productData.productDescription, textAlign: TextAlign.justify,),
                                 ))),
-                        const SizedBox(height: 20.0,),
+                        // const SizedBox(height: 20.0,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -106,8 +104,7 @@ class ProductDetailsPage extends GetView<ProductController> {
               ],
             ),
           ),
-
-        ));
+        );
   }
 
   Future<void> checkBasketProducts(BasketController basketController, ProductController productController) async{

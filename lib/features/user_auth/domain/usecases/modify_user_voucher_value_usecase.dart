@@ -13,20 +13,24 @@ class ModifyUserVoucherValueUseCase implements UseCasesWithParams <void, UserVou
   @override
   Future<Either<Failure, void>> call(params) async{
     print('usecase OK');
-    return await userRepo.modifyUserVoucherValue(
+    return await userRepo.modifyUserValue(
         userID: params.userID,
-        voucherValue: params.voucherValue);
+        value: params.value,
+        valueID: params.valueID,
+    );
     // TODO: implement call
     throw UnimplementedError();
   }}
 
 class UserVoucherParams extends Equatable{
   final String userID;
-  final double voucherValue;
+  final dynamic value;
+  final String valueID;
   const UserVoucherParams({
     required this.userID,
-    required this.voucherValue,
+    required this.value,
+    required this.valueID
 });
   @override
-  List<Object> get props => [userID, voucherValue];
+  List<Object> get props => [userID, value, valueID];
 }

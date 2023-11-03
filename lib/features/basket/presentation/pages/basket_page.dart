@@ -18,9 +18,7 @@ class BasketPage extends GetView<BasketController> {
     OrderController orderController = Get.find();
     UserDataController userDataController = Get.find();
 
-    return ResponsiveScaledBox(
-      width: 430,
-      child: Scaffold(
+    return Scaffold(
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Koszyk')),
         body: Obx(() {
@@ -120,7 +118,7 @@ class BasketPage extends GetView<BasketController> {
             ],
           );
         }),
-      ),
-    );
+      );
+
   }
 }

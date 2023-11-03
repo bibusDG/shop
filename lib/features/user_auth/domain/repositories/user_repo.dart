@@ -47,10 +47,10 @@ abstract class UserRepo {
 
   Future<Either<Failure, void>> logOutUser();
 
-  Future<Either<Failure, void>> modifyUserVoucherValue({
+  Future<Either<Failure, void>> modifyUserValue({
     required String userID,
-    required double voucherValue,
-
+    required dynamic value,
+    required String valueID,
 });
 
 }

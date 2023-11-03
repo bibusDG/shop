@@ -124,13 +124,16 @@ class UserRepoImp implements  UserRepo{
   }
 
   @override
-  Future<Either<Failure, void>> modifyUserVoucherValue({
+  Future<Either<Failure, void>> modifyUserValue({
     required String userID,
-    required double voucherValue}) async{
+    required dynamic value,
+    required String valueID
+  }) async{
     try{
-      final result = await userFirebaseDataSource.modifyUserVoucherValue(
+      final result = await userFirebaseDataSource.modifyUserValue(
           userID: userID,
-          voucherValue: voucherValue);
+          value: value,
+          valueID : valueID,);
       return const Right(null);
     }catch(error){
       return const Left(UserModifyFailure(failureMessage: 'Unable to modify user'));

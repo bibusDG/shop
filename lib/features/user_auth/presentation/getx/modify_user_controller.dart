@@ -58,10 +58,11 @@ class ModifyUserController extends GetxController{
 
   }
 
-  Future<void> modifyUserVoucher({userID, voucherValue}) async{
+  Future<void> modifyUserValue({userID, value, valueID}) async{
     final result = await modifyUserVoucherValueUseCase(
         UserVoucherParams(
-            voucherValue: voucherValue,
+            valueID: valueID,
+            value: value,
             userID: userID));
     result.fold((failure){
       return Get.snackbar('title', 'message');

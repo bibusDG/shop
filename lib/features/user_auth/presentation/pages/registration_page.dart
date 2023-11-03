@@ -15,9 +15,7 @@ class RegistrationPage extends GetView<CreateUserController> {
 
     ModifyUserController modifyUserController = Get.find();
 
-    return ResponsiveScaledBox(
-      width: 430,
-      child: Scaffold(
+    return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(70.0),
           child: CustomAppBar(appBarTitle: controller.registrationPage == true ? 'REJESTRACJA' : 'ZMIANA DANYCH',),
@@ -133,7 +131,6 @@ class RegistrationPage extends GetView<CreateUserController> {
 
           ),
         ),
-      ),
     );
   }
 }

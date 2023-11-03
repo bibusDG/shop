@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/bindings/basket_bindings.dart';
 import 'package:shop/core/bindings/modify_user_bindings.dart';
 import 'package:shop/core/bindings/order_bindings.dart';
@@ -15,8 +16,6 @@ import 'package:shop/features/product_categories/presentation/pages/product_cate
 import 'package:shop/features/user_auth/presentation/pages/registration_page.dart';
 import 'package:shop/features/user_auth/presentation/pages/user_profile_page.dart';
 import 'package:shop/firebase_options.dart';
-import 'package:responsive_framework/breakpoint.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import 'core/bindings/product_bindings.dart';
 import 'core/start_page.dart';
@@ -40,12 +39,16 @@ class Shop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      builder: (context, child) => ResponsiveBreakpoints.builder(
-          child: child!,
-          breakpoints: const [
-            Breakpoint(start: 0, end: 450, name: MOBILE),
-            Breakpoint(start: 451, end: 800, name: TABLET),
-          ]
+      builder: (context, child) => ResponsiveWrapper.builder(
+        child,
+        maxWidth: 1200,
+        minWidth: 450,
+        defaultScale: true,
+        breakpoints: [
+          const ResponsiveBreakpoint.resize(450, name: MOBILE),
+          const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+          const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+        ],
       ),
       initialRoute: '/start_page',
       getPages: [

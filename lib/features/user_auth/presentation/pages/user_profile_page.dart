@@ -15,9 +15,7 @@ class UserProfilePage extends GetView<ModifyUserController> {
     UserDataController userDataController = Get.find();
     CreateUserController createUserController = Get.find();
 
-    return ResponsiveScaledBox(
-        width: 430,
-        child: Scaffold(
+    return Scaffold(
           appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Mój profil'),
           ),
           body: Column(
@@ -95,7 +93,6 @@ class UserProfilePage extends GetView<ModifyUserController> {
               ),
             ],
           ),
-        )
     );
   }
 }

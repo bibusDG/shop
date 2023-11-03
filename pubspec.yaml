@@ -40,7 +40,7 @@ dependencies:
   get:
   firebase_core:
   cloud_firestore:
-  responsive_framework:
+  responsive_framework: ^0.2.0
   flutter_bloc:
   flutter_rating_bar:
   photo_view:

@@ -45,9 +45,10 @@ abstract class UserFirebaseDataSource{
     required double voucherValue,
 });
   
-  Future<void> modifyUserVoucherValue({
+  Future<void> modifyUserValue({
     required String userID,
-    required double voucherValue,
+    required dynamic value,
+    required String valueID,
 });
 
 }
@@ -164,14 +165,16 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
   }
 
   @override
-  Future<void> modifyUserVoucherValue({
+  Future<void> modifyUserValue({
     required String userID,
-    required double voucherValue}) async{
+    required dynamic value,
+    required String valueID,
+  }) async{
     final user = await FirebaseFirestore.instance.collection('company').
     doc(COMPANY_NAME).collection('users').doc(userID).get();
     await FirebaseFirestore.instance.collection('company').
     doc(COMPANY_NAME).
-    collection('users').doc(userID).update({'voucherValue' : user.data()?['voucherValue'] + voucherValue});
+    collection('users').doc(userID).update({valueID : user.data()?[valueID] + value});
     // TODO: implement modifyUserVoucherValue
     // throw UnimplementedError();
   }

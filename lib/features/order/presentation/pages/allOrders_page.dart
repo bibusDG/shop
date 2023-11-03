@@ -12,9 +12,7 @@ class AllOrdersPage extends GetView<OrderController> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaledBox(
-      width: 430,
-      child: Scaffold(
+    return Scaffold(
         appBar: const PreferredSize(preferredSize: Size.fromHeight(70.0), child: CustomAppBar(appBarTitle: 'Zamówienia')),
         body: StreamBuilder(
             stream: controller.streamOrders(),
@@ -61,8 +59,8 @@ class AllOrdersPage extends GetView<OrderController> {
                 return const Center(child: Text('Brak zamówień'));
               }
             }),
-      ),
-    );
+      );
+
   }
 }
 
