@@ -9,10 +9,10 @@ import '../../domain/usecases/modify_user_voucher_value_usecase.dart';
 
 class ModifyUserController extends GetxController{
   ModifyUserUseCase modifyUserUseCase;
-  // ModifyUserVoucherValueUseCase modifyUserVoucherValueUseCase;
+  ModifyUserVoucherValueUseCase modifyUserVoucherValueUseCase;
   ModifyUserController({
     required this.modifyUserUseCase,
-    // required this.modifyUserVoucherValueUseCase,
+    required this.modifyUserVoucherValueUseCase,
   });
 
   Future<void> setTextValues() async{
@@ -58,18 +58,18 @@ class ModifyUserController extends GetxController{
 
   }
 
-  // Future<void> modifyUserVoucher({userMobilePhone, userEmail, voucherValue}) async{
-  //   final result = await modifyUserVoucherValueUseCase(
-  //       UserVoucherParams(
-  //           voucherValue: voucherValue,
-  //           userMobilePhone: userMobilePhone,
-  //           userEmail: userEmail));
-  //   result.fold((failure){
-  //     return Get.snackbar('title', 'message');
-  //   }, (result){
-  //     return Get.snackbar('Success', 'message');
-  //   });
-  // }
+  Future<void> modifyUserVoucher({userID, voucherValue}) async{
+    final result = await modifyUserVoucherValueUseCase(
+        UserVoucherParams(
+            voucherValue: voucherValue,
+            userID: userID));
+    result.fold((failure){
+      return Get.snackbar('title', 'message');
+    }, (result){
+      print('controller ok');
+      return Get.snackbar('Success', 'message');
+    });
+  }
 
 
 }

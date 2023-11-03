@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../basket/domain/entities/basket.dart';
 
 class UserOrder extends Equatable{
+  final String userID;
   final String userMobile;
   final String deliveryMethod;
   final List<String> orderedProducts;
@@ -21,6 +22,7 @@ class UserOrder extends Equatable{
     required this.userMobile,
     required this.deliveryMethod,
     required this.orderedProducts,
+    required this.userID,
 
 
     required this.orderID,
@@ -34,6 +36,7 @@ class UserOrder extends Equatable{
 });
 
   const UserOrder.empty() : this(
+    userID: 'userID',
     orderTime: 'orderTime',
     orderStatus: 'orderStatus',
     orderPrice: 0.0,

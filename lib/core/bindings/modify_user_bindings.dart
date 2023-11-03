@@ -13,10 +13,10 @@ class ModifyUserBindings implements Bindings{
     Get.lazyPut<UserFirebaseDataSource>(() => UserFirebaseDataSourceImp());
     Get.lazyPut<UserRepo>(() => UserRepoImp(userFirebaseDataSource: Get.find()));
     Get.lazyPut(() => ModifyUserUseCase(userRepo: Get.find()));
-    // Get.lazyPut(() => ModifyUserVoucherValueUseCase(userRepo: Get.find()));
+    Get.lazyPut(() => ModifyUserVoucherValueUseCase(userRepo: Get.find()));
     Get.lazyPut(() => ModifyUserController(
         modifyUserUseCase: Get.find(),
-        // modifyUserVoucherValueUseCase: Get.find(),
+        modifyUserVoucherValueUseCase: Get.find(),
     ));
     // TODO: implement dependencies
   }

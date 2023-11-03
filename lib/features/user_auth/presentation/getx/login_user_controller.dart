@@ -23,6 +23,7 @@ class LoginUserController extends GetxController{
     }, (user) async{
       userDataController.userData = user;
       userDataController.userLoginStatus.value = true;
+      userDataController.voucherValue.value = user.voucherValue;
     });
     if(Get.currentRoute == '/login_page'){
       Get.back();

@@ -65,7 +65,7 @@ class OrderDetailPage extends GetView<OrderController> {
                         const SizedBox(height: 20.0,),
                         const Text('Rodzaj płatności:'),
                         const SizedBox(height: 20.0,),
-                        Text(order.paymentMethod == 'cash' ? 'Gotówka' : order.paymentMethod == "blik" ? 'Blik na telefon' : 'Przelew',
+                        Text(order.paymentMethod == 'cash' ? 'Gotówka' : order.paymentMethod == "blik" ? 'Blik na telefon' : order.paymentMethod == "voucher" ? 'Voucher' :'Przelew',
                             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 20.0,),
                         const Text('Status zamówienia:'),
@@ -94,11 +94,16 @@ class OrderModificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    OrderController orderController = Get.find();
+    // OrderController orderController = Get.find();
+    ModifyUserController modifyUserController = Get.find();
 
     return SizedBox(
       height: 100,
-      child: Obx(() {
+      child: order.orderStatus == 'Gotowe' ?
+      const SizedBox(
+        width: double.infinity,
+        child: Center(child: Text('Zamówienie zrealizowane', style: TextStyle(fontSize: 20.0),),),
+      ) :Obx(() {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -107,7 +112,7 @@ class OrderModificationWidget extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    controller.orderStatus.value = 'Złożono zamówienie';
+                   controller.orderStatus.value = 'Złożono zamówienie';
                   },
                   child: Text('Zamówione', style: controller.orderStatus.value == 'Złożono zamówienie' ?
                   const TextStyle(fontSize: 18, fontWeight: FontWeight.w900) : const TextStyle(fontSize: 12),),
@@ -129,7 +134,13 @@ class OrderModificationWidget extends StatelessWidget {
               ],
             ),
             CupertinoButton(child: Text('Zapisz zmiany'), onPressed: () async{
-                orderController.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+              if(order.orderedProducts[0].contains('Voucher')){
+                await modifyUserController.modifyUserVoucher(voucherValue: order.orderPrice, userID: order.userID);
+                controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+              }else{
+                controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+              }
+
             }),
           ],
         );

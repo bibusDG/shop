@@ -12,12 +12,11 @@ class UserProfilePage extends GetView<ModifyUserController> {
 
   @override
   Widget build(BuildContext context) {
-
     UserDataController userDataController = Get.find();
     CreateUserController createUserController = Get.find();
 
     return ResponsiveScaledBox(
-      width: 430,
+        width: 430,
         child: Scaffold(
           appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Mój profil'),
           ),
@@ -37,22 +36,22 @@ class UserProfilePage extends GetView<ModifyUserController> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Dane osobowe:'),
-                          Text('${userDataController.userData.userName} ${userDataController.userData.userSurname}',
-                            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-                          Text('${userDataController.userData.userPostalCode} ${userDataController.userData.userCity}'),
-                          Text('ul. ${userDataController.userData.userAddress}'),
-                          Text('tel. ${userDataController.userData.userMobilePhone}'),
-                          Text('email: ${userDataController.userData.userEmail}')
-                        ],
-                    ),
+                          children: [
+                            const Text('Dane osobowe:'),
+                            Text('${userDataController.userData.userName} ${userDataController.userData.userSurname}',
+                              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                            Text('${userDataController.userData.userPostalCode} ${userDataController.userData.userCity}'),
+                            Text('ul. ${userDataController.userData.userAddress}'),
+                            Text('tel. ${userDataController.userData.userMobilePhone}'),
+                            Text('email: ${userDataController.userData.userEmail}')
+                          ],
+                        ),
                         GestureDetector(
-                          onTap: () async{
-                            await controller.setTextValues();
-                            createUserController.registrationPage = false;
-                            await Get.toNamed('/registration_page');
-                          },
+                            onTap: () async {
+                              await controller.setTextValues();
+                              createUserController.registrationPage = false;
+                              await Get.toNamed('/registration_page');
+                            },
                             child: const Text('Zmień')),
                         const SizedBox(width: 5.0,)
 
@@ -68,11 +67,12 @@ class UserProfilePage extends GetView<ModifyUserController> {
                 itemCount: 8,
                 itemSize: 40,
                 rating: userDataController.userData.userBonusPoints.toDouble(),
-                  itemBuilder: (context, index) => const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  ),
+                itemBuilder: (context, index) =>
+                const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+              ),
               SizedBox(height: 20.0,),
               const Text('Vouchery'),
               const SizedBox(height: 20.0,),
@@ -84,8 +84,10 @@ class UserProfilePage extends GetView<ModifyUserController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('${userDataController.userData.voucherValue.toString()} PLN' ,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35))
+                      Obx(() {
+                        return Text('${userDataController.voucherValue.value.toString()} PLN',
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35));
+                      })
                     ],
                   ),
                 ),

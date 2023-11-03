@@ -123,18 +123,20 @@ class UserRepoImp implements  UserRepo{
     throw UnimplementedError();
   }
 
-  // @override
-  // Future<Either<Failure, void>> modifyUserVoucherValue({
-  //   required String userEmail,
-  //   required String userMobilePhone,
-  //   required double voucherValue}) async{
-  //   try{
-  //     return const Right(null);
-  //   }catch(error){
-  //     return const Left(UserModifyFailure(failureMessage: 'Unable to modify user'));
-  //   }
-  //   // TODO: implement modifyUserVoucherValue
-  //   throw UnimplementedError();
-  // }
+  @override
+  Future<Either<Failure, void>> modifyUserVoucherValue({
+    required String userID,
+    required double voucherValue}) async{
+    try{
+      final result = await userFirebaseDataSource.modifyUserVoucherValue(
+          userID: userID,
+          voucherValue: voucherValue);
+      return const Right(null);
+    }catch(error){
+      return const Left(UserModifyFailure(failureMessage: 'Unable to modify user'));
+    }
+    // TODO: implement modifyUserVoucherValue
+    throw UnimplementedError();
+  }
   
 }

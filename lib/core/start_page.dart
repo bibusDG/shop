@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import 'custom_widgets/custom_app_bar.dart';
@@ -12,6 +13,7 @@ class StartPage extends GetView {
   Widget build(BuildContext context) {
 
     final user = Get.put(UserDataController());
+    ModifyUserController modifyUserController = Get.find();
 
     return Scaffold(
       appBar: const PreferredSize(

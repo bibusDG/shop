@@ -4,6 +4,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/constants/constants.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
+import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import '../getx/order_controller.dart';
@@ -13,6 +14,7 @@ class OrderPage extends GetView<OrderController> {
 
   @override
   Widget build(BuildContext context) {
+
     UserDataController userDataController = Get.find();
     BasketController basketController = Get.find();
 
@@ -72,20 +74,26 @@ class OrderPage extends GetView<OrderController> {
                       key: const Key('cash'),
                       text1: 'Gotówka',
                       text2: '',
-                      icon: const Icon(Icons.money, size: 70),
-                      size: controller.paymentMethod.value == 'cash' ? 150.0 : 120.0,),
+                      icon: const Icon(Icons.money, size: 50),
+                      size: controller.paymentMethod.value == 'cash' ? 120.0 : 100.0,),
                     CustomOrderWidget(
                       key: const Key('blik'),
                       text1: 'Blik',
                       text2: '',
-                      icon: const Icon(Icons.install_mobile, size: 70,),
-                      size: controller.paymentMethod.value == 'blik' ? 150.0 : 120.0,),
+                      icon: const Icon(Icons.install_mobile, size: 50,),
+                      size: controller.paymentMethod.value == 'blik' ? 120.0 : 100.0,),
                     CustomOrderWidget(
                       key: const Key('bank_account'),
                       text1: 'Przelew',
                       text2: '',
-                      icon: const Icon(Icons.payments_rounded, size: 70,),
-                      size: controller.paymentMethod.value == 'bank_account' ? 150.0 : 120.0,),
+                      icon: const Icon(Icons.payments_rounded, size: 50,),
+                      size: controller.paymentMethod.value == 'bank_account' ? 120.0 : 100.0,),
+                    CustomOrderWidget(
+                      key: const Key('voucher'),
+                      text1: 'Voucher',
+                      text2: '',
+                      icon: const Icon(Icons.card_giftcard, size: 50,),
+                      size: controller.paymentMethod.value == 'voucher' ? 120.0 : 100.0,),
                   ],
                 );
               }),
@@ -152,7 +160,14 @@ class OrderPage extends GetView<OrderController> {
                   ),
                   const SizedBox(height: 20.0,),
                   ElevatedButton(onPressed: () async{
-                    await controller.createNewOrder();
+                    ModifyUserController modifyUserController = Get.find();
+                    if(controller.paymentMethod.value == 'voucher'){
+                      await controller.createNewOrder();
+                      await modifyUserController.modifyUserVoucher(userID: userDataController.userData.userID, voucherValue: -controller.totalValue);
+                      userDataController.voucherValue.value -= controller.totalValue.value;
+                    }else{
+                      await controller.createNewOrder();
+                    }
                     Get.toNamed('/start_page');
                   }, child: const Text('Zamawiam')),
                 ],
@@ -182,6 +197,7 @@ class CustomOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrderController orderController = Get.find();
+    UserDataController userDataController = Get.find();
 
     return GestureDetector(
       onTap: () {
@@ -191,6 +207,14 @@ class CustomOrderWidget extends StatelessWidget {
           orderController.paymentMethod.value = 'blik';
         } else if (key == const Key('bank_account')) {
           orderController.paymentMethod.value = 'bank_account';
+        } else if (key == const Key('voucher')) {
+          if(userDataController.voucherValue < orderController.totalValue.value){
+            Get.defaultDialog(
+              title: 'Uwaga',
+              content: Text('Nie masz wystarczających środków na koncie'));}
+          else{
+            orderController.paymentMethod.value = 'voucher';
+          }
         } else if (key == const Key('courier')) {
           orderController.deliveryMethod.value = 'courier';
           orderController.deliveryCost.value = COURIER_COST;

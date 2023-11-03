@@ -13,6 +13,7 @@ class CreateOrderUseCase implements UseCasesWithParams<void, CreateOrderParams>{
   @override
   Future<Either<Failure, void>> call(params) async{
     return await orderRepo.createOrder(
+        userID: params.userID,
         deliveryMethod: params.deliveryMethod,
         userMobile: params.userMobile,
         orderedProducts: params.orderedProducts,
@@ -32,6 +33,7 @@ class CreateOrderUseCase implements UseCasesWithParams<void, CreateOrderParams>{
 
 class CreateOrderParams extends Equatable{
 
+  final String userID;
   final String userMobile;
   final String deliveryMethod;
   final List<String> orderedProducts;
@@ -49,6 +51,7 @@ class CreateOrderParams extends Equatable{
     required this.orderedProducts,
     required this.deliveryMethod,
     required this.userMobile,
+    required this.userID,
 
     required this.orderNumber,
     required this.orderStatus,
@@ -61,6 +64,7 @@ class CreateOrderParams extends Equatable{
   });
 
   const CreateOrderParams.empty() : this(
+    userID: 'userID',
     orderID: 'orderID',
     orderNumber: 'orderNumber',
     orderPrice: 0.0,

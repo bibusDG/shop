@@ -65,7 +65,10 @@ class ProductDetailsPage extends GetView<ProductController> {
                         SizedBox(
                             height: 260,
                             child: SingleChildScrollView(
-                                child: Text(controller.productData.productDescription))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(controller.productData.productDescription, textAlign: TextAlign.justify,),
+                                ))),
                         const SizedBox(height: 20.0,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

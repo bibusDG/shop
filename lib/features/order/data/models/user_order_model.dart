@@ -5,6 +5,7 @@ import '../../domain/entities/user_order.dart';
 
 class UserOrderModel extends UserOrder{
   const UserOrderModel({
+    required super.userID,
     required super.deliveryMethod,
     required super.userMobile,
     required super.orderedProducts,
@@ -20,6 +21,7 @@ class UserOrderModel extends UserOrder{
 });
 
   const UserOrderModel.empty() : this(
+    userID: 'userID',
     orderID: 'orderID',
     orderNumber: 'orderNumber',
     paymentMethod: 'paymentMethod',
@@ -35,6 +37,7 @@ class UserOrderModel extends UserOrder{
   );
 
   UserOrderModel copyWith({
+    String? userID,
     String? orderID,
     String? orderNumber,
     String? userEmail,
@@ -49,6 +52,7 @@ class UserOrderModel extends UserOrder{
     List<String>? orderedProducts,
   }) =>
       UserOrderModel(
+        userID: userID ?? this.userID,
         orderID: orderID ?? this.orderID,
         orderNumber: orderNumber ?? this.orderNumber,
         userEmail: userEmail ?? this.userEmail,
@@ -68,6 +72,7 @@ class UserOrderModel extends UserOrder{
   String toRawJson() => json.encode(toJson());
 
   factory UserOrderModel.fromJson(Map<String, dynamic> json) => UserOrderModel(
+    userID: json["userID"],
     orderID: json["orderID"],
     orderNumber: json["orderNumber"],
     userEmail: json["userEmail"],
@@ -83,6 +88,7 @@ class UserOrderModel extends UserOrder{
   );  
 
   Map<String, dynamic> toJson() => {
+    "userID": userID,
     "orderID" : orderID,
     "orderNumber": orderNumber,
     "userEmail": userEmail,

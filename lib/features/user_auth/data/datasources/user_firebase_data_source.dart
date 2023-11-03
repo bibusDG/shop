@@ -45,11 +45,10 @@ abstract class UserFirebaseDataSource{
     required double voucherValue,
 });
   
-//   Future<void> modifyUserVoucherValue({
-//     required String userEmail,
-//     required String userMobilePhone,
-//     required double voucherValue,
-// });
+  Future<void> modifyUserVoucherValue({
+    required String userID,
+    required double voucherValue,
+});
 
 }
 
@@ -164,22 +163,17 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     // throw UnimplementedError();
   }
 
-  // @override
-  // Future<void> modifyUserVoucherValue({
-  //   required String userEmail,
-  //   required String userMobilePhone,
-  //   required double voucherValue}) async{
-  //   print('dd');
-  //   await FirebaseFirestore.instance.collection('company').
-  //   doc(COMPANY_NAME).
-  //   collection('users').
-  //   where('userEmail', isEqualTo: userEmail).
-  //   where('userMobilePhone', isEqualTo: userMobilePhone).get().
-  //   then((value){
-  //     value.docs[0].data().update('voucherValue', (value) => voucherValue);
-  //   });
-  //   // TODO: implement modifyUserVoucherValue
-  //   // throw UnimplementedError();
-  // }
+  @override
+  Future<void> modifyUserVoucherValue({
+    required String userID,
+    required double voucherValue}) async{
+    final user = await FirebaseFirestore.instance.collection('company').
+    doc(COMPANY_NAME).collection('users').doc(userID).get();
+    await FirebaseFirestore.instance.collection('company').
+    doc(COMPANY_NAME).
+    collection('users').doc(userID).update({'voucherValue' : user.data()?['voucherValue'] + voucherValue});
+    // TODO: implement modifyUserVoucherValue
+    // throw UnimplementedError();
+  }
   
 }
