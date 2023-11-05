@@ -20,6 +20,7 @@ void main() {
   test('should call [CreateUserUseCase.createNewUser]', () async{
     //Arrange
     when(()=> repo.createNewUser(
+        productsForFree: any(named: 'productsForFree'),
         voucherValue: any(named: 'voucherValue'),
         userID: any(named: 'userID'),
         userName: any(named: 'userName'),
@@ -40,6 +41,7 @@ void main() {
     //Assert
     expect(result, equals(const Right<dynamic, void>(null)));
     verify(()=>repo.createNewUser(
+        productsForFree: params.productsForFree,
         voucherValue: params.voucherValue,
         userID: params.userID,
         userName: params.userName,

@@ -15,6 +15,7 @@ const EMPTY_USER = User(
     userBonusPoints: 0,
     isAdmin: false,
     voucherValue: 0,
+    productsForFree: 0,
 );
 
 const double COURIER_COST = 20;

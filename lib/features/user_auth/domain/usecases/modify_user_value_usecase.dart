@@ -5,14 +5,13 @@ import 'package:shop/core/usecases/usecases.dart';
 
 import '../repositories/user_repo.dart';
 
-class ModifyUserVoucherValueUseCase implements UseCasesWithParams <void, UserVoucherParams> {
+class ModifyUserValueUseCase implements UseCasesWithParams <void, UserValueParams> {
   UserRepo userRepo;
-  ModifyUserVoucherValueUseCase({required this.userRepo});
+  ModifyUserValueUseCase({required this.userRepo});
 
 
   @override
   Future<Either<Failure, void>> call(params) async{
-    print('usecase OK');
     return await userRepo.modifyUserValue(
         userID: params.userID,
         value: params.value,
@@ -22,11 +21,11 @@ class ModifyUserVoucherValueUseCase implements UseCasesWithParams <void, UserVou
     throw UnimplementedError();
   }}
 
-class UserVoucherParams extends Equatable{
+class UserValueParams extends Equatable{
   final String userID;
   final dynamic value;
   final String valueID;
-  const UserVoucherParams({
+  const UserValueParams({
     required this.userID,
     required this.value,
     required this.valueID

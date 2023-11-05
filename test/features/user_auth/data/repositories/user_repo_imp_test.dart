@@ -34,9 +34,11 @@ void main() {
     const bool isAdmin = false;
     const int userBonusPoints = 0;
     const double voucherValue = 0.0;
+    const int productsForFree = 0;
     
     test('should call [UserFirebaseDataSource.createUser] and finish successfuly', () async{
       when(()=>userFirebaseDataSource.createUser(
+          productsForFree: any(named: 'productsForFree'),
           voucherValue: any(named: 'voucherValue'),
           userID: any(named: 'userID'),
           userName: any(named: 'userName'),
@@ -51,6 +53,7 @@ void main() {
           isAdmin: false,)).thenAnswer((_) async => Future.value());
 
       final result = await userRepoImp.createNewUser(
+          productsForFree: productsForFree,
           voucherValue: voucherValue,
           userID: userID,
           userName: userName,
@@ -66,6 +69,7 @@ void main() {
 
       expect(result, equals(const Right(null)));
       verify(()=>userFirebaseDataSource.createUser(
+          productsForFree: productsForFree,
           voucherValue: voucherValue,
           userID: userID,
           userName: userName,
@@ -86,6 +90,7 @@ void main() {
     test('Should return failureMessage, when connection unsuccessful', () async{
 
       when(() => userFirebaseDataSource.createUser(
+        productsForFree: any(named: 'productsForFree'),
         voucherValue: any(named: 'voucherValue'),
         userID: any(named: 'userID'),
         userName: any(named: 'userName'),
@@ -100,6 +105,7 @@ void main() {
         isAdmin: false,)).thenThrow(createFailureMessage);
 
       final result = await userRepoImp.createNewUser(
+          productsForFree: productsForFree,
           voucherValue: voucherValue,
           userID: userID,
           userName: userName,

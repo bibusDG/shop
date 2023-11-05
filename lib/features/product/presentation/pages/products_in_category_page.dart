@@ -19,6 +19,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
     
 
     return Scaffold(
+      backgroundColor: Colors.white,
           bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: () {
             controller.resetCreateProductTextFields();
             Get.toNamed('/create_product_page');
@@ -50,29 +51,34 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                               alignment: Alignment.center,
                               children: [
                                 Card(
-                                  color: Colors.black,
+                                  elevation: 0,
+                                  color: Colors.white,
                                   child: Column(
                                     children: [
                                       const SizedBox(
                                         height: 10.0,
                                       ),
+                                      product.productGallery.isNotEmpty?
                                       Container(
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                          image: DecorationImage(
+                                            fit: BoxFit.fitHeight,
+                                              image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
+                                            borderRadius: BorderRadius.circular(5.0),
                                             color: Colors.white
                                         ),
                                         width: 180,
                                         height: 280,
-                                        child: product.productGallery.isNotEmpty?
-                                        Image(
-                                          fit: BoxFit.fill,
-                                            image: const StringToImage().getSingleImage(image: product.productGallery[0]).image):
-                                        const Center(child:Text('Brakzdjęcia')),
+                                      ) : const SizedBox(
+                                        width: 180,
+                                        height: 280,
+                                        child: Center(child:Text('Brak zdjęcia')),
                                       ),
                                       const SizedBox(
                                         height: 20.0,
                                       ),
-                                      Center(child:Text(product.productName, style: const TextStyle(color: Colors.white),)),
+                                      Center(child:Text(product.productName.toUpperCase(),
+                                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),
                                     ],
                                   ),
                                 ),

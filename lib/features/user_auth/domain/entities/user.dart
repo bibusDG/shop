@@ -13,6 +13,7 @@ class User extends Equatable{
   final bool isAdmin;
   final int userBonusPoints;
   final double voucherValue;
+  final int productsForFree;
 
   const User({
     required this.userID,
@@ -27,6 +28,7 @@ class User extends Equatable{
     required this.isAdmin,
     required this.userBonusPoints,
     required this.voucherValue,
+    required this.productsForFree,
 });
 
   const User.empty() : this(
@@ -41,7 +43,8 @@ class User extends Equatable{
     userPostalCode: 'empty_userPostalCode',
     isAdmin: false,
     userBonusPoints: 0,
-    voucherValue: 0.0
+    voucherValue: 0.0,
+    productsForFree: 0,
   );
 
   @override

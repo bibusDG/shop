@@ -5,11 +5,11 @@ import 'package:shop/features/user_auth/presentation/getx/create_user_controller
 import 'package:shop/features/user_auth/presentation/getx/logout_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
-import '../../domain/usecases/modify_user_voucher_value_usecase.dart';
+import '../../domain/usecases/modify_user_value_usecase.dart';
 
 class ModifyUserController extends GetxController{
   ModifyUserUseCase modifyUserUseCase;
-  ModifyUserVoucherValueUseCase modifyUserVoucherValueUseCase;
+  ModifyUserValueUseCase modifyUserVoucherValueUseCase;
   ModifyUserController({
     required this.modifyUserUseCase,
     required this.modifyUserVoucherValueUseCase,
@@ -38,6 +38,7 @@ class ModifyUserController extends GetxController{
 
     final result = await modifyUserUseCase(
         ModifyUserParams(
+        productsForFree: 0,
         voucherValue: 0,
         userAddress: createUserController.userAddressTextField.text,
         userPostalCode: createUserController.userPostalCodeTextField.text,
@@ -60,15 +61,14 @@ class ModifyUserController extends GetxController{
 
   Future<void> modifyUserValue({userID, value, valueID}) async{
     final result = await modifyUserVoucherValueUseCase(
-        UserVoucherParams(
+        UserValueParams(
             valueID: valueID,
             value: value,
             userID: userID));
     result.fold((failure){
-      return Get.snackbar('title', 'message');
+      // return Get.snackbar('title', 'message');
     }, (result){
-      print('controller ok');
-      return Get.snackbar('Success', 'message');
+      // return Get.snackbar('Success', 'message');
     });
   }
 

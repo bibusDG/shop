@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shop/core/classes/string_to_image.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/order/presentation/getx/order_controller.dart';
@@ -19,6 +20,7 @@ class BasketPage extends GetView<BasketController> {
     UserDataController userDataController = Get.find();
 
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Koszyk')),
         body: Obx(() {
@@ -38,16 +40,26 @@ class BasketPage extends GetView<BasketController> {
                         alignment: AlignmentDirectional.topEnd,
                         children: [
                           Card(
+                            color: Colors.white,
+                            elevation: 0,
                             child: Row(
                               children: [
                                 const SizedBox(width: 20.0,),
+                                product!.productGallery.isNotEmpty ?
                                 Container(
                                   width: 150,
                                   height: 150,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white,),
-                                ),
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
+                                    )
+                                  ) : const SizedBox(
+                                    width: 150,
+                                    height: 150,
+                                    child: Center(child: Text('No image'))),
                                 const SizedBox(width: 30.0,),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

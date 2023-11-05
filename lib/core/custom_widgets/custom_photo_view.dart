@@ -30,7 +30,7 @@ class CustomPhotoView extends StatelessWidget{
                 : null,),
           ),
         ),
-        // backgroundDecoration: widget.backgroundDecoration,
+        backgroundDecoration: const BoxDecoration(color: Colors.white),
         // pageController: widget.pageController,
         // onPageChanged: onPageChanged,
       );

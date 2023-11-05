@@ -19,6 +19,7 @@ abstract class UserFirebaseDataSource{
     required bool isAdmin,
     required int userBonusPoints,
     required double voucherValue,
+    required int productsForFree,
 });
 
   Future<UserModel> loginUser({
@@ -43,6 +44,7 @@ abstract class UserFirebaseDataSource{
     required String userPostalCode,
     required String userAddress,
     required double voucherValue,
+    required int productsForFree,
 });
   
   Future<void> modifyUserValue({
@@ -70,7 +72,9 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     required String userAddress,
     required bool isAdmin,
     required double voucherValue,
-    required int userBonusPoints}) async{
+    required int userBonusPoints,
+    required int productsForFree,
+  }) async{
       final addUser = await FirebaseFirestore.instance.collection('company').
       doc(COMPANY_NAME).collection('users').
       add(UserModel(
@@ -85,7 +89,9 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
           userCity: userCity,
           userPostalCode: userPostalCode,
           userBonusPoints: userBonusPoints,
-          userAddress: userAddress).toJson());
+          userAddress: userAddress,
+          productsForFree: productsForFree
+      ).toJson());
       final userDocID = addUser.id;
       await FirebaseFirestore.instance.collection('company').
       doc(COMPANY_NAME).
@@ -141,7 +147,9 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     required String userMobilePhone,
     required String userCity,
     required String userPostalCode,
-    required String userAddress}) async{
+    required String userAddress,
+    required int productsForFree,
+  }) async{
     await FirebaseFirestore.instance.
     collection('company').
     doc(COMPANY_NAME).
@@ -158,6 +166,7 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
         "userAddress": userAddress,
         "userPassword": userPassword,
         "voucherValue": voucherValue,
+        "productsForFree": productsForFree,
       }
     );
     // TODO: implement modifyUser
@@ -174,7 +183,8 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     doc(COMPANY_NAME).collection('users').doc(userID).get();
     await FirebaseFirestore.instance.collection('company').
     doc(COMPANY_NAME).
-    collection('users').doc(userID).update({valueID : user.data()?[valueID] + value});
+    collection('users').doc(userID).
+    update(valueID == 'voucherValue'? {valueID : user.data()?[valueID] + value} : {valueID : value});
     // TODO: implement modifyUserVoucherValue
     // throw UnimplementedError();
   }

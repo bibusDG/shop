@@ -12,8 +12,8 @@ class StartPage extends GetView {
   @override
   Widget build(BuildContext context) {
 
-    final user = Get.put(UserDataController());
-    ModifyUserController modifyUserController = Get.find();
+    // final user = Get.put(UserDataController());
+    // ModifyUserController modifyUserController = Get.find();
 
     return Scaffold(
       appBar: const PreferredSize(

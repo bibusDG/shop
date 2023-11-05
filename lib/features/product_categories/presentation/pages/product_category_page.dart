@@ -22,6 +22,7 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
     UserDataController userDataController = Get.find();
 
     return Scaffold(
+        backgroundColor: Colors.white,
         bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){
           Get.toNamed('/create_new_category_page');
         },
@@ -54,73 +55,93 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                         child: Stack(
                           alignment: AlignmentDirectional.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 20),
-                              child:
-                              Card(
-                                color: Colors.black,
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Container(
+                            Card(
+                              elevation: 0,
+                              shadowColor: Colors.white,
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  // const SizedBox(height: 20.0,),
+                                  productCategory.productCategoryPicture.isNotEmpty?
+                                  ShaderMask(
+                                    shaderCallback: (rect) {
+                                      return const LinearGradient(
+                                        begin: Alignment.center,
+                                        end: Alignment.bottomCenter,
+                                        colors: [Colors.transparent, Colors.black],
+                                      ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+                                    },
+                                    blendMode: BlendMode.srcATop,
+                                    child: Container(
                                       decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: const StringToImage().getSingleImage(image: productCategory.productCategoryPicture).image,),
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0)),
-                                      height: 300,
-                                      width: 300,
-                                      child: productCategory.productCategoryPicture.isNotEmpty?
-                                      Image(
-                                        fit: BoxFit.fill,
-                                        image: const StringToImage().getSingleImage(image: productCategory.productCategoryPicture).image,) :
-                                      const Center(child:Text('Brak zdjęcia')),
+                                          borderRadius: BorderRadius.circular(10.0),
+                                      ),
+                                      height: Get.width + 45,
+                                      width: Get.width + 45
                                     ),
-                                    const SizedBox(height: 20.0,),
-                                    Center(child: Text(productCategory.productCategoryName, style: const TextStyle(color: Colors.white),)),
-                                  ],
-                                ),
+                                  ) : SizedBox(
+                                      width: Get.width,
+                                      height: Get.width,
+                                      child: const Center(child:Text('Brak zdjęcia'))),
+                                  // const SizedBox(height: 30.0,),
+                                  // Center(child: Text(productCategory.productCategoryName.toUpperCase(),
+                                  //   style: const TextStyle(decoration: TextDecoration.underline, color: Colors.black, fontSize: 25.0, fontWeight: FontWeight.w200),)),
+                                ],
                               ),
                             ),
                             userDataController.userData.isAdmin == true?
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            Column(
                               children: [
-                                const SizedBox(width: 30.0,),
-                                IconButton(
-                                  onPressed: () async{
-                                    Get.defaultDialog(
-                                      title: 'Uwaga',
-                                      content: Column(
-                                        children: [
-                                          const Text(deleteCategoryInfo),
-                                          const SizedBox(height: 20.0,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () async{
+                                        Get.defaultDialog(
+                                          title: 'Uwaga',
+                                          content: Column(
                                             children: [
-                                              CupertinoButton(
-                                                  onPressed: () async{
-                                                await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
-                                              },
-                                                  child: const Text('Usuń'),),
-                                              CupertinoButton(
-                                                  onPressed: (){Get.back();},
-                                                  child: const Text('Anuluj'),)
+                                              const Text(deleteCategoryInfo),
+                                              const SizedBox(height: 20.0,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                children: [
+                                                  CupertinoButton(
+                                                      onPressed: () async{
+                                                    await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
+                                                  },
+                                                      child: const Text('Usuń'),),
+                                                  CupertinoButton(
+                                                      onPressed: (){Get.back();},
+                                                      child: const Text('Anuluj'),)
+                                                ],
+                                              ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                    );
+                                        );
 
-                                }, icon: const Icon(Icons.delete, size: 65, color: Colors.blue,)),
-                                IconButton(onPressed: () async{
-                                  String categoryImage = await PhotoToString().takeAPhotoFromGallery();
-                                  controller.modifyCategory(category: productCategory, image: categoryImage);
+                                    }, icon: const Icon(Icons.delete, size: 65, color: Colors.blue,)),
+                                    IconButton(onPressed: () async{
+                                      String categoryImage = await PhotoToString().takeAPhotoFromGallery();
+                                      controller.modifyCategory(category: productCategory, image: categoryImage);
 
-                                }, icon: const Icon(Icons.image, size: 65, color: Colors.blue,)),
+                                    }, icon: const Icon(Icons.image, size: 65, color: Colors.blue,)),
 
+                                  ],
+                                ),
+                                SizedBox(height: Get.width-80,),
+                                Center(child: Text(productCategory.productCategoryName.toUpperCase(), style: const TextStyle(decoration: TextDecoration.underline, decorationColor: Colors.white, color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w200),)),
                               ],
-                            ) : const SizedBox(),
+                            ) : Column(
+                              children: [
+                                SizedBox(height: Get.width),
+                                Center(child: Text(productCategory.productCategoryName.toUpperCase(), style: const TextStyle(decoration: TextDecoration.underline, decorationColor: Colors.white, color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w200),)),
+                              ],
+                            ),
                           ],
                         ),
                       );

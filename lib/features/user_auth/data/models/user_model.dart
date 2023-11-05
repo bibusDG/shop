@@ -16,6 +16,7 @@ class UserModel extends User{
     required super.userAddress,
     required super.userBonusPoints,
     required super.voucherValue,
+    required super.productsForFree,
 });
   const UserModel.empty() : this(
     userPassword: 'password',
@@ -30,6 +31,7 @@ class UserModel extends User{
     isAdmin: false,
     userBonusPoints: 0,
     voucherValue: 0.0,
+    productsForFree: 0
   );
 
   UserModel copyWith({
@@ -45,8 +47,10 @@ class UserModel extends User{
     bool? isAdmin,
     int? userBonusPoints,
     double? voucherValue,
+    int? productsForFree,
   }) =>
       UserModel(
+        productsForFree: productsForFree ?? this.productsForFree,
         userID: userID ?? this.userID,
         userName: userName ?? this.userName,
         userSurname: userSurname ?? this.userSurname,
@@ -78,6 +82,7 @@ class UserModel extends User{
     isAdmin: json["isAdmin"],
     userBonusPoints: json["userBonusPoints"],
     voucherValue: json["voucherValue"],
+    productsForFree: json["productsForFree"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -93,6 +98,7 @@ class UserModel extends User{
     "isAdmin": isAdmin,
     "userBonusPoints": userBonusPoints,
     "voucherValue": voucherValue,
+    "productsForFree": productsForFree,
   };
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -108,7 +114,8 @@ class UserModel extends User{
       userAddress: map['userAddress'] as String,
       isAdmin: map['isAdmin'] as bool,
       userBonusPoints: map['userBonusPoints'] as int,
-      voucherValue: map['voucherValue'] as double
+      voucherValue: map['voucherValue'] as double,
+      productsForFree: map['productsForFree'] as int,
     );
   }
 

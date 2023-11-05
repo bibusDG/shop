@@ -19,6 +19,7 @@ abstract class UserRepo {
     required bool isAdmin,
     required int userBonusPoints,
     required double voucherValue,
+    required int productsForFree,
 });
 
   Future<Either<Failure, void>> deleteUser({
@@ -43,6 +44,7 @@ abstract class UserRepo {
     required String userPostalCode,
     required String userAddress,
     required double voucherValue,
+    required int productsForFree,
 });
 
   Future<Either<Failure, void>> logOutUser();

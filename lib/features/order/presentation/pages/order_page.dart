@@ -17,6 +17,8 @@ class OrderPage extends GetView<OrderController> {
 
     UserDataController userDataController = Get.find();
     BasketController basketController = Get.find();
+    bool isVoucher = basketController.listOfProducts.values.elementAt(0).productName.contains('Voucher');
+
 
     return Scaffold(
           appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Zamówienie',),),
@@ -86,7 +88,7 @@ class OrderPage extends GetView<OrderController> {
                       text2: '',
                       icon: const Icon(Icons.payments_rounded, size: 50,),
                       size: controller.paymentMethod.value == 'bank_account' ? 120.0 : 100.0,),
-                    CustomOrderWidget(
+                     isVoucher ? const SizedBox(): CustomOrderWidget(
                       key: const Key('voucher'),
                       text1: 'Voucher',
                       text2: '',
@@ -103,7 +105,7 @@ class OrderPage extends GetView<OrderController> {
                 ],
               ),
               const SizedBox(height: 20.0,),
-              Obx(() {
+              isVoucher? const Center(child: Text('Dostawa elektroniczna')) : Obx(() {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -161,19 +163,36 @@ class OrderPage extends GetView<OrderController> {
                     ModifyUserController modifyUserController = Get.find();
                     if(controller.paymentMethod.value == 'voucher'){
                       await controller.createNewOrder();
+                      userDataController.voucherValue.value -= controller.totalValue.value;
                       await modifyUserController.modifyUserValue(
                           userID: userDataController.userData.userID,
-                          value: -controller.totalValue,
+                          value: userDataController.voucherValue.value,
                           valueID: 'voucherValue');
-                      userDataController.voucherValue.value -= controller.totalValue.value;
+
                     }else{
                       await controller.createNewOrder();
                     }
-                    modifyUserController.modifyUserValue(
-                      userID: userDataController.userData.userID,
-                      valueID: 'userBonusPoints',
-                      value: userDataController.userData.userBonusPoints + 1
-                    );
+                    if(userDataController.bonusPointsValue.value == 7){
+                      userDataController.freeProducts.value += 1;
+                      userDataController.bonusPointsValue.value = 0;
+                        await modifyUserController.modifyUserValue(
+                        userID: userDataController.userData.userID,
+                        valueID: 'userBonusPoints',
+                        value: userDataController.bonusPointsValue.value,
+                      );
+                        modifyUserController.modifyUserValue(
+                        userID: userDataController.userData.userID,
+                        valueID: 'productsForFree',
+                        value: userDataController.freeProducts.value,
+                      );
+                    }else{
+                      userDataController.bonusPointsValue.value += 1;
+                      modifyUserController.modifyUserValue(
+                          userID: userDataController.userData.userID,
+                          valueID: 'userBonusPoints',
+                          value: userDataController.bonusPointsValue.value
+                      );
+                    }
                     Get.toNamed('/start_page');
                   }, child: const Text('Zamawiam')),
                 ],

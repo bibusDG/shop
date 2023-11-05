@@ -22,9 +22,11 @@ class UserRepoImp implements  UserRepo{
     required bool isAdmin,
     required int userBonusPoints,
     required double voucherValue,
+    required int productsForFree,
   }) async{
     try{
       final result = await userFirebaseDataSource.createUser(
+          productsForFree: productsForFree,
           voucherValue: voucherValue,
           userID: userID,
           userName: userName,
@@ -90,9 +92,12 @@ class UserRepoImp implements  UserRepo{
     required String userMobilePhone,
     required String userCity,
     required String userPostalCode,
-    required String userAddress}) async{
+    required String userAddress,
+    required int productsForFree,
+  }) async{
     try{
       final result = await userFirebaseDataSource.modifyUser(
+          productsForFree: productsForFree,
           voucherValue: voucherValue,
           userID: userID,
           userName: userName,

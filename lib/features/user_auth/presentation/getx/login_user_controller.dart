@@ -24,6 +24,8 @@ class LoginUserController extends GetxController{
       userDataController.userData = user;
       userDataController.userLoginStatus.value = true;
       userDataController.voucherValue.value = user.voucherValue;
+      userDataController.bonusPointsValue.value = user.userBonusPoints;
+      userDataController.freeProducts.value = user.productsForFree;
     });
     if(Get.currentRoute == '/login_page'){
       Get.back();

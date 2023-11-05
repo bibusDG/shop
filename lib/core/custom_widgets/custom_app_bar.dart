@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
     return AppBar(
       automaticallyImplyLeading: Get.currentRoute == '/start_page'? false : true,
       centerTitle: true,
-      title: Text(appBarTitle),
+      title: Text(appBarTitle.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w200, decoration: TextDecoration.underline),),
       actions: [
         Get.currentRoute == '/registration_page' || Get.currentRoute == '/login_page' ?
         const SizedBox() : Stack(
@@ -69,7 +69,7 @@ class CustomAppBar extends StatelessWidget {
               Get.toNamed('/start_page');
             }
             if (value == 3) {
-              await logIn.loginUser();
+              // await logIn.loginUser();
               Get.toNamed('/user_profile_page');
             }
             if (value == 2) {
