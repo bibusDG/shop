@@ -25,88 +25,83 @@ class ProductDetailsPage extends GetView<ProductController> {
 
 
     return Scaffold(
+      bottomSheet: BottomSheet(
+        backgroundColor: Colors.white30,
+        enableDrag: false,
+        // decoration: const BoxDecoration(
+        //   color: Colors.yellow,
+        //   borderRadius: BorderRadius.only(
+        //       topLeft: Radius.circular(20.0),
+        //       topRight: Radius.circular(20.0)),
+        // ),
+        onClosing: () {  },
+        builder: (BuildContext context) {
+          return  SizedBox(
+            height: 550,
+            child: Column(
+              children: [
+                const SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(controller.productData.productName,
+                      style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w200),),
+                    Text('${controller.productData.productPrice.toString()} PLN',
+                        style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w700)
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20.0,),
+                SizedBox(
+                    height: 330,
+                    child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(controller.productData.productDescription, textAlign: TextAlign.justify,),
+                        ))),
+                // const SizedBox(height: 30.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(controller.productData.productAvailability <= 0 ? 'Produkt niedostępny' :
+                    'Dostępna ilość: ${controller.availability.value}'),
+                    IconButton(
+                      onPressed: controller.productData.productAvailability <= 0 ? null :
+                          () async {
+                        if (userData.userLoginStatus.value == false) {
+                          Get.defaultDialog(
+                              title: 'Uwaga',
+                              content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
+                          );
+                        } else {
+                          checkBasketProducts(basketController, controller);
+                          // await basketController.addProductToBasket(product: controller.productData);
+                        }
+                      },
+                      icon: const Icon(Icons.add_shopping_cart),
+                      iconSize: 25,
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(20),
+                        backgroundColor: Colors.black, // <-- Button color
+                        foregroundColor: Colors.white, // <-- Splash color
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
           appBar: PreferredSize(
               preferredSize: const Size.fromHeight(70.0),
               child: CustomAppBar(appBarTitle: controller.productData.productName)),
-          body: Center(
-            child: Column(
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: Container(
-                      color: Colors.transparent,
-                      child: CustomPhotoView(galleryItems: myImages),
-                    )),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0)),
-                    ),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 20.0,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(controller.productData.productName,
-                              style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w200),),
-                            Text('${controller.productData.productPrice.toString()} PLN',
-                                style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w700)
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20.0,),
-                        SizedBox(
-                            height: 280,
-                            child: SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(controller.productData.productDescription, textAlign: TextAlign.justify,),
-                                ))),
-                        // const SizedBox(height: 20.0,),
-                        Column(
-                          children: [
-                            const SizedBox(height: 30.0,),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(controller.productData.productAvailability <= 0 ? 'Produkt niedostępny' :
-                                  'Dostępna ilość: ${controller.availability.value}'),
-                                  IconButton(
-                                    onPressed: controller.productData.productAvailability <= 0 ? null :
-                                        () async {
-                                      if (userData.userLoginStatus.value == false) {
-                                        Get.defaultDialog(
-                                            title: 'Uwaga',
-                                            content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
-                                        );
-                                      } else {
-                                        checkBasketProducts(basketController, controller);
-                                          // await basketController.addProductToBasket(product: controller.productData);
-                                        }
-                                    },
-                                    icon: const Icon(Icons.add_shopping_cart),
-                                    iconSize: 25,
-                                    style: ElevatedButton.styleFrom(
-                                      shape: const CircleBorder(),
-                                      padding: const EdgeInsets.all(20),
-                                      backgroundColor: Colors.black, // <-- Button color
-                                      foregroundColor: Colors.white, // <-- Splash color
-                                    ),
-                                  )
-                                ],
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          body: AspectRatio(
+            aspectRatio: 1,
+            child: SizedBox(
+              width: double.infinity,
+              child:CustomPhotoView(galleryItems: myImages),
             ),
           ),
         );

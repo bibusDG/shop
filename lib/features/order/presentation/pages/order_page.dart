@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -42,13 +43,10 @@ class OrderPage extends GetView<OrderController> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(height: 10.0,),
-                            Text('${userDataController.userData.userName} ${userDataController.userData.userSurname}', style: const TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.w800),),
                             Obx(() {
-                              return Text(controller.deliveryData.value);
+                              return Text(controller.deliveryData.value, style: TextStyle(fontSize: 17.0),);
                             }),
                           ],
                         ),
@@ -62,7 +60,7 @@ class OrderPage extends GetView<OrderController> {
               const Row(
                 children: [
                   SizedBox(width: 20.0,),
-                  Text('Metoda płatności: '),
+                  Text('Wybierz metodę płatności: '),
                 ],
               ),
               const SizedBox(height: 20.0,),
@@ -74,26 +72,30 @@ class OrderPage extends GetView<OrderController> {
                       key: const Key('cash'),
                       text1: 'Gotówka',
                       text2: '',
-                      icon: const Icon(Icons.money, size: 50),
-                      size: controller.paymentMethod.value == 'cash' ? 120.0 : 100.0,),
+                      icon: Icon(Icons.money,
+                          size: controller.paymentMethod.value == 'cash' ? 50 : 30),
+                      size: 120.0,),
                     CustomOrderWidget(
                       key: const Key('blik'),
                       text1: 'Blik',
                       text2: '',
-                      icon: const Icon(Icons.install_mobile, size: 50,),
-                      size: controller.paymentMethod.value == 'blik' ? 120.0 : 100.0,),
+                      icon: Icon(Icons.install_mobile,
+                        size: controller.paymentMethod.value == 'blik' ? 50 : 30,),
+                      size: 120.0,),
                     CustomOrderWidget(
                       key: const Key('bank_account'),
                       text1: 'Przelew',
                       text2: '',
-                      icon: const Icon(Icons.payments_rounded, size: 50,),
-                      size: controller.paymentMethod.value == 'bank_account' ? 120.0 : 100.0,),
+                      icon: Icon(Icons.payments_rounded,
+                        size: controller.paymentMethod.value == 'bank_account' ? 50 : 30,),
+                      size: 100,),
                      isVoucher ? const SizedBox(): CustomOrderWidget(
                       key: const Key('voucher'),
                       text1: 'Voucher',
                       text2: '',
-                      icon: const Icon(Icons.card_giftcard, size: 50,),
-                      size: controller.paymentMethod.value == 'voucher' ? 120.0 : 100.0,),
+                      icon: Icon(Icons.card_giftcard,
+                        size: controller.paymentMethod.value == 'voucher' ? 50 : 30,),
+                      size: 110.0,),
                   ],
                 );
               }),
@@ -113,14 +115,16 @@ class OrderPage extends GetView<OrderController> {
                       key: const Key('courier'),
                       text1: 'Kurier',
                       text2: '$COURIER_COST PLN',
-                      icon: const Icon(Icons.drive_eta_outlined, size: 60,),
-                      size: controller.deliveryMethod.value == 'courier' ? 150.0 : 120.0,),
+                      icon: Icon(Icons.drive_eta_outlined,
+                        size: controller.deliveryMethod.value == 'courier' ? 60 : 30,),
+                      size: 120.0,),
                     CustomOrderWidget(
                         key: Key('own_transport'),
                         text1: 'Odbiór własny',
                         text2: '0 PLN',
-                        icon: const Icon(Icons.handshake_outlined, size: 60,),
-                        size: controller.deliveryMethod.value == 'own_transport' ? 150.0 : 120.0),
+                        icon: Icon(Icons.handshake_outlined,
+                          size: controller.deliveryMethod.value == 'own_transport' ? 60 : 30,),
+                        size: 120.0),
 
                   ],
                 );
@@ -128,38 +132,49 @@ class OrderPage extends GetView<OrderController> {
               const SizedBox(height: 30.0,),
               Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // const SizedBox(width: 20.0,),
-                      const Text('Koszt zamówienia'),
-                      Text(controller.orderValue.value.toStringAsFixed(2)),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // const SizedBox(width: 20.0,),
+                        const Text('Koszt zamówienia'),
+                        Text(controller.orderValue.value.toStringAsFixed(2), style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 15.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // const SizedBox(width: 20.0,),
-                      Text('Koszt dostawy'),
-                      Obx(() {
-                        return Text(controller.deliveryCost.value.toStringAsFixed(2));
-                      }),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // const SizedBox(width: 20.0,),
+                        const Text('Koszt dostawy'),
+                        Obx(() {
+                          return Text(controller.deliveryCost.value.toStringAsFixed(2),
+                              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700));
+                        }),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 15.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // const SizedBox(width: 20.0,),
-                      const Text('Całkowity koszt'),
-                      Obx(() {
-                        return Text(controller.totalValue.value.toStringAsFixed(2));
-                      }),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0, left: 25.0, right: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // const SizedBox(width: 20.0,),
+                        const Text('Całkowity koszt'),
+                        Obx(() {
+                          return Text(controller.totalValue.value.toStringAsFixed(2),
+                            style: const TextStyle(color: Colors.red, fontSize: 18.0, fontWeight: FontWeight.w700),);
+                        }),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20.0,),
-                  ElevatedButton(onPressed: () async{
+                  CupertinoButton(
+                    color: Colors.black,
+                      onPressed: () async{
                     ModifyUserController modifyUserController = Get.find();
                     if(controller.paymentMethod.value == 'voucher'){
                       await controller.createNewOrder();
@@ -253,8 +268,8 @@ class CustomOrderWidget extends StatelessWidget {
         height: size,
         width: size,
         child: Card(
-          elevation: 30.0,
-          color: Colors.white,
+          elevation: 0,
+          // color: Colors.transparent,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

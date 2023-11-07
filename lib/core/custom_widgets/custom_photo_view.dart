@@ -15,7 +15,7 @@ class CustomPhotoView extends StatelessWidget{
         builder: (BuildContext context, int index) {
           return PhotoViewGalleryPageOptions(
             imageProvider: galleryItems[index].image,
-            initialScale: PhotoViewComputedScale.contained * 0.8,
+            initialScale: PhotoViewComputedScale.covered,
             // heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
           );
         },
@@ -30,7 +30,7 @@ class CustomPhotoView extends StatelessWidget{
                 : null,),
           ),
         ),
-        backgroundDecoration: const BoxDecoration(color: Colors.white),
+        backgroundDecoration: const BoxDecoration(color: Colors.black),
         // pageController: widget.pageController,
         // onPageChanged: onPageChanged,
       );

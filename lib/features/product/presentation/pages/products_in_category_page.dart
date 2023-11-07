@@ -36,7 +36,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                   if(snapshot.data.length > 0){
                     return GridView.builder(
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio:0.6,
+                          childAspectRatio:0.9,
                           crossAxisCount: 2),
                         // itemExtent: 180,
                         itemCount: snapshot.data.length,
@@ -55,27 +55,28 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                                   color: Colors.white,
                                   child: Column(
                                     children: [
-                                      const SizedBox(
-                                        height: 10.0,
-                                      ),
                                       product.productGallery.isNotEmpty?
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            fit: BoxFit.fitHeight,
-                                              image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
-                                            borderRadius: BorderRadius.circular(5.0),
-                                            color: Colors.white
+                                      AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              fit: BoxFit.fitHeight,
+                                                image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
+                                              borderRadius: BorderRadius.circular(5.0),
+                                              color: Colors.white
+                                          ),
+                                          width: double.infinity/2,
                                         ),
-                                        width: 180,
-                                        height: 280,
-                                      ) : const SizedBox(
-                                        width: 180,
-                                        height: 280,
-                                        child: Center(child:Text('Brak zdjęcia')),
+                                      ) : const AspectRatio(
+                                        aspectRatio: 1,
+                                        child: SizedBox(
+                                          width: double.infinity/2,
+                                          child: Center(child:Text('Brak zdjęcia')),
+                                        ),
                                       ),
                                       const SizedBox(
-                                        height: 20.0,
+                                        height: 5.0,
                                       ),
                                       Center(child:Text(product.productName.toUpperCase(),
                                         style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),

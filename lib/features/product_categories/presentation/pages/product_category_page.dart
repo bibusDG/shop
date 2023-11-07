@@ -40,7 +40,6 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
                       childAspectRatio: 1.0),
-                    // itemExtent: 180,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index){
                       ProductCategory productCategory = snapshot.data[index];
@@ -53,7 +52,7 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                           Get.toNamed('/products_in_category_page');
                         },
                         child: Stack(
-                          alignment: AlignmentDirectional.center,
+                          alignment: AlignmentDirectional.bottomCenter,
                           children: [
                             Card(
                               elevation: 0,
@@ -72,76 +71,87 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                                       ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
                                     },
                                     blendMode: BlendMode.srcATop,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: const StringToImage().getSingleImage(image: productCategory.productCategoryPicture).image,),
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
+                                    child: AspectRatio(
+                                      aspectRatio: 1,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: const StringToImage().getSingleImage(image: productCategory.productCategoryPicture).image,),
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        // height: Get.width,
+                                        width: double.infinity
                                       ),
-                                      height: Get.width + 45,
-                                      width: Get.width + 45
                                     ),
-                                  ) : SizedBox(
-                                      width: Get.width,
-                                      height: Get.width,
-                                      child: const Center(child:Text('Brak zdjęcia'))),
+                                  ) : const AspectRatio(
+                                    aspectRatio: 1,
+                                    child: SizedBox(
+                                        width: double.infinity,
+                                        // height: Get.width,
+                                        child: Center(child:Text('Brak zdjęcia'))),
+                                  ),
                                   // const SizedBox(height: 30.0,),
                                   // Center(child: Text(productCategory.productCategoryName.toUpperCase(),
                                   //   style: const TextStyle(decoration: TextDecoration.underline, color: Colors.black, fontSize: 25.0, fontWeight: FontWeight.w200),)),
                                 ],
                               ),
                             ),
-                            userDataController.userData.isAdmin == true?
-                            Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () async{
-                                        Get.defaultDialog(
-                                          title: 'Uwaga',
-                                          content: Column(
-                                            children: [
-                                              const Text(deleteCategoryInfo),
-                                              const SizedBox(height: 20.0,),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  CupertinoButton(
-                                                      onPressed: () async{
-                                                    await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
-                                                  },
-                                                      child: const Text('Usuń'),),
-                                                  CupertinoButton(
-                                                      onPressed: (){Get.back();},
-                                                      child: const Text('Anuluj'),)
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        );
-
-                                    }, icon: const Icon(Icons.delete, size: 65, color: Colors.blue,)),
-                                    IconButton(onPressed: () async{
-                                      String categoryImage = await PhotoToString().takeAPhotoFromGallery();
-                                      controller.modifyCategory(category: productCategory, image: categoryImage);
-
-                                    }, icon: const Icon(Icons.image, size: 65, color: Colors.blue,)),
-
-                                  ],
-                                ),
-                                SizedBox(height: Get.width-80,),
-                                Center(child: Text(productCategory.productCategoryName.toUpperCase(), style: const TextStyle(decoration: TextDecoration.underline, decorationColor: Colors.white, color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w200),)),
-                              ],
-                            ) : Column(
-                              children: [
-                                SizedBox(height: Get.width),
-                                Center(child: Text(productCategory.productCategoryName.toUpperCase(), style: const TextStyle(decoration: TextDecoration.underline, decorationColor: Colors.white, color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w200),)),
-                              ],
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 25.0),
+                                child: Text(productCategory.productCategoryName.toUpperCase(),
+                                  style: const TextStyle(decoration: TextDecoration.underline,
+                                      decorationColor: Colors.white,
+                                      color: Colors.white,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w200),),
+                              ),
                             ),
+                            userDataController.userData.isAdmin == true?
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () async{
+                                          Get.defaultDialog(
+                                            title: 'Uwaga',
+                                            content: Column(
+                                              children: [
+                                                const Text(deleteCategoryInfo),
+                                                const SizedBox(height: 20.0,),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    CupertinoButton(
+                                                        onPressed: () async{
+                                                      await controller.deleteCategory(productCategoryID: productCategory.productCategoryID);
+                                                    },
+                                                        child: const Text('Usuń'),),
+                                                    CupertinoButton(
+                                                        onPressed: (){Get.back();},
+                                                        child: const Text('Anuluj'),)
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
+
+                                      }, icon: const Icon(Icons.delete, size: 65, color: Colors.blue,)),
+                                      IconButton(onPressed: () async{
+                                        String categoryImage = await PhotoToString().takeAPhotoFromGallery();
+                                        controller.modifyCategory(category: productCategory, image: categoryImage);
+
+                                      }, icon: const Icon(Icons.image, size: 65, color: Colors.blue,)),
+
+                                    ],
+                                  ),
+                                )
+                                : const SizedBox(),
                           ],
                         ),
                       );
