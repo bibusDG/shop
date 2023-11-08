@@ -19,8 +19,9 @@ class AllOrdersPage extends GetView<OrderController> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
               if(snapshot.hasData){
                 if(snapshot.data.length > 0){
-                  return ListView.builder(
-                      itemExtent: 250,
+                  return ListView.separated(
+
+                      // itemExtent: 180,
                       itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index){
 
@@ -34,10 +35,16 @@ class AllOrdersPage extends GetView<OrderController> {
                           Get.to(const OrderDetailPage(), arguments: order);
                         },
                         child: Card(
-                          color: Colors.white,
+                          elevation: 0,
+                          // color: Colors.white,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const SizedBox(height: 180,),
+                              const SizedBox(height: 20.0,),
+                              Text('Zamówienie nr: ${order.orderNumber}'),
+                              Text(order.orderTime.substring(0,10)),
+                              const SizedBox(height: 40.0,),
+                              // const SizedBox(height: 180,),
                               OrderStatusWidget(order: order),
                               const Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -47,12 +54,14 @@ class AllOrdersPage extends GetView<OrderController> {
                                   Text('Gotowe'),
                                 ],
                               ),
+                              const SizedBox(height: 40.0,),
                             ],
                           ),
                         ),
                       ),
                     );
-                  });
+                  }, separatorBuilder: (BuildContext context, int index) { return
+                    Divider(endIndent: 20.0, indent: 20.0, color: Colors.black, thickness: 0.5,); },);
                 }return const CircularProgressIndicator();
 
               }else{
@@ -80,7 +89,7 @@ class OrderStatusWidget extends StatelessWidget {
           width: 20,
           height: 20,
           decoration: const BoxDecoration(
-            color: Colors.amber,
+            color: Colors.black,
             shape: BoxShape.circle
           ),
         ),
@@ -88,14 +97,14 @@ class OrderStatusWidget extends StatelessWidget {
         Container(
           height: 3.0,
           width: 110,
-          color: order.orderStatus == 'W przygotowaniu' || order.orderStatus == 'Gotowe' ? Colors.amber : Colors.grey,
+          color: order.orderStatus == 'W przygotowaniu' || order.orderStatus == 'Gotowe' ? Colors.black : Colors.grey,
         ),
         const SizedBox(width: 10.0,),
         Container(
           width: 20,
           height: 20,
           decoration: BoxDecoration(
-              color: order.orderStatus == 'W przygotowaniu' || order.orderStatus == 'Gotowe' ? Colors.amber : Colors.grey,
+              color: order.orderStatus == 'W przygotowaniu' || order.orderStatus == 'Gotowe' ? Colors.black : Colors.grey,
               shape: BoxShape.circle
           ),
         ),
@@ -103,14 +112,14 @@ class OrderStatusWidget extends StatelessWidget {
         Container(
           height: 3.0,
           width: 110,
-          color: order.orderStatus == 'Gotowe'? Colors.amber : Colors.grey,
+          color: order.orderStatus == 'Gotowe'? Colors.black : Colors.grey,
         ),
         const SizedBox(width: 10.0,),
         Container(
           width: 20,
           height: 20,
           decoration: BoxDecoration(
-              color: order.orderStatus == 'Gotowe'? Colors.amber : Colors.grey,
+              color: order.orderStatus == 'Gotowe'? Colors.black : Colors.grey,
               shape: BoxShape.circle
           ),
         ),

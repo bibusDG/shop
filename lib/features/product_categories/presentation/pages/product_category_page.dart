@@ -22,7 +22,6 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
     UserDataController userDataController = Get.find();
 
     return Scaffold(
-        backgroundColor: Colors.white,
         bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: (){
           Get.toNamed('/create_new_category_page');
         },
@@ -56,8 +55,6 @@ class ProductCategoryPage extends GetView<ProductCategoryController> {
                           children: [
                             Card(
                               elevation: 0,
-                              shadowColor: Colors.white,
-                              color: Colors.white,
                               child: Column(
                                 children: [
                                   // const SizedBox(height: 20.0,),

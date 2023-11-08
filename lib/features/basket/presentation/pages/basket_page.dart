@@ -17,7 +17,6 @@ class BasketPage extends GetView<BasketController> {
     UserDataController userDataController = Get.find();
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: const PreferredSize(
           preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Koszyk')),
       body: Obx(() {
@@ -37,7 +36,6 @@ class BasketPage extends GetView<BasketController> {
                       alignment: AlignmentDirectional.topEnd,
                       children: [
                         Card(
-                          color: Colors.white,
                           elevation: 0,
                           child: Row(
                             children: [
@@ -163,19 +161,19 @@ class SetFreeProduct{
 
   setFreeProductIcon(){
     if (userDataController.freeProducts.value > 0 && !basketController.productIsFree.contains(product.productID)) {
-      return GestureDetector(child: const Icon(Icons.star_outline), onTap: (){
+      return GestureDetector(child: const Icon(Icons.star_outline, size: 35,), onTap: (){
         userDataController.freeProducts -= 1;
         basketController.productIsFree.add(product.productID);
         basketController.finalPrice.value -= product.productPrice;
       },);
     }else if(userDataController.freeProducts.value > 0 && basketController.productIsFree.contains(product.productID)){
-      return GestureDetector(child: const Icon(Icons.star), onTap: (){
+      return GestureDetector(child: const Icon(Icons.star, size: 35,), onTap: (){
         userDataController.freeProducts += 1;
         basketController.productIsFree.remove(product.productID);
         basketController.finalPrice.value += product.productPrice;
       },);
     }else if(userDataController.freeProducts.value == 0 && basketController.productIsFree.contains(product.productID)){
-      return GestureDetector(child: const Icon(Icons.star), onTap: (){
+      return GestureDetector(child: const Icon(Icons.star, size: 35,), onTap: (){
         userDataController.freeProducts += 1;
         basketController.productIsFree.remove(product.productID);
         basketController.finalPrice.value += product.productPrice;

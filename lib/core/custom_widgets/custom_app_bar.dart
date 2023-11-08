@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget {
         const SizedBox() : Stack(
             children: [
               Obx(() {
-                return controller.listOfProducts.isEmpty ? const SizedBox() :
+                return controller.listOfProducts.isEmpty || userDataController.userLoginStatus == false? const SizedBox() :
                 Text(controller.listOfProducts.length.toString());
               }),
               IconButton(onPressed: () {
@@ -108,8 +108,8 @@ class CustomAppBar extends StatelessWidget {
           },
           child: ClipRect(
             child: userDataController.userLoginStatus == true ? CircleAvatar(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
               child: Text(userDataController.userData.userName[0] + userDataController.userData.userSurname[0]),
             ) : const Icon(Icons.menu),
           ),);

@@ -26,68 +26,71 @@ class ProductDetailsPage extends GetView<ProductController> {
 
     return Scaffold(
       bottomSheet: BottomSheet(
-        backgroundColor: Colors.white30,
         enableDrag: false,
-        // decoration: const BoxDecoration(
-        //   color: Colors.yellow,
-        //   borderRadius: BorderRadius.only(
-        //       topLeft: Radius.circular(20.0),
-        //       topRight: Radius.circular(20.0)),
-        // ),
-        onClosing: () {  },
+        onClosing: () {},
         builder: (BuildContext context) {
           return  SizedBox(
-            height: 550,
+            height: 450,
             child: Column(
               children: [
                 const SizedBox(height: 20.0,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(controller.productData.productName,
-                      style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w200),),
-                    Text('${controller.productData.productPrice.toString()} PLN',
-                        style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w700)
-                    ),
-                  ],
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(controller.productData.productName,
+                        style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w200),),
+                      Text('${controller.productData.productPrice.toString()} PLN',
+                          style: const TextStyle(fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w700)
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20.0,),
-                SizedBox(
-                    height: 330,
-                    child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(controller.productData.productDescription, textAlign: TextAlign.justify,),
-                        ))),
+                Expanded(
+                  flex:4,
+                  child: SizedBox(
+                      height: 330,
+                      child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 40.0, right: 40.0),
+                            child: Text(controller.productData.productDescription, textAlign: TextAlign.justify,style:
+                            const TextStyle(fontStyle: FontStyle.italic, fontSize: 16),),
+                          ))),
+                ),
                 // const SizedBox(height: 30.0,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(controller.productData.productAvailability <= 0 ? 'Produkt niedostępny' :
-                    'Dostępna ilość: ${controller.availability.value}'),
-                    IconButton(
-                      onPressed: controller.productData.productAvailability <= 0 ? null :
-                          () async {
-                        if (userData.userLoginStatus.value == false) {
-                          Get.defaultDialog(
-                              title: 'Uwaga',
-                              content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
-                          );
-                        } else {
-                          checkBasketProducts(basketController, controller);
-                          // await basketController.addProductToBasket(product: controller.productData);
-                        }
-                      },
-                      icon: const Icon(Icons.add_shopping_cart),
-                      iconSize: 25,
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(20),
-                        backgroundColor: Colors.black, // <-- Button color
-                        foregroundColor: Colors.white, // <-- Splash color
-                      ),
-                    )
-                  ],
+                Expanded(
+                  flex:2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(controller.productData.productAvailability <= 0 ? 'Produkt niedostępny' :
+                      'Dostępna ilość: ${controller.availability.value}'),
+                      IconButton(
+                        onPressed: controller.productData.productAvailability <= 0 ? null :
+                            () async {
+                          if (userData.userLoginStatus.value == false) {
+                            Get.defaultDialog(
+                                title: 'Uwaga',
+                                content: const Text('Aby dodać produkt do koszyka musisz być zalogowany')
+                            );
+                          } else {
+                            checkBasketProducts(basketController, controller);
+                            // await basketController.addProductToBasket(product: controller.productData);
+                          }
+                        },
+                        icon: const Icon(Icons.add_shopping_cart),
+                        iconSize: 25,
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(20),
+                          backgroundColor: Colors.black, // <-- Button color
+                          foregroundColor: Colors.white, // <-- Splash color
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -19,7 +19,6 @@ class ProductsInCategoryPage extends GetView<ProductController> {
     
 
     return Scaffold(
-      backgroundColor: Colors.white,
           bottomSheet: userDataController.userData.isAdmin == true? IconButton(onPressed: () {
             controller.resetCreateProductTextFields();
             Get.toNamed('/create_product_page');
@@ -52,7 +51,6 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                               children: [
                                 Card(
                                   elevation: 0,
-                                  color: Colors.white,
                                   child: Column(
                                     children: [
                                       product.productGallery.isNotEmpty?

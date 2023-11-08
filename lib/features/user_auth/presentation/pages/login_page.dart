@@ -11,40 +11,45 @@ class LoginPage extends GetView<LoginUserController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: CustomAppBar(appBarTitle: 'Strona logowania',),),
-        body: Center(
-            child: Column(
-              children: [
-                const SizedBox(height: 20.0,),
-                CustomTextForm(
-                    key: const Key('email'),
-                    textEditingController: controller.loginEmailTextInput,
-                    obscureText: false,
-                    hintText: '',
-                    labelText: 'e-mail',
-                    mustContainText: '@',
-                    notAllowedText: ' ',
-                    textLength: 6,
-                    keyboardType: TextInputType.emailAddress),
-                CustomTextForm(
-                    key: Key('password'),
-                    textEditingController: controller.loginPasswordTextInput,
-                    obscureText: true,
-                    hintText: '',
-                    labelText: 'hasło',
-                    mustContainText: '',
-                    notAllowedText: ' ',
-                    textLength: 6,
-                    keyboardType: TextInputType.text),
-                const SizedBox(height: 30.0,),
-                CupertinoButton(child: Text('Zaloguj'), onPressed: (){
-                  controller.loginUser();
-                }),
-              ],
-            )),
-      );
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(70),
+            child: CustomAppBar(appBarTitle: 'Strona logowania',),),
+          body: Center(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20.0,),
+                  CustomTextForm(
+                      key: const Key('email'),
+                      textEditingController: controller.loginEmailTextInput,
+                      obscureText: false,
+                      hintText: '',
+                      labelText: 'e-mail',
+                      mustContainText: '@',
+                      notAllowedText: ' ',
+                      textLength: 6,
+                      keyboardType: TextInputType.emailAddress),
+                  CustomTextForm(
+                      key: Key('password'),
+                      textEditingController: controller.loginPasswordTextInput,
+                      obscureText: true,
+                      hintText: '',
+                      labelText: 'hasło',
+                      mustContainText: '',
+                      notAllowedText: ' ',
+                      textLength: 6,
+                      keyboardType: TextInputType.text),
+                  const SizedBox(height: 30.0,),
+                  CupertinoButton(child: Text('Zaloguj'), onPressed: (){
+                    controller.loginUser();
+                  }),
+                ],
+              )),
+        ),
+    );
   }
 }

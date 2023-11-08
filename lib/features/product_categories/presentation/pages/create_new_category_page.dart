@@ -14,57 +14,62 @@ class CreateNewCategoryPage extends GetView<ProductCategoryController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-          appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Nowa kategoria',)),
-          body: Center(
-            child: Obx(() {
-              return Column(
-                children: [
-                  const SizedBox(height: 20.0,),
-                  CustomTextForm(
-                      textEditingController: controller.productCategoryName,
-                      obscureText: false,
-                      hintText: '',
-                      labelText: 'Nazwa kategorii',
-                      mustContainText: '',
-                      notAllowedText: '  ',
-                      textLength: 0,
-                      keyboardType: TextInputType.text),
-                  const SizedBox(height: 20.0,),
-                  CupertinoButton(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: const Text('Dodaj zdjęcie kategorii'), onPressed: () async {
-                    final image = await PhotoToString().takeAPhotoFromGallery();
-                    controller.categoryImage.value = image;
-                  }),
-                  controller.categoryImage.value.isNotEmpty ?
-                  Column(
-                    children: [
-                      const SizedBox(height: 20.0,),
-                      SizedBox(
-                        width: 200,
-                        height: 200,
-                        child: Card(
-                          child: Image(
-                            fit: BoxFit.fill,
-                            image: const StringToImage()
-                                .getSingleImage(image: controller.categoryImage.value).image),
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+            appBar: const PreferredSize(preferredSize: Size.fromHeight(70), child: CustomAppBar(appBarTitle: 'Nowa kategoria',)),
+            body: Center(
+              child: Obx(() {
+                return Column(
+                  children: [
+                    const SizedBox(height: 20.0,),
+                    CustomTextForm(
+                        textEditingController: controller.productCategoryName,
+                        obscureText: false,
+                        hintText: '',
+                        labelText: 'Nazwa kategorii',
+                        mustContainText: '',
+                        notAllowedText: '  ',
+                        textLength: 0,
+                        keyboardType: TextInputType.text),
+                    const SizedBox(height: 20.0,),
+                    CupertinoButton(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: const Text('Dodaj zdjęcie kategorii'), onPressed: () async {
+                      final image = await PhotoToString().takeAPhotoFromGallery();
+                      controller.categoryImage.value = image;
+                    }),
+                    controller.categoryImage.value.isNotEmpty ?
+                    Column(
+                      children: [
+                        const SizedBox(height: 20.0,),
+                        SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: Card(
+                            child: Image(
+                              fit: BoxFit.fill,
+                              image: const StringToImage()
+                                  .getSingleImage(image: controller.categoryImage.value).image),
+                          ),
                         ),
-                      ),
-                    ],
-                  ) : const SizedBox(),
-                  const SizedBox(height: 20.0,),
-                  CupertinoButton(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: const Text('Utwórz kategorię'), onPressed: () async {
-                    await controller.createNewCategory();
-                  }),
-                ],
-              );
-            }),
+                      ],
+                    ) : const SizedBox(),
+                    const SizedBox(height: 20.0,),
+                    CupertinoButton(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: const Text('Utwórz kategorię'), onPressed: () async {
+                      await controller.createNewCategory();
+                    }),
+                  ],
+                );
+              }),
+            ),
           ),
-        );
+    );
   }
 }
