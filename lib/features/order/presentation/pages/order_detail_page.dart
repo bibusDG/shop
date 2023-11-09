@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/order/data/models/user_order_model.dart';
 import 'package:shop/features/order/presentation/getx/order_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
+
+import '../../../../core/classes/sms_class.dart';
 
 class OrderDetailPage extends GetView<OrderController> {
   const OrderDetailPage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class OrderDetailPage extends GetView<OrderController> {
   Widget build(BuildContext context) {
 
     UserDataController userDataController = Get.find();
+    ModifyUserController modifyUserController = Get.find();
 
     UserOrderModel order = Get.arguments;
     controller.orderStatus.value = order.orderStatus;
@@ -22,7 +24,7 @@ class OrderDetailPage extends GetView<OrderController> {
 
     return Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true ?
-          OrderModificationWidget(controller: controller, order: order,) : const SizedBox(),
+          OrderModificationWidget(controller: controller, order: order, modifyUserController: modifyUserController,) : const SizedBox(),
           appBar: const PreferredSize(
               preferredSize: Size.fromHeight(70),
               child: CustomAppBar(appBarTitle: 'Szczegóły zamówienia')),
@@ -83,8 +85,10 @@ class OrderDetailPage extends GetView<OrderController> {
 class OrderModificationWidget extends StatelessWidget {
   final OrderController controller;
   final UserOrderModel order;
+  final ModifyUserController modifyUserController;
 
   const OrderModificationWidget({
+    required this.modifyUserController,
     required this.controller,
     required this.order,
     super.key,
@@ -94,7 +98,7 @@ class OrderModificationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // OrderController orderController = Get.find();
-    ModifyUserController modifyUserController = Get.find();
+    // ModifyUserController modifyUserController = Get.find();
 
     return SizedBox(
       height: 100,
@@ -135,9 +139,19 @@ class OrderModificationWidget extends StatelessWidget {
             CupertinoButton(child: Text('Zapisz zmiany'), onPressed: () async{
               if(order.orderedProducts[0].contains('Voucher')){
                 await modifyUserController.modifyUserValue(valueID: 'voucherValue', value: order.orderPrice, userID: order.userID);
-                controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+                await controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+                await SendSms(
+                  orderNumber: order.orderNumber,
+                  mobilePhoneNumber: order.userMobile.removeAllWhitespace,
+                  operationStatus: controller.orderStatus.value,
+                ).sendSmsToUser();
               }else{
-                controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+                await controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+                await SendSms(
+                  orderNumber: order.orderNumber,
+                  mobilePhoneNumber: order.userMobile.removeAllWhitespace,
+                  operationStatus: controller.orderStatus.value,
+                ).sendSmsToUser();
               }
 
             }),

@@ -45,6 +45,7 @@ dependencies:
   flutter_rating_bar:
   photo_view:
   image_picker:
+  flutter_sms:
 #  bloc:
 
 

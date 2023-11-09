@@ -9,10 +9,10 @@ import '../../domain/usecases/modify_user_value_usecase.dart';
 
 class ModifyUserController extends GetxController{
   ModifyUserUseCase modifyUserUseCase;
-  ModifyUserValueUseCase modifyUserVoucherValueUseCase;
+  ModifyUserValueUseCase modifyUserValueUseCase;
   ModifyUserController({
     required this.modifyUserUseCase,
-    required this.modifyUserVoucherValueUseCase,
+    required this.modifyUserValueUseCase,
   });
 
   Future<void> setTextValues() async{
@@ -60,7 +60,7 @@ class ModifyUserController extends GetxController{
   }
 
   Future<void> modifyUserValue({userID, value, valueID}) async{
-    final result = await modifyUserVoucherValueUseCase(
+    final result = await modifyUserValueUseCase(
         UserValueParams(
             valueID: valueID,
             value: value,

@@ -18,7 +18,7 @@ class CreateUserController extends GetxController{
   final userSurnameTextField = TextEditingController();
   final userEmailTextField = TextEditingController();
   final userPasswordTextField = TextEditingController();
-  final userMobilePhoneTextField = TextEditingController(text: '+48 ');
+  final userMobilePhoneTextField = TextEditingController();
   final userCityTextField = TextEditingController();
   final userAddressTextField = TextEditingController();
   final userPostalCodeTextField = TextEditingController();

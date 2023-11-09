@@ -16,7 +16,7 @@ class ModifyUserBindings implements Bindings{
     Get.lazyPut(() => ModifyUserValueUseCase(userRepo: Get.find()));
     Get.lazyPut(() => ModifyUserController(
         modifyUserUseCase: Get.find(),
-        modifyUserVoucherValueUseCase: Get.find(),
+        modifyUserValueUseCase: Get.find(),
     ));
     // TODO: implement dependencies
   }

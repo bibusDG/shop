@@ -31,8 +31,7 @@ class AllOrdersPage extends GetView<OrderController> {
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                       child: GestureDetector(
                         onTap: () async{
-
-                          Get.to(const OrderDetailPage(), arguments: order);
+                          Get.toNamed('/order_detail_page', arguments: order);
                         },
                         child: Card(
                           elevation: 0,
@@ -61,7 +60,7 @@ class AllOrdersPage extends GetView<OrderController> {
                       ),
                     );
                   }, separatorBuilder: (BuildContext context, int index) { return
-                    Divider(endIndent: 20.0, indent: 20.0, color: Colors.black, thickness: 0.5,); },);
+                    const Divider(endIndent: 20.0, indent: 20.0, color: Colors.black, thickness: 0.5,); },);
                 }return const CircularProgressIndicator();
 
               }else{

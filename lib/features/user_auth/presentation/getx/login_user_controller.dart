@@ -26,14 +26,9 @@ class LoginUserController extends GetxController{
       userDataController.voucherValue.value = user.voucherValue;
       userDataController.bonusPointsValue.value = user.userBonusPoints;
       userDataController.freeProducts.value = user.productsForFree;
-    });
-    if(Get.currentRoute == '/login_page'){
       Get.back();
-      Get.snackbar('Witaj ${userDataController.userData.userName}', 'Logowanie pomyślne');
-      return userDataController.userData;
-    }else{
-      return userDataController.userData;
-    }
-
+      return Get.snackbar('Witaj ${userDataController.userData.userName}', 'Logowanie pomyślne');
+    });
+    return userDataController.userData;
   }
 }

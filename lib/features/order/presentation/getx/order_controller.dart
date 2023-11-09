@@ -1,5 +1,8 @@
+import 'dart:ffi';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shop/core/classes/sms_class.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/order/domain/usecases/create_order_usecase.dart';
 import 'package:shop/features/order/domain/usecases/stream_order_usecase.dart';
@@ -31,6 +34,7 @@ class OrderController extends GetxController{
   RxString deliveryData = ''.obs;
   List<String> listOfProducts = [];
   RxString orderStatus = ''.obs;
+  String orderNumber = '';
 
 
 
@@ -51,7 +55,7 @@ class OrderController extends GetxController{
 
     await getListOfProducts();
 
-    final String randomNumber = generateRandomNumber();
+    generateRandomNumber();
 
     final result = await createOrderUseCase(
         CreateOrderParams(
@@ -59,7 +63,7 @@ class OrderController extends GetxController{
         deliveryMethod: deliveryMethod.value,
         userMobile: userDataController.userData.userMobilePhone,
         orderedProducts: listOfProducts,
-        orderNumber: randomNumber,
+        orderNumber: orderNumber,
         orderStatus: 'Złożono zamówienie',
         orderID: '',
         orderPrice: totalValue.value.toPrecision(2),
@@ -84,7 +88,15 @@ class OrderController extends GetxController{
       basketController.productCounter.value = {};
       basketController.finalPrice.value = 0.0;
 
-      return Get.snackbar('Udało się!', 'Zamówienie nr $randomNumber złożono pomyślnie');
+      // return Get.snackbar('Udało się!', 'Zamówienie nr $orderNumber złożono pomyślnie');
+      return Get.defaultDialog(
+        title: 'Dziękujemy',
+        content: SizedBox(child: Text(SendSms(
+            paymentMethod: paymentMethod.value,
+            orderNumber: orderNumber,
+            orderValue: totalValue.value.toString(),
+            mobilePhoneNumber: '').sendInfoAboutOrder())),
+      );
     });
   }
 
@@ -105,10 +117,11 @@ class OrderController extends GetxController{
   }
 
   ///function, that generates random six digit order number
-  String generateRandomNumber(){
+  void generateRandomNumber() async{
     var rng = Random();
     var code = rng.nextInt(900000) + 100000;
-    return  code.toString();
+    orderNumber = code.toString();
+    // return  code.toString();
   }
 
   ///function, that generates string list of products with amount

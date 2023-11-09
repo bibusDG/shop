@@ -27,3 +27,4 @@ const String deleteCategoryInfo =
     'o tej samej nazwie i chcesz pozostawić jej produktu na później'
     'naciśnij "Usuń".\nKategoria zostanie usunięta ale produkty znajdujące się w niej '
     'będą mogły być w przyszłości powiązane z tą kategorią na nowo.';
+

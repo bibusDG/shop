@@ -62,7 +62,7 @@ class Shop extends StatelessWidget {
         GetPage(name: '/order_page', page: () => const OrderPage()),
         GetPage(name: '/allOrders_page', page: () => const AllOrdersPage(), binding: OrderBindings()),
         GetPage(name: '/user_profile_page', page: () => const UserProfilePage(), binding: ModifyUserBindings()),
-        GetPage(name: '/order_detail_page', page: () => const OrderDetailPage()),
+        GetPage(name: '/order_detail_page', page: () => const OrderDetailPage(), binding: ModifyUserBindings()),
         GetPage(name: '/create_product_page', page: () => const CreateProductPage()),
         GetPage(name: '/create_new_category_page', page: () => const CreateNewCategoryPage()),
       ],

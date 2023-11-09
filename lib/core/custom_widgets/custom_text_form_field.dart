@@ -62,6 +62,8 @@ class CustomTextForm extends StatelessWidget {
             return 'Nie używaj $notAllowedText';
           }else if (key == const Key('password') && value!.length < 6){
             return 'Hasło za krótkie';
+          }else if (key == const Key('phone') && !value!.contains(mustContainText)){
+            return 'Dopisz $mustContainText';
           }
         },
       ),
