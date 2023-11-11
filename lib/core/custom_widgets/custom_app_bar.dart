@@ -47,7 +47,7 @@ class CustomAppBar extends StatelessWidget {
         Obx(() {
           return buildPopupMenuButton(userDataController);
         }),
-        const SizedBox(width: 10.0,)
+        const SizedBox(width: 20.0,)
         // const SizedBox(width: 10.0,)
       ],
     );

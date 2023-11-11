@@ -24,70 +24,104 @@ class OrderDetailPage extends GetView<OrderController> {
 
     return Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true ?
-          OrderModificationWidget(controller: controller, order: order, modifyUserController: modifyUserController,) : const SizedBox(),
+          AdminOrderModification(controller: controller, order: order, modifyUserController: modifyUserController,) : const SizedBox(),
           appBar: const PreferredSize(
               preferredSize: Size.fromHeight(70),
               child: CustomAppBar(appBarTitle: 'Szczegóły zamówienia')),
-          body: Column(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Column(
-                      children: [
-                        const Text('Adres dostawy: '),
-                        const SizedBox(height: 15.0,),
-                        Text(deliveryAddress, style: const TextStyle(fontSize: 20.0),),
-                        const SizedBox(height: 20.0,),
-                        const Text('Zamówione produkty: '),
-                        const SizedBox(height: 20.0,),
-                        SizedBox(
-                          width: 300,
-                          height: 160,
-                          child: ListView.builder(
-                              itemCount: order.orderedProducts.length,
-                              itemExtent: 70.0,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Card(
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: Text(order.orderedProducts[index], style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))),
-                                );
-                              }),
-                        ),
-                        const Text('Całkowity koszt zamówienia:'),
-                        const SizedBox(height: 20.0,),
-                        Text('${order.orderPrice} PLN', style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
-                        const SizedBox(height: 20.0,),
-                        const Text('Data i numer zamówienia:'),
-                        const SizedBox(height: 20.0,),
-                        Text('${order.orderTime.substring(0, 10)}, nr.${order.orderNumber}',
-                            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 20.0,),
-                        const Text('Rodzaj płatności:'),
-                        const SizedBox(height: 20.0,),
-                        Text(order.paymentMethod == 'cash' ? 'Gotówka' : order.paymentMethod == "blik" ? 'Blik na telefon' : order.paymentMethod == "voucher" ? 'Voucher' :'Przelew',
-                            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 20.0,),
-                        const Text('Status zamówienia:'),
-                        const SizedBox(height: 20.0,),
-                        Text(order.orderStatus, style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          body: Center(
+                child: Column(
+                  children: [
+                    Expanded(flex:2, child: deliveryDestination(deliveryAddress)),
+                    Expanded(flex:2, child: listOfOrderedProducts(order)),
+                    Expanded(flex:1, child: orderCost(order)),
+                    Expanded(flex:1, child: dateNumberOfDelivery(order)),
+                    Expanded(flex:1, child: paymentMethod(order)),
+                    Expanded(flex:1, child: orderStatus(order)),
 
-                      ],
-                    ),
-                  ))
-            ],
-          ),
+                  ],
+                ),
+              )
         );
+  }
+
+  Column deliveryDestination(String deliveryAddress) {
+    return Column(children: [
+                    const Text('Adres dostawy: '),
+                    const SizedBox(height: 15.0,),
+                    Text(deliveryAddress, style: const TextStyle(fontSize: 20.0),),
+                  ],);
+  }
+
+  Column listOfOrderedProducts(UserOrderModel order) {
+    return Column(children: [
+                    const Text('Zamówione produkty: '),
+                    const SizedBox(height: 20.0,),
+                    SizedBox(
+                      width: 300,
+                      height: 160,
+                      child: ListView.separated(
+                          itemCount: order.orderedProducts.length,
+                          // itemExtent: 70.0,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Card(
+                              elevation: 0,
+                              // color: Colors.white,
+                              child: Center(
+                                  child: Text(order.orderedProducts[index], style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))),
+                            );
+                          }, separatorBuilder: (BuildContext context, int index) { return
+                        const Divider(endIndent: 20.0, indent: 20.0, color: Colors.black, thickness: 0.5,);  },),
+                    ),
+                  ],);
+  }
+
+  Column orderCost(UserOrderModel order) {
+    return Column(children: [
+                    const Text('Całkowity koszt zamówienia:'),
+                    const SizedBox(height: 20.0,),
+                    Text('${order.orderPrice} PLN', style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
+                  ],);
+  }
+
+  Column dateNumberOfDelivery(UserOrderModel order) {
+    return Column(
+                    children: [
+                      const Text('Data i numer zamówienia:'),
+                      const SizedBox(height: 20.0,),
+                      Text('${order.orderTime.substring(0, 10)}, nr.${order.orderNumber}',
+                          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                    ],
+                  );
+  }
+
+  Column paymentMethod(UserOrderModel order) {
+    return Column(
+                    children: [
+                      const Text('Rodzaj płatności:'),
+                      const SizedBox(height: 20.0,),
+                      Text(order.paymentMethod == 'cash' ? 'Gotówka' : order.paymentMethod == "blik" ? 'Blik na telefon' : order.paymentMethod == "voucher" ? 'Voucher' :'Przelew',
+                          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                    ],
+                  );
+  }
+
+  Column orderStatus(UserOrderModel order) {
+    return Column(
+                    children: [
+                      const Text('Status zamówienia:'),
+                      const SizedBox(height: 20.0,),
+                      Text(order.orderStatus, style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                    ],
+                  );
   }
 }
 
-class OrderModificationWidget extends StatelessWidget {
+class AdminOrderModification extends StatelessWidget {
   final OrderController controller;
   final UserOrderModel order;
   final ModifyUserController modifyUserController;
 
-  const OrderModificationWidget({
+  const AdminOrderModification({
     required this.modifyUserController,
     required this.controller,
     required this.order,
@@ -96,10 +130,6 @@ class OrderModificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // OrderController orderController = Get.find();
-    // ModifyUserController modifyUserController = Get.find();
-
     return SizedBox(
       height: 100,
       child: order.orderStatus == 'Gotowe' ?

@@ -27,196 +27,222 @@ class OrderPage extends GetView<OrderController> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
-                children: [
-                  SizedBox(width: 20.0,),
-                  Text('Adres dostawy : '),
-                ],
-              ),
-              const SizedBox(height: 20.0,),
-              Center(
-                child: SizedBox(
-                  height: 120.0,
-                  width: 400,
-                  child: Card(
-                    color: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Obx(() {
-                              return Text(controller.deliveryData.value, style: TextStyle(fontSize: 17.0),);
-                            }),
-                          ],
-                        ),
-                        Text('Zmień'),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20.0,),
-              const Row(
-                children: [
-                  SizedBox(width: 20.0,),
-                  Text('Wybierz metodę płatności: '),
-                ],
-              ),
-              const SizedBox(height: 20.0,),
-              Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CustomOrderWidget(
-                      key: const Key('cash'),
-                      text1: 'Gotówka',
-                      text2: '',
-                      icon: Icon(Icons.money,
-                          size: controller.paymentMethod.value == 'cash' ? 50 : 30),
-                      size: 120.0,),
-                    CustomOrderWidget(
-                      key: const Key('blik'),
-                      text1: 'Blik',
-                      text2: '',
-                      icon: Icon(Icons.install_mobile,
-                        size: controller.paymentMethod.value == 'blik' ? 50 : 30,),
-                      size: 120.0,),
-                    CustomOrderWidget(
-                      key: const Key('bank_account'),
-                      text1: 'Przelew',
-                      text2: '',
-                      icon: Icon(Icons.payments_rounded,
-                        size: controller.paymentMethod.value == 'bank_account' ? 50 : 30,),
-                      size: 100,),
-                     isVoucher ? const SizedBox(): CustomOrderWidget(
-                      key: const Key('voucher'),
-                      text1: 'Voucher',
-                      text2: '',
-                      icon: Icon(Icons.card_giftcard,
-                        size: controller.paymentMethod.value == 'voucher' ? 50 : 30,),
-                      size: 110.0,),
-                  ],
-                );
-              }),
-              const SizedBox(height: 20.0,),
-              const Row(
-                children: [
-                  SizedBox(width: 20.0,),
-                  Text('Dostawa: '),
-                ],
-              ),
-              const SizedBox(height: 20.0,),
-              isVoucher? const Center(child: Text('Dostawa elektroniczna')) : Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CustomOrderWidget(
-                      key: const Key('courier'),
-                      text1: 'Kurier',
-                      text2: '$COURIER_COST PLN',
-                      icon: Icon(Icons.drive_eta_outlined,
-                        size: controller.deliveryMethod.value == 'courier' ? 60 : 30,),
-                      size: 120.0,),
-                    CustomOrderWidget(
-                        key: Key('own_transport'),
-                        text1: 'Odbiór własny',
-                        text2: '0 PLN',
-                        icon: Icon(Icons.handshake_outlined,
-                          size: controller.deliveryMethod.value == 'own_transport' ? 60 : 30,),
-                        size: 120.0),
-
-                  ],
-                );
-              }),
-              const SizedBox(height: 30.0,),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // const SizedBox(width: 20.0,),
-                        const Text('Koszt zamówienia'),
-                        Text(controller.orderValue.value.toStringAsFixed(2), style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // const SizedBox(width: 20.0,),
-                        const Text('Koszt dostawy'),
-                        Obx(() {
-                          return Text(controller.deliveryCost.value.toStringAsFixed(2),
-                              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700));
-                        }),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0, left: 25.0, right: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // const SizedBox(width: 20.0,),
-                        const Text('Całkowity koszt'),
-                        Obx(() {
-                          return Text(controller.totalValue.value.toStringAsFixed(2),
-                            style: const TextStyle(color: Colors.red, fontSize: 18.0, fontWeight: FontWeight.w700),);
-                        }),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20.0,),
-                  CupertinoButton(
-                    color: Colors.black,
-                      onPressed: () async{
-                    ModifyUserController modifyUserController = Get.find();
-                    if(controller.paymentMethod.value == 'voucher'){
-                      await controller.createNewOrder();
-                      userDataController.voucherValue.value -= controller.totalValue.value;
-                      await modifyUserController.modifyUserValue(
-                          userID: userDataController.userData.userID,
-                          value: userDataController.voucherValue.value,
-                          valueID: 'voucherValue');
-
-                    }else{
-                      await controller.createNewOrder();
-                    }
-                    if(userDataController.bonusPointsValue.value == 7){
-                      userDataController.freeProducts.value += 1;
-                      userDataController.bonusPointsValue.value = 0;
-                        await modifyUserController.modifyUserValue(
-                        userID: userDataController.userData.userID,
-                        valueID: 'userBonusPoints',
-                        value: userDataController.bonusPointsValue.value,
-                      );
-                        modifyUserController.modifyUserValue(
-                        userID: userDataController.userData.userID,
-                        valueID: 'productsForFree',
-                        value: userDataController.freeProducts.value,
-                      );
-                    }else{
-                      userDataController.bonusPointsValue.value += 1;
-                      modifyUserController.modifyUserValue(
-                          userID: userDataController.userData.userID,
-                          valueID: 'userBonusPoints',
-                          value: userDataController.bonusPointsValue.value
-                      );
-                    }
-                    Get.toNamed('/start_page');
-                  }, child: const Text('Zamawiam')),
-                ],
-              ),
+              Expanded(flex: 1, child: deliveryAddress()),
+              Expanded(flex:1, child: paymentMethod(isVoucher)),
+              Expanded(flex:1, child: deliveryMethod(isVoucher)),
+              Expanded(flex:1, child: orderSummary(userDataController)),
 
             ],
           ),
     );
+  }
+
+  Column orderSummary(UserDataController userDataController) {
+    return Column(
+              children: [
+                // const SizedBox(height: 30.0,),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // const SizedBox(width: 20.0,),
+                      const Text('Koszt zamówienia'),
+                      Text(controller.orderValue.value.toStringAsFixed(2), style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0, left: 25.0, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // const SizedBox(width: 20.0,),
+                      const Text('Koszt dostawy'),
+                      Obx(() {
+                        return Text(controller.deliveryCost.value.toStringAsFixed(2),
+                            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700));
+                      }),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0, left: 25.0, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // const SizedBox(width: 20.0,),
+                      const Text('Całkowity koszt'),
+                      Obx(() {
+                        return Text(controller.totalValue.value.toStringAsFixed(2),
+                          style: const TextStyle(color: Colors.red, fontSize: 18.0, fontWeight: FontWeight.w700),);
+                      }),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10.0,),
+                CupertinoButton(
+                  color: Colors.black,
+                    onPressed: () async{
+                  ModifyUserController modifyUserController = Get.find();
+                  if(controller.paymentMethod.value == 'voucher'){
+                    await controller.createNewOrder();
+                    userDataController.voucherValue.value -= controller.totalValue.value;
+                    await modifyUserController.modifyUserValue(
+                        userID: userDataController.userData.userID,
+                        value: userDataController.voucherValue.value,
+                        valueID: 'voucherValue');
+
+                  }else{
+                    await controller.createNewOrder();
+                  }
+                  if(userDataController.bonusPointsValue.value == 7){
+                    userDataController.freeProducts.value += 1;
+                    userDataController.bonusPointsValue.value = 0;
+                      await modifyUserController.modifyUserValue(
+                      userID: userDataController.userData.userID,
+                      valueID: 'userBonusPoints',
+                      value: userDataController.bonusPointsValue.value,
+                    );
+                      modifyUserController.modifyUserValue(
+                      userID: userDataController.userData.userID,
+                      valueID: 'productsForFree',
+                      value: userDataController.freeProducts.value,
+                    );
+                  }else{
+                    userDataController.bonusPointsValue.value += 1;
+                    modifyUserController.modifyUserValue(
+                        userID: userDataController.userData.userID,
+                        valueID: 'userBonusPoints',
+                        value: userDataController.bonusPointsValue.value
+                    );
+                  }
+                  Get.toNamed('/start_page');
+                }, child: const Text('Zamawiam')),
+              ],
+            );
+  }
+
+  Column deliveryMethod(bool isVoucher) {
+    return Column(
+              children: [
+                const Row(
+                  children: [
+                    SizedBox(width: 20.0,),
+                    Text('Dostawa: '),
+                  ],
+                ),
+                const SizedBox(height: 20.0,),
+                isVoucher? const Center(child: Text('Dostawa elektroniczna')) : Obx(() {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomOrderWidget(
+                        key: const Key('courier'),
+                        text1: 'Kurier',
+                        text2: '$COURIER_COST PLN',
+                        icon: Icon(Icons.drive_eta_outlined,
+                          size: controller.deliveryMethod.value == 'courier' ? 60 : 30,),
+                        size: 120.0,),
+                      CustomOrderWidget(
+                          key: Key('own_transport'),
+                          text1: 'Odbiór własny',
+                          text2: '0 PLN',
+                          icon: Icon(Icons.handshake_outlined,
+                            size: controller.deliveryMethod.value == 'own_transport' ? 60 : 30,),
+                          size: 120.0),
+
+                    ],
+                  );
+                }),
+              ],
+            );
+  }
+
+  Column paymentMethod(bool isVoucher) {
+    return Column(
+              children: [
+                const Row(
+                  children: [
+                    SizedBox(width: 20.0,),
+                    Text('Wybierz metodę płatności: '),
+                  ],
+                ),
+                const SizedBox(height: 20.0,),
+                Obx(() {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomOrderWidget(
+                        key: const Key('cash'),
+                        text1: 'Gotówka',
+                        text2: '',
+                        icon: Icon(Icons.money,
+                            size: controller.paymentMethod.value == 'cash' ? 50 : 30),
+                        size: 120.0,),
+                      CustomOrderWidget(
+                        key: const Key('blik'),
+                        text1: 'Blik',
+                        text2: '',
+                        icon: Icon(Icons.install_mobile,
+                          size: controller.paymentMethod.value == 'blik' ? 50 : 30,),
+                        size: 120.0,),
+                      CustomOrderWidget(
+                        key: const Key('bank_account'),
+                        text1: 'Przelew',
+                        text2: '',
+                        icon: Icon(Icons.payments_rounded,
+                          size: controller.paymentMethod.value == 'bank_account' ? 50 : 30,),
+                        size: 100,),
+                      isVoucher ? const SizedBox(): CustomOrderWidget(
+                        key: const Key('voucher'),
+                        text1: 'Voucher',
+                        text2: '',
+                        icon: Icon(Icons.card_giftcard,
+                          size: controller.paymentMethod.value == 'voucher' ? 50 : 30,),
+                        size: 110.0,),
+                    ],
+                  );
+                }),
+              ],
+            );
+  }
+
+  Column deliveryAddress() {
+    return Column(
+              children: [
+                const Row(
+                  children: [
+                    SizedBox(width: 20.0,),
+                    Text('Adres dostawy : '),
+                  ],
+                ),
+                const SizedBox(height: 20.0,),
+                Center(
+                  child: SizedBox(
+                    height: 120.0,
+                    width: 400,
+                    child: Card(
+                      color: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Obx(() {
+                                return Text(controller.deliveryData.value, style: TextStyle(fontSize: 17.0),);
+                              }),
+                            ],
+                          ),
+                          Text('Zmień'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
   }
 }
 

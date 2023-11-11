@@ -59,11 +59,13 @@ class CreateUserController extends GetxController{
     userPasswordTextField.text.length >= 6 &&
     userNameTextField.text.trim() != '' &&
     userMobilePhoneTextField.text.trim() != '' &&
+    userMobilePhoneTextField.text.trim().contains('+48') &&
     userAddressTextField.text.trim() != '' &&
     userPostalCodeTextField.text.trim() != '' &&
     userSurnameTextField.text.trim() != '' &&
     userCityTextField.text.trim() != '' &&
-    userEmailTextField.text.trim() != ''
+    userEmailTextField.text.trim() != '' &&
+    userEmailTextField.text.trim().contains('@')
     ){
       activateRegistrationButton.value = true;
     }else{

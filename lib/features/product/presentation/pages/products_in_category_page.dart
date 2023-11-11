@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/classes/string_to_image.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
@@ -34,10 +33,8 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                 if(snapshot.hasData){
                   if(snapshot.data.length > 0){
                     return GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio:0.9,
-                          crossAxisCount: 2),
-                        // itemExtent: 180,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: Get.width/(Get.height / 1.8), crossAxisCount: 2),
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index){
                           Product product = snapshot.data[index];
@@ -50,72 +47,12 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                               alignment: Alignment.center,
                               children: [
                                 Card(
+                                  // color: Colors.black,
                                   elevation: 0,
-                                  child: Column(
-                                    children: [
-                                      product.productGallery.isNotEmpty?
-                                      AspectRatio(
-                                        aspectRatio: 1,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              fit: BoxFit.fitHeight,
-                                                image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
-                                              borderRadius: BorderRadius.circular(5.0),
-                                              color: Colors.white
-                                          ),
-                                          width: double.infinity/2,
-                                        ),
-                                      ) : const AspectRatio(
-                                        aspectRatio: 1,
-                                        child: SizedBox(
-                                          width: double.infinity/2,
-                                          child: Center(child:Text('Brak zdjęcia')),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      Center(child:Text(product.productName.toUpperCase(),
-                                        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),
-                                    ],
-                                  ),
+                                  child: productView(product),
                                 ),
                                 userDataController.userData.isAdmin == true?
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(onPressed: () async{
-                                      await Get.defaultDialog(
-                                        title: 'Uwaga',
-                                        content: Column(
-                                          children: [
-                                            const Text('Czy na pewno chcesz usunąć ten produkt ?'),
-                                            const SizedBox(height: 30.0,),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                              CupertinoButton(child: const Text('Usuń'), onPressed: () async{
-                                                Get.back();
-                                                await controller.deleteProduct(productID: product.productID);
-
-                                              }),
-                                                CupertinoButton(child: const Text('Anuluj'), onPressed: (){
-                                                  Get.back();
-                                                })
-                                            ],),
-                                          ],
-                                        ),
-                                      );
-
-
-                                    }, icon: const Icon(Icons.delete, size: 55, color: Colors.blue,)),
-                                    IconButton(onPressed: () async{
-                                      await controller.setEditProductData(product: product);
-                                      Get.toNamed('/create_product_page');
-                                    }, icon: const Icon(Icons.edit, size: 55, color: Colors.blue,)),
-                                  ],
-                                ) : const SizedBox(),
+                                adminInterface(product) : const SizedBox(),
                               ],
                             ),
                           );
@@ -129,5 +66,72 @@ class ProductsInCategoryPage extends GetView<ProductController> {
 
               }),
         );
+  }
+
+  Row adminInterface(Product product) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(onPressed: () async{
+            await Get.defaultDialog(
+              title: 'Uwaga',
+              content: Column(
+                children: [
+                  const Text('Czy na pewno chcesz usunąć ten produkt ?'),
+                  const SizedBox(height: 30.0,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    CupertinoButton(child: const Text('Usuń'), onPressed: () async{
+                      Get.back();
+                      await controller.deleteProduct(productID: product.productID);
+
+                    }),
+                      CupertinoButton(child: const Text('Anuluj'), onPressed: (){
+                        Get.back();
+                      })
+                  ],),
+                ],
+              ),
+            );
+          }, icon: const Icon(Icons.delete, size: 55, color: Colors.blue,)),
+          IconButton(onPressed: () async{
+            await controller.setEditProductData(product: product);
+            Get.toNamed('/create_product_page');
+          }, icon: const Icon(Icons.edit, size: 55, color: Colors.blue,)),
+        ],
+      );
+  }
+
+  Column productView (Product product) {
+    return Column(
+        children: [
+          product.productGallery.isNotEmpty?
+          AspectRatio(
+            aspectRatio: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                    image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: Colors.white
+              ),
+              width: double.infinity/2,
+            ),
+          ) : const AspectRatio(
+            aspectRatio: 1,
+            child: SizedBox(
+              width: double.infinity/2,
+              child: Center(child:Text('Brak zdjęcia')),
+            ),
+          ),
+          const SizedBox(
+            height: 5.0,
+          ),
+          Center(child:Text(product.productName.toUpperCase(),
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),
+        ],
+      );
   }
 }
