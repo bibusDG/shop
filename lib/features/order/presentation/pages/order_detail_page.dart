@@ -43,7 +43,7 @@ class OrderDetailPage extends GetView<OrderController> {
               )
         );
   }
-
+///method responsible for delivery adress view
   Column deliveryDestination(String deliveryAddress) {
     return Column(children: [
                     const Text('Adres dostawy: '),
@@ -51,7 +51,7 @@ class OrderDetailPage extends GetView<OrderController> {
                     Text(deliveryAddress, style: const TextStyle(fontSize: 20.0),),
                   ],);
   }
-
+///method responsible for list of orders view
   Column listOfOrderedProducts(UserOrderModel order) {
     return Column(children: [
                     const Text('Zamówione produkty: '),
@@ -74,7 +74,7 @@ class OrderDetailPage extends GetView<OrderController> {
                     ),
                   ],);
   }
-
+///method responsible for total order cost view
   Column orderCost(UserOrderModel order) {
     return Column(children: [
                     const Text('Całkowity koszt zamówienia:'),
@@ -82,7 +82,7 @@ class OrderDetailPage extends GetView<OrderController> {
                     Text('${order.orderPrice} PLN', style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
                   ],);
   }
-
+///method responsible for order data (date, order number) view
   Column dateNumberOfDelivery(UserOrderModel order) {
     return Column(
                     children: [
@@ -93,7 +93,7 @@ class OrderDetailPage extends GetView<OrderController> {
                     ],
                   );
   }
-
+///method responsible for payment view
   Column paymentMethod(UserOrderModel order) {
     return Column(
                     children: [
@@ -104,7 +104,7 @@ class OrderDetailPage extends GetView<OrderController> {
                     ],
                   );
   }
-
+///method responsible for order status
   Column orderStatus(UserOrderModel order) {
     return Column(
                     children: [
@@ -115,7 +115,7 @@ class OrderDetailPage extends GetView<OrderController> {
                   );
   }
 }
-
+///class responsible for admin panel in order detail page (modification of order status)
 class AdminOrderModification extends StatelessWidget {
   final OrderController controller;
   final UserOrderModel order;

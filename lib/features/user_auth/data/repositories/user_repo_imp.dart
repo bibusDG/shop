@@ -23,6 +23,7 @@ class UserRepoImp implements  UserRepo{
     required int userBonusPoints,
     required double voucherValue,
     required int productsForFree,
+    required String mobileToken,
   }) async{
     try{
       final result = await userFirebaseDataSource.createUser(
@@ -38,7 +39,9 @@ class UserRepoImp implements  UserRepo{
           userPostalCode: userPostalCode,
           userAddress: userAddress,
           userBonusPoints: userBonusPoints,
-          isAdmin: isAdmin);
+          isAdmin: isAdmin,
+          mobileToken: mobileToken,
+      );
       return Right(result);
     }catch(error){
       return const Left(UserCreateFailure(failureMessage: 'Not able to create new user'));

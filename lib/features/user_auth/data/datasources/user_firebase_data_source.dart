@@ -20,6 +20,7 @@ abstract class UserFirebaseDataSource{
     required int userBonusPoints,
     required double voucherValue,
     required int productsForFree,
+    required String mobileToken,
 });
 
   Future<UserModel> loginUser({
@@ -74,6 +75,7 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
     required double voucherValue,
     required int userBonusPoints,
     required int productsForFree,
+    required String mobileToken,
   }) async{
       final addUser = await FirebaseFirestore.instance.collection('company').
       doc(COMPANY_NAME).collection('users').
@@ -90,7 +92,8 @@ class UserFirebaseDataSourceImp implements UserFirebaseDataSource{
           userPostalCode: userPostalCode,
           userBonusPoints: userBonusPoints,
           userAddress: userAddress,
-          productsForFree: productsForFree
+          productsForFree: productsForFree,
+          mobileToken: mobileToken,
       ).toJson());
       final userDocID = addUser.id;
       await FirebaseFirestore.instance.collection('company').

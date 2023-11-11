@@ -71,7 +71,7 @@ class AllOrdersPage extends GetView<OrderController> {
 
   }
 }
-
+///class responsible for order status view
 class OrderStatusWidget extends StatelessWidget {
   final UserOrderModel order;
   const OrderStatusWidget({

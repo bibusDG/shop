@@ -33,6 +33,7 @@ void main() {
         userAddress: any(named: 'userAddress'),
         userBonusPoints: any(named: 'userBonusPoints'),
         isAdmin: false,
+        mobileToken: any(named: 'mobileToken'),
     )).thenAnswer((_) async => const Right(null));
 
     //Act
@@ -53,7 +54,9 @@ void main() {
         userPostalCode: params.userPostalCode,
         userAddress: params.userAddress,
         userBonusPoints: params.userBonusPoints,
-        isAdmin: params.isAdmin)).called(1);
+        isAdmin: params.isAdmin,
+        mobileToken: params.mobileToken,
+    )).called(1);
     verifyNoMoreInteractions(repo);
   });
 }

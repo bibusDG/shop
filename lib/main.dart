@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/bindings/basket_bindings.dart';
 import 'package:shop/core/bindings/modify_user_bindings.dart';
+import 'package:shop/core/bindings/notification_bindings.dart';
 import 'package:shop/core/bindings/order_bindings.dart';
 import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
@@ -24,11 +26,26 @@ import 'features/order/presentation/pages/order_page.dart';
 import 'features/product/presentation/pages/product_details_page.dart';
 import 'features/user_auth/presentation/pages/login_page.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  ///firebase messaging
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+ ///
   runApp(const Shop());
 }
 
@@ -52,7 +69,7 @@ class Shop extends StatelessWidget {
       ),
       initialRoute: '/start_page',
       getPages: [
-        GetPage(name: '/login_page', page: () => const LoginPage()),
+        GetPage(name: '/login_page', page: () => const LoginPage(), binding: NotificationBindings()),
         GetPage(name:'/product_category', page :() => const ProductCategoryPage(), bindings: [ProductCategoryBindings(), ProductBindings()]),
         GetPage(name: '/start_page', page: () => const StartPage(), bindings: [BasketBindings(), UserBindings(), ModifyUserBindings()]),
         GetPage(name: '/registration_page', page: () => const RegistrationPage()),
@@ -74,4 +91,5 @@ class Shop extends StatelessWidget {
     );
   }
 }
+
 

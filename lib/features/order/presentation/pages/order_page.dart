@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-import 'package:shop/core/classes/sms_class.dart';
 import 'package:shop/core/constants/constants.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
@@ -36,7 +34,7 @@ class OrderPage extends GetView<OrderController> {
           ),
     );
   }
-
+///method responsible for order summary view
   Column orderSummary(UserDataController userDataController) {
     return Column(
               children: [
@@ -122,7 +120,7 @@ class OrderPage extends GetView<OrderController> {
               ],
             );
   }
-
+///method responsible for delivery method view
   Column deliveryMethod(bool isVoucher) {
     return Column(
               children: [
@@ -158,7 +156,7 @@ class OrderPage extends GetView<OrderController> {
               ],
             );
   }
-
+///method responsible for payment method
   Column paymentMethod(bool isVoucher) {
     return Column(
               children: [
@@ -207,7 +205,7 @@ class OrderPage extends GetView<OrderController> {
               ],
             );
   }
-
+///method responsible for delivery address vies
   Column deliveryAddress() {
     return Column(
               children: [
@@ -245,7 +243,7 @@ class OrderPage extends GetView<OrderController> {
             );
   }
 }
-
+///widget/class responsible for payment and delivery icons on order page
 class CustomOrderWidget extends StatelessWidget {
   final String text1;
   final String text2;

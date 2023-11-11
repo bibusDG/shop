@@ -14,6 +14,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
   @override
   Widget build(BuildContext context) {
 
+    ///find userDataController
     UserDataController userDataController = Get.find();
     
 
@@ -67,7 +68,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
               }),
         );
   }
-
+///method responsible for admin panel control in products
   Row adminInterface(Product product) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +103,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
         ],
       );
   }
-
+///method responsible for product view in scaffold
   Column productView (Product product) {
     return Column(
         children: [

@@ -16,6 +16,7 @@ const EMPTY_USER = User(
     isAdmin: false,
     voucherValue: 0,
     productsForFree: 0,
+    mobileToken: '',
 );
 
 const double COURIER_COST = 20;

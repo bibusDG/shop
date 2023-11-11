@@ -35,6 +35,7 @@ void main() {
     const int userBonusPoints = 0;
     const double voucherValue = 0.0;
     const int productsForFree = 0;
+    const String mobileToken = 'mobileToken';
     
     test('should call [UserFirebaseDataSource.createUser] and finish successfuly', () async{
       when(()=>userFirebaseDataSource.createUser(
@@ -50,6 +51,7 @@ void main() {
           userPostalCode: any(named: 'userPostalCode'),
           userAddress: any(named: 'userAddress'),
           userBonusPoints: any(named: 'userBonusPoints'),
+          mobileToken: any(named: 'mobileToken'),
           isAdmin: false,)).thenAnswer((_) async => Future.value());
 
       final result = await userRepoImp.createNewUser(
@@ -65,7 +67,9 @@ void main() {
           userPostalCode: userPostalCode,
           userAddress: userAddress,
           userBonusPoints: userBonusPoints,
-          isAdmin: isAdmin);
+          isAdmin: isAdmin,
+          mobileToken: mobileToken,
+      );
 
       expect(result, equals(const Right(null)));
       verify(()=>userFirebaseDataSource.createUser(
@@ -81,7 +85,9 @@ void main() {
           userPostalCode: userPostalCode,
           userAddress: userAddress,
           userBonusPoints: userBonusPoints,
-          isAdmin: isAdmin)).called(1);
+          isAdmin: isAdmin,
+          mobileToken: mobileToken,
+      )).called(1);
       verifyNoMoreInteractions(userFirebaseDataSource);
 
     });
@@ -102,6 +108,7 @@ void main() {
         userPostalCode: any(named: 'userPostalCode'),
         userAddress: any(named: 'userAddress'),
         userBonusPoints: any(named: 'userBonusPoints'),
+        mobileToken: any(named: 'mobileToken'),
         isAdmin: false,)).thenThrow(createFailureMessage);
 
       final result = await userRepoImp.createNewUser(
@@ -117,7 +124,9 @@ void main() {
           userPostalCode: userPostalCode,
           userAddress: userAddress,
           userBonusPoints: userBonusPoints,
-          isAdmin: isAdmin);
+          isAdmin: isAdmin,
+          mobileToken: mobileToken,
+      );
       
       expect(result, equals(Left(UserCreateFailure(failureMessage: createFailureMessage.failureMessage))));
     });

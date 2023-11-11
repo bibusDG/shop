@@ -14,6 +14,7 @@ class User extends Equatable{
   final int userBonusPoints;
   final double voucherValue;
   final int productsForFree;
+  final String mobileToken;
 
   const User({
     required this.userID,
@@ -29,6 +30,7 @@ class User extends Equatable{
     required this.userBonusPoints,
     required this.voucherValue,
     required this.productsForFree,
+    required this.mobileToken,
 });
 
   const User.empty() : this(
@@ -45,6 +47,7 @@ class User extends Equatable{
     userBonusPoints: 0,
     voucherValue: 0.0,
     productsForFree: 0,
+    mobileToken: 'mobileToken'
   );
 
   @override

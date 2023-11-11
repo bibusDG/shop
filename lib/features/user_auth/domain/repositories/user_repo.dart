@@ -20,6 +20,7 @@ abstract class UserRepo {
     required int userBonusPoints,
     required double voucherValue,
     required int productsForFree,
+    required String mobileToken,
 });
 
   Future<Either<Failure, void>> deleteUser({

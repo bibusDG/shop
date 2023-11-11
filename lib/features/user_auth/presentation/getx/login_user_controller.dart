@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shop/features/notifications/presentation/getx/user_notification_controller.dart';
 import 'package:shop/features/user_auth/domain/usecases/user_login_usecase.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
@@ -14,6 +15,7 @@ class LoginUserController extends GetxController{
 
   Future<User> loginUser() async{
     UserDataController userDataController = Get.find();
+    UserNotificationController userNotificationController = Get.find();
     final userData = await loginUserUseCase(
         LoginParams(
             userPassword: loginPasswordTextInput.text,
@@ -26,6 +28,7 @@ class LoginUserController extends GetxController{
       userDataController.voucherValue.value = user.voucherValue;
       userDataController.bonusPointsValue.value = user.userBonusPoints;
       userDataController.freeProducts.value = user.productsForFree;
+      await userNotificationController.updateMobileToken(userID: user.userID);
       Get.back();
       return Get.snackbar('Witaj ${userDataController.userData.userName}', 'Logowanie pomyślne');
     });
