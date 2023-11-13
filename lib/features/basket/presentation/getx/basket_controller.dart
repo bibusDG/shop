@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shop/features/basket/domain/usecases/add_product_to_basket_usecase.dart';
 import 'package:shop/features/basket/domain/usecases/remove_product_from_basket_usecase.dart';
-import 'package:shop/features/product/presentation/getx/product_controller.dart';
-import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
 import '../../../product/domain/entities/product.dart';
 import '../../domain/entities/basket.dart';
