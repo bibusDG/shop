@@ -18,7 +18,7 @@ class OrderPage extends GetView<OrderController> {
 
     UserDataController userDataController = Get.find();
     BasketController basketController = Get.find();
-    bool? isVoucher = basketController.listOfProducts.values.elementAt(0).productName.contains('Voucher');
+    // bool? isVoucher = basketController.listOfProducts.values.elementAt(0).productName.contains('Voucher');
 
 
     return Scaffold(
@@ -27,13 +27,14 @@ class OrderPage extends GetView<OrderController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(flex: 1, child: deliveryAddress()),
-              Expanded(flex:1, child: paymentMethod(isVoucher)),
-              Expanded(flex:1, child: deliveryMethod(isVoucher)),
+              Expanded(flex:1, child: paymentMethod(basketController.voucherInBasket)),
+              Expanded(flex:1, child: deliveryMethod(basketController.voucherInBasket)),
               Expanded(flex:1, child: orderSummary(userDataController)),
 
             ],
           ),
     );
+
   }
 ///method responsible for order summary view
   Column orderSummary(UserDataController userDataController) {
@@ -116,15 +117,22 @@ class OrderPage extends GetView<OrderController> {
                         value: userDataController.bonusPointsValue.value
                     );
                   }
-                  Get.toNamed('/start_page');
                   OrderController orderController = Get.find();
-
-                  NotificationText(
+                  ///send notification to user about next steps
+                  await NotificationText(
                     orderValue: orderController.orderValue.value.toString(),
                     mobileToken: userDataController.userData.mobileToken,
                     orderNumber: orderController.orderNumber,
                     paymentMethod: orderController.paymentMethod.value,
                   ).sendNotificationInfoAboutOrder();
+                  ///send notification to admin about new order
+                  await NotificationText(
+                    mobileToken: '',
+                    orderNumber: orderController.orderNumber,
+                    orderValue: orderController.orderValue.value.toString()
+                  ).sendNotificationToAdmin();
+
+                  Get.toNamed('/start_page');
 
                 }, child: const Text('Zamawiam')),
               ],

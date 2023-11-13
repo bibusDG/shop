@@ -12,6 +12,7 @@ class UserNotificationController extends GetxController{
     required this.sendNotificationUseCase,
   });
 
+  ///update user mobile token when login
   Future<void> updateMobileToken({userID}) async{
     final String? token = await FirebaseMessaging.instance.getToken();
     final result = await updateUserTokenUseCase(TokenParams(
@@ -24,6 +25,7 @@ class UserNotificationController extends GetxController{
     });
   }
 
+  ///send notification to user
   Future<void> sendNotificationToUser({mobileToken, notificationTopic, notificationText}) async{
 
     final result = await sendNotificationUseCase(
@@ -39,6 +41,7 @@ class UserNotificationController extends GetxController{
 
   }
 
+  ///send notification to admin
   Future<void> sendNotificationToAdmin({mobileToken, notificationTopic, notificationText}) async{
 
     final result = await sendNotificationUseCase(

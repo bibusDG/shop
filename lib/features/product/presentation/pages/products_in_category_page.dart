@@ -35,7 +35,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                   if(snapshot.data.length > 0){
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: Get.width/(Get.height / 1.8), crossAxisCount: 2),
+                          childAspectRatio: Get.width/((Get.height) / 1.6), crossAxisCount: 2),
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index){
                           Product product = snapshot.data[index];
@@ -128,7 +128,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
             ),
           ),
           const SizedBox(
-            height: 5.0,
+            height: 15.0,
           ),
           Center(child:Text(product.productName.toUpperCase(),
             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),

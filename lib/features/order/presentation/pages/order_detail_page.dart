@@ -66,8 +66,7 @@ class OrderDetailPage extends GetView<OrderController> {
                     const Text('Zamówione produkty: '),
                     const SizedBox(height: 20.0,),
                     SizedBox(
-                      width: 300,
-                      height: 160,
+                      height: 100,
                       child: ListView.separated(
                           itemCount: order.orderedProducts.length,
                           // itemExtent: 70.0,
@@ -183,6 +182,7 @@ class AdminOrderModification extends StatelessWidget {
                 await controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
                 ///get token from user
                 String userToken = await getUserMobileToken();
+                ///send notification to user abour order status
                 NotificationText(
                     operationStatus: controller.orderStatus.value,
                     orderNumber: order.orderID,
@@ -192,7 +192,9 @@ class AdminOrderModification extends StatelessWidget {
 
               }else{
                 await controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
+                ///get user mobileToken
                 String userToken = await getUserMobileToken();
+                ///send notification about order status
                 NotificationText(
                     operationStatus: controller.orderStatus.value,
                     orderNumber: order.orderNumber,

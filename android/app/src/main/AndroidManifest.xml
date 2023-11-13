@@ -2,7 +2,7 @@
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <application
-        android:label="shop"
+        android:label="SUDCORP"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
