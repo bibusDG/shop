@@ -7,6 +7,7 @@ import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
+import '../../../../core/classes/notification_text.dart';
 import '../getx/order_controller.dart';
 
 class OrderPage extends GetView<OrderController> {
@@ -17,7 +18,7 @@ class OrderPage extends GetView<OrderController> {
 
     UserDataController userDataController = Get.find();
     BasketController basketController = Get.find();
-    bool isVoucher = basketController.listOfProducts.values.elementAt(0).productName.contains('Voucher');
+    bool? isVoucher = basketController.listOfProducts.values.elementAt(0).productName.contains('Voucher');
 
 
     return Scaffold(
@@ -116,6 +117,15 @@ class OrderPage extends GetView<OrderController> {
                     );
                   }
                   Get.toNamed('/start_page');
+                  OrderController orderController = Get.find();
+
+                  NotificationText(
+                    orderValue: orderController.orderValue.value.toString(),
+                    mobileToken: userDataController.userData.mobileToken,
+                    orderNumber: orderController.orderNumber,
+                    paymentMethod: orderController.paymentMethod.value,
+                  ).sendNotificationInfoAboutOrder();
+
                 }, child: const Text('Zamawiam')),
               ],
             );
@@ -307,4 +317,5 @@ class CustomOrderWidget extends StatelessWidget {
       ),
     );
   }
+
 }

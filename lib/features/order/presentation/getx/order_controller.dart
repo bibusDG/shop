@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:shop/core/classes/sms_class.dart';
+import 'package:shop/core/classes/notification_text.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
 import 'package:shop/features/order/domain/usecases/create_order_usecase.dart';
 import 'package:shop/features/order/domain/usecases/stream_order_usecase.dart';
@@ -89,14 +89,7 @@ class OrderController extends GetxController{
       basketController.finalPrice.value = 0.0;
 
       // return Get.snackbar('Udało się!', 'Zamówienie nr $orderNumber złożono pomyślnie');
-      return Get.defaultDialog(
-        title: 'Dziękujemy',
-        content: SizedBox(child: Text(SendSms(
-            paymentMethod: paymentMethod.value,
-            orderNumber: orderNumber,
-            orderValue: totalValue.value.toString(),
-            mobilePhoneNumber: '').sendInfoAboutOrder())),
-      );
+      return null;
     });
   }
 

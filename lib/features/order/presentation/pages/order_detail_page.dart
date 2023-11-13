@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/core/constants/constants.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
+import 'package:shop/features/notifications/presentation/getx/user_notification_controller.dart';
 import 'package:shop/features/order/data/models/user_order_model.dart';
 import 'package:shop/features/order/presentation/getx/order_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
-import '../../../../core/classes/sms_class.dart';
+import '../../../../core/classes/notification_text.dart';
 
 class OrderDetailPage extends GetView<OrderController> {
   const OrderDetailPage({Key? key}) : super(key: key);
@@ -17,6 +20,7 @@ class OrderDetailPage extends GetView<OrderController> {
 
     UserDataController userDataController = Get.find();
     ModifyUserController modifyUserController = Get.find();
+    UserNotificationController userNotificationController = Get.find();
 
     UserOrderModel order = Get.arguments;
     controller.orderStatus.value = order.orderStatus;
@@ -24,7 +28,12 @@ class OrderDetailPage extends GetView<OrderController> {
 
     return Scaffold(
           bottomSheet: userDataController.userData.isAdmin == true ?
-          AdminOrderModification(controller: controller, order: order, modifyUserController: modifyUserController,) : const SizedBox(),
+          AdminOrderModification(
+            controller: controller,
+            order: order,
+            modifyUserController: modifyUserController,
+            userNotificationController: userNotificationController,
+          ) : const SizedBox(),
           appBar: const PreferredSize(
               preferredSize: Size.fromHeight(70),
               child: CustomAppBar(appBarTitle: 'Szczegóły zamówienia')),
@@ -120,11 +129,13 @@ class AdminOrderModification extends StatelessWidget {
   final OrderController controller;
   final UserOrderModel order;
   final ModifyUserController modifyUserController;
+  final UserNotificationController userNotificationController;
 
   const AdminOrderModification({
     required this.modifyUserController,
     required this.controller,
     required this.order,
+    required this.userNotificationController,
     super.key,
   });
 
@@ -170,18 +181,23 @@ class AdminOrderModification extends StatelessWidget {
               if(order.orderedProducts[0].contains('Voucher')){
                 await modifyUserController.modifyUserValue(valueID: 'voucherValue', value: order.orderPrice, userID: order.userID);
                 await controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
-                await SendSms(
-                  orderNumber: order.orderNumber,
-                  mobilePhoneNumber: order.userMobile.removeAllWhitespace,
-                  operationStatus: controller.orderStatus.value,
-                ).sendSmsToUser();
+                ///get token from user
+                String userToken = await getUserMobileToken();
+                NotificationText(
+                    operationStatus: controller.orderStatus.value,
+                    orderNumber: order.orderID,
+                    mobileToken: userToken
+                ).sendNotificationToUser();
+                ///
+
               }else{
                 await controller.modifyOrderByAdmin(orderID: order.orderID, orderStatus: controller.orderStatus.value);
-                await SendSms(
-                  orderNumber: order.orderNumber,
-                  mobilePhoneNumber: order.userMobile.removeAllWhitespace,
-                  operationStatus: controller.orderStatus.value,
-                ).sendSmsToUser();
+                String userToken = await getUserMobileToken();
+                NotificationText(
+                    operationStatus: controller.orderStatus.value,
+                    orderNumber: order.orderNumber,
+                    mobileToken: userToken
+                ).sendNotificationToUser();
               }
 
             }),
@@ -190,4 +206,12 @@ class AdminOrderModification extends StatelessWidget {
       }),
     );
   }
+
+    getUserMobileToken() async{
+    final user = await FirebaseFirestore.instance.collection('company').
+    doc(COMPANY_NAME).collection('users').doc(order.userID).get();
+    Map<String, dynamic>? dd = user.data();
+    return dd!['mobileToken'];
+  }
+
 }
