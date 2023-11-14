@@ -35,7 +35,8 @@ class ProductsInCategoryPage extends GetView<ProductController> {
                   if(snapshot.data.length > 0){
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: Get.width/((Get.height) / 1.6), crossAxisCount: 2),
+                          childAspectRatio: 1,
+                          crossAxisCount: 2),
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index){
                           Product product = snapshot.data[index];
@@ -108,27 +109,24 @@ class ProductsInCategoryPage extends GetView<ProductController> {
     return Column(
         children: [
           product.productGallery.isNotEmpty?
-          AspectRatio(
-            aspectRatio: 1,
+          Expanded(
+            flex:1,
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                     image: const StringToImage().getSingleImage(image: product.productGallery[0]).image),
                   borderRadius: BorderRadius.circular(5.0),
                   color: Colors.white
               ),
               width: double.infinity/2,
             ),
-          ) : const AspectRatio(
-            aspectRatio: 1,
+          ) : const Expanded(
+            flex:1,
             child: SizedBox(
               width: double.infinity/2,
               child: Center(child:Text('Brak zdjęcia')),
             ),
-          ),
-          const SizedBox(
-            height: 15.0,
           ),
           Center(child:Text(product.productName.toUpperCase(),
             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),

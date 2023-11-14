@@ -28,9 +28,7 @@ class UserNotificationDataSourceImp implements UserNotificationDataSource{
     required String mobileToken,
     required String notificationText,
     required String notificationTopic}) async{
-    //
-    // https://fcm.googleapis.com/v1/projects/shop-da808/messages:send
-    // https://fcm.googleapis.com/fcm/send
+
     try {
     await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -41,7 +39,20 @@ class UserNotificationDataSourceImp implements UserNotificationDataSource{
       },
       body: jsonEncode(
         <String, dynamic>{
+          "apns": {
+            "payload": {
+              "aps": {
+                "alert": {
+                  "body": notificationText,
+                  "title": notificationTopic,
+                },
+                "badge" : 2,
+                "sound" : "default"
+              }
+            }
+          },
           'notification': <String, dynamic>{
+            'sound': "default",
             'body': notificationText,
             'title': notificationTopic,
           },

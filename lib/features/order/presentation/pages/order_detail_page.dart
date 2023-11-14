@@ -65,20 +65,21 @@ class OrderDetailPage extends GetView<OrderController> {
     return Column(children: [
                     const Text('Zamówione produkty: '),
                     const SizedBox(height: 20.0,),
-                    SizedBox(
-                      height: 100,
-                      child: ListView.separated(
-                          itemCount: order.orderedProducts.length,
-                          // itemExtent: 70.0,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                              elevation: 0,
-                              // color: Colors.white,
-                              child: Center(
-                                  child: Text(order.orderedProducts[index], style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))),
-                            );
-                          }, separatorBuilder: (BuildContext context, int index) { return
-                        const Divider(endIndent: 20.0, indent: 20.0, color: Colors.black, thickness: 0.5,);  },),
+                    Flexible(
+                      child: SizedBox(
+                        child: ListView.separated(
+                            itemCount: order.orderedProducts.length,
+                            // itemExtent: 70.0,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Card(
+                                elevation: 0,
+                                // color: Colors.white,
+                                child: Center(
+                                    child: Text(order.orderedProducts[index], style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))),
+                              );
+                            }, separatorBuilder: (BuildContext context, int index) { return
+                          const Divider(endIndent: 20.0, indent: 20.0, color: Colors.black, thickness: 0.5,);  },),
+                      ),
                     ),
                   ],);
   }

@@ -108,7 +108,6 @@ void loadFCM() async {
       importance: Importance.high,
       enableVibration: true,
     );
-
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     /// Create an Android Notification Channel.
