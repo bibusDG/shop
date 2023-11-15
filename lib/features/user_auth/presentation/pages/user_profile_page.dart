@@ -57,7 +57,7 @@ class UserProfilePage extends GetView<ModifyUserController> {
                               createUserController.registrationPage = false;
                               await Get.toNamed('/registration_page');
                             },
-                            child: const CircleAvatar(backgroundColor: Colors.black12, radius: 35, child: Text('Zmień'))),
+                            child: const Text('Zmień', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w700),)),
                         const SizedBox(width: 5.0,)
 
                       ],

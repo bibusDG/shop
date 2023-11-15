@@ -34,6 +34,7 @@ class OrderController extends GetxController{
   RxString deliveryData = ''.obs;
   List<String> listOfProducts = [];
   RxString orderStatus = ''.obs;
+  RxString finalAcceptedOrderStatus = ''.obs;
   String orderNumber = '';
 
 
