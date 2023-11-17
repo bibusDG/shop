@@ -52,11 +52,12 @@ class PaymentRepoImp implements PaymentRepo{
     required String merchantDisplayName}) async{
     try{
       var gPay = const PaymentSheetGooglePay(merchantCountryCode: 'PL', currencyCode: 'PLN', testEnv: true);
-      await Stripe.instance.initPaymentSheet(paymentSheetParameters: SetupPaymentSheetParameters(
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: clientSecretKey,
         style: ThemeMode.light,
         merchantDisplayName: merchantDisplayName,
-        googlePay: gPay
+        googlePay: gPay,
       )).then((value){});
       return const Right(null);
     }catch(error){

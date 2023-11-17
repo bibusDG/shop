@@ -36,8 +36,8 @@ class PaymentController extends GetxController{
 
   Future<void> displayPaymentSheet() async{
     final result = await displayPaymentSheetUseCase(const DisplaySheetParams(
-        failureText: 'OK',
-        successText: 'Payment failed'));
+        failureText: 'payment failed',
+        successText: 'OK'));
     result.fold((failed){}, (result){});
   }
 
