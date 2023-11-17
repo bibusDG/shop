@@ -1,6 +1,6 @@
 import 'package:shop/features/user_auth/domain/entities/user.dart';
 
-const COMPANY_NAME = 'sudol_coo';
+const COMPANY_NAME = 'mal0ry';
 
 const EMPTY_USER = User(
     userID: '',
