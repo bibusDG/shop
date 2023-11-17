@@ -3,14 +3,17 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/bindings/basket_bindings.dart';
 import 'package:shop/core/bindings/modify_user_bindings.dart';
 import 'package:shop/core/bindings/notification_bindings.dart';
 import 'package:shop/core/bindings/order_bindings.dart';
+import 'package:shop/core/bindings/payment_bindings.dart';
 import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
+import 'package:shop/core/constants/constants.dart';
 import 'package:shop/features/notifications/presentation/getx/user_notification_controller.dart';
 import 'package:shop/features/order/presentation/pages/allOrders_page.dart';
 import 'package:shop/features/order/presentation/pages/order_detail_page.dart';
@@ -37,6 +40,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = STRIPE_TEST_KEY;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -153,12 +157,12 @@ class Shop extends StatelessWidget {
       getPages: [
         GetPage(name: '/login_page', page: () => const LoginPage(), binding: NotificationBindings()),
         GetPage(name:'/product_category', page :() => const ProductCategoryPage(), bindings: [ProductCategoryBindings(), ProductBindings()]),
-        GetPage(name: '/start_page', page: () => const StartPage(), bindings: [BasketBindings(), UserBindings(), ModifyUserBindings()]),
+        GetPage(name: '/start_page', page: () => const StartPage(), bindings: [BasketBindings(), UserBindings(), ModifyUserBindings(), PaymentBindings()]),
         GetPage(name: '/registration_page', page: () => const RegistrationPage()),
         GetPage(name: '/products_in_category_page', page: ()=> const ProductsInCategoryPage(), binding: ProductBindings()),
         GetPage(name: '/product_details_page', page: () => const ProductDetailsPage(), binding: ProductBindings()),
         GetPage(name: '/basket_page', page: () => const BasketPage(), binding: OrderBindings()),
-        GetPage(name: '/order_page', page: () => const OrderPage(), binding: NotificationBindings()),
+        GetPage(name: '/order_page', page: () => const OrderPage(), bindings: [NotificationBindings(), PaymentBindings()]),
         GetPage(name: '/allOrders_page', page: () => const AllOrdersPage(), binding: OrderBindings()),
         GetPage(name: '/user_profile_page', page: () => const UserProfilePage(), binding: ModifyUserBindings()),
         GetPage(name: '/order_detail_page', page: () => const OrderDetailPage(), bindings: [ModifyUserBindings(), NotificationBindings()]),
