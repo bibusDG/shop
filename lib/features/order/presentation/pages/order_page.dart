@@ -48,7 +48,7 @@ class OrderPage extends GetView<OrderController> {
                     children: [
                       // const SizedBox(width: 20.0,),
                       const Text('Koszt zamówienia'),
-                      Text('${controller.orderValue.value.toStringAsFixed(2)} PLN', style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),),
+                      Text(controller.orderValue.value.toStringAsFixed(2), style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),),
                     ],
                   ),
                 ),
@@ -60,7 +60,7 @@ class OrderPage extends GetView<OrderController> {
                       // const SizedBox(width: 20.0,),
                       const Text('Koszt dostawy'),
                       Obx(() {
-                        return Text('${controller.deliveryCost.value.toStringAsFixed(2)} PLN',
+                        return Text(controller.deliveryCost.value.toStringAsFixed(2),
                             style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700));
                       }),
                     ],
@@ -74,7 +74,7 @@ class OrderPage extends GetView<OrderController> {
                       // const SizedBox(width: 20.0,),
                       const Text('Całkowity koszt'),
                       Obx(() {
-                        return Text('${controller.totalValue.value.toStringAsFixed(2)} PLN',
+                        return Text(controller.totalValue.value.toStringAsFixed(2),
                           style: const TextStyle(color: Colors.red, fontSize: 18.0, fontWeight: FontWeight.w700),);
                       }),
                     ],
@@ -145,7 +145,7 @@ class OrderPage extends GetView<OrderController> {
                 const Row(
                   children: [
                     SizedBox(width: 20.0,),
-                    Text('Dostawa: ', style: TextStyle(decoration: TextDecoration.underline)),
+                    Text('Dostawa: '),
                   ],
                 ),
                 const SizedBox(height: 20.0,),
@@ -181,7 +181,7 @@ class OrderPage extends GetView<OrderController> {
                 const Row(
                   children: [
                     SizedBox(width: 20.0,),
-                    Text('Wybierz metodę płatności: ', style: TextStyle(decoration: TextDecoration.underline),),
+                    Text('Wybierz metodę płatności: '),
                   ],
                 ),
                 const SizedBox(height: 20.0,),
@@ -230,7 +230,7 @@ class OrderPage extends GetView<OrderController> {
                 const Row(
                   children: [
                     SizedBox(width: 20.0,),
-                    Text('Adres dostawy : ', style: TextStyle(decoration: TextDecoration.underline)),
+                    Text('Adres dostawy : '),
                   ],
                 ),
                 const SizedBox(height: 20.0,),
@@ -251,7 +251,7 @@ class OrderPage extends GetView<OrderController> {
                               }),
                             ],
                           ),
-                          const Text('Zmień', style: TextStyle(fontWeight: FontWeight.w800, color: Colors.red),),
+                          Text('Zmień'),
                         ],
                       ),
                     ),
@@ -293,7 +293,7 @@ class CustomOrderWidget extends StatelessWidget {
           if(userDataController.voucherValue < orderController.totalValue.value){
             Get.defaultDialog(
               title: 'Uwaga',
-              content: const Text('Nie masz wystarczających środków na koncie'));}
+              content: Text('Nie masz wystarczających środków na koncie'));}
           else{
             orderController.paymentMethod.value = 'voucher';
           }

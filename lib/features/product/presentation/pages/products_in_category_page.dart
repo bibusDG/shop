@@ -129,7 +129,7 @@ class ProductsInCategoryPage extends GetView<ProductController> {
             ),
           ),
           Center(child:Text(product.productName.toUpperCase(),
-            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w300, decoration: TextDecoration.underline),)),
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w200, decoration: TextDecoration.underline),)),
         ],
       );
   }

@@ -160,19 +160,19 @@ class SetFreeProduct{
 });
 
   setFreeProductIcon(){
-    if (userDataController.freeProducts.value > 0 && !basketController.productIsFree.contains(product.productID) && !product.productName.contains('Voucher')) {
+    if (userDataController.freeProducts.value > 0 && !basketController.productIsFree.contains(product.productID)) {
       return GestureDetector(child: const Icon(Icons.star_outline, size: 35,), onTap: (){
         userDataController.freeProducts -= 1;
         basketController.productIsFree.add(product.productID);
         basketController.finalPrice.value -= product.productPrice;
       },);
-    }else if(userDataController.freeProducts.value > 0 && basketController.productIsFree.contains(product.productID) && !product.productName.contains('Voucher')){
+    }else if(userDataController.freeProducts.value > 0 && basketController.productIsFree.contains(product.productID)){
       return GestureDetector(child: const Icon(Icons.star, size: 35,), onTap: (){
         userDataController.freeProducts += 1;
         basketController.productIsFree.remove(product.productID);
         basketController.finalPrice.value += product.productPrice;
       },);
-    }else if(userDataController.freeProducts.value == 0 && basketController.productIsFree.contains(product.productID) && !product.productName.contains('Voucher')){
+    }else if(userDataController.freeProducts.value == 0 && basketController.productIsFree.contains(product.productID)){
       return GestureDetector(child: const Icon(Icons.star, size: 35,), onTap: (){
         userDataController.freeProducts += 1;
         basketController.productIsFree.remove(product.productID);

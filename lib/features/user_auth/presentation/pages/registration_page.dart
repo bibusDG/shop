@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
+import 'package:shop/features/notifications/presentation/getx/user_notification_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/create_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import '../../../../core/custom_widgets/custom_text_form_field.dart';
@@ -13,6 +15,7 @@ class RegistrationPage extends GetView<CreateUserController> {
   Widget build(BuildContext context) {
 
     ModifyUserController modifyUserController = Get.find();
+    UserNotificationController notificationController = Get.find();
 
     return GestureDetector(
       onTap: (){

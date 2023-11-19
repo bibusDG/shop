@@ -39,15 +39,20 @@ class UserNotificationDataSourceImp implements UserNotificationDataSource{
       },
       body: jsonEncode(
         <String, dynamic>{
-          'apns': <String, dynamic>{
-            'payload': {
-              'aps': {
-                'sound' : 'default'
+          "apns": {
+            "payload": {
+              "aps": {
+                "alert": {
+                  "body": notificationText,
+                  "title": notificationTopic,
+                },
+                "badge" : 2,
+                "sound" : "default"
               }
             }
           },
           'notification': <String, dynamic>{
-            'sound': 'default',
+            'sound': "default",
             'body': notificationText,
             'title': notificationTopic,
           },
