@@ -32,7 +32,7 @@ class StartPage extends GetView {
                 child: Text('Cześć'), onTap: (){Get.toNamed('/product_category');},),
             GestureDetector(child: Text('pay'), onTap: () async{
               ///Stripe payment
-              final intent = await paymentController.createPaymentIntent();
+              await paymentController.createPaymentIntent();
               await paymentController.initPaymentSheet(paymentIntent: paymentController.intent);
               paymentController.displayPaymentSheet();
               ///payment STRIPE

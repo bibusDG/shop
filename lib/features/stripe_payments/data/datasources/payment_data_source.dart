@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop/core/constants/constants.dart';
 import 'package:http/http.dart' as http;
@@ -31,6 +30,9 @@ class PaymentDataSourceImp implements PaymentDataSource{
     Map<String, dynamic> body = {
       "amount": intentAmount,
       "currency": intentCurrency,
+      "payment_method_types[0]": 'blik',
+      "payment_method_types[1]": 'card',
+      "payment_method_types[2]": 'paypal',
     };
     final result = await http.post(
       Uri.parse('https://api.stripe.com/v1/payment_intents'),
@@ -39,7 +41,9 @@ class PaymentDataSourceImp implements PaymentDataSource{
         'Content-Type': contentType,
       },
       body: body,
+
     );
+    print(json.decode(result.body));
     return json.decode(result.body);
 
     // TODO: implement createPaymentIntent

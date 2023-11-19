@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shop/core/constants/constants.dart';
 import 'package:shop/features/stripe_payments/domain/usecases/create_payment_intent_usecase.dart';
@@ -21,9 +22,9 @@ class PaymentController extends GetxController{
 
   Future<dynamic> createPaymentIntent() async{
     final result = await createPaymentIntentUseCase(
-       const IntentParams(
-            contentType: CONTENT_TYPE,
-            authTestKey: AUTH_KEY,
+          IntentParams(
+            contentType: '${dotenv.env['CONTENT_TYPE']}',
+            authTestKey: 'Bearer ${dotenv.env['AUTH_KEY']}',
             intentCurrency: INTENT_CURRENCY,
             intentAmount: INTENT_AMOUNT));
     result.fold((failure){
