@@ -15,7 +15,6 @@ class StartPage extends GetView {
 
     // final user = Get.put(UserDataController());
     // ModifyUserController modifyUserController = Get.find();
-    PaymentController paymentController = Get.find();
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -30,13 +29,6 @@ class StartPage extends GetView {
           children: [
             GestureDetector(
                 child: Text('Cześć'), onTap: (){Get.toNamed('/product_category');},),
-            GestureDetector(child: Text('pay'), onTap: () async{
-              ///Stripe payment
-              await paymentController.createPaymentIntent();
-              await paymentController.initPaymentSheet(paymentIntent: paymentController.intent);
-              paymentController.displayPaymentSheet();
-              ///payment STRIPE
-            },),
           ],
         ),
       ),),
