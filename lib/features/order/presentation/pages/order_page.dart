@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/core/bindings/payment_bindings.dart';
 import 'package:shop/core/constants/constants.dart';
 import 'package:shop/core/custom_widgets/custom_app_bar.dart';
 import 'package:shop/features/basket/presentation/getx/basket_controller.dart';
+import 'package:shop/features/stripe_payments/presentation/getx/payment_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
@@ -18,6 +20,7 @@ class OrderPage extends GetView<OrderController> {
 
     UserDataController userDataController = Get.find();
     BasketController basketController = Get.find();
+
     // bool? isVoucher = basketController.listOfProducts.values.elementAt(0).productName.contains('Voucher');
 
 
@@ -38,6 +41,7 @@ class OrderPage extends GetView<OrderController> {
   }
 ///method responsible for order summary view
   Column orderSummary(UserDataController userDataController) {
+    PaymentController paymentController = Get.find();
     return Column(
               children: [
                 // const SizedBox(height: 30.0,),
@@ -95,6 +99,12 @@ class OrderPage extends GetView<OrderController> {
 
                   }else{
                     await controller.createNewOrder();
+
+                    // ///Stripe payment
+                    // final intent = await paymentController.createPaymentIntent();
+                    // await paymentController.initPaymentSheet(paymentIntent: intent);
+                    // await paymentController.displayPaymentSheet();
+                    // ///payment STRIPE
                   }
                   if(userDataController.bonusPointsValue.value == 7){
                     userDataController.freeProducts.value += 1;

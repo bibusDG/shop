@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop/features/stripe_payments/presentation/getx/payment_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/modify_user_controller.dart';
 import 'package:shop/features/user_auth/presentation/getx/user_data_controller.dart';
 
@@ -14,6 +15,7 @@ class StartPage extends GetView {
 
     // final user = Get.put(UserDataController());
     // ModifyUserController modifyUserController = Get.find();
+    PaymentController paymentController = Get.find();
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -28,6 +30,13 @@ class StartPage extends GetView {
           children: [
             GestureDetector(
                 child: Text('Cześć'), onTap: (){Get.toNamed('/product_category');},),
+            GestureDetector(child: Text('pay'), onTap: () async{
+              ///Stripe payment
+              await paymentController.createPaymentIntent();
+              await paymentController.initPaymentSheet(paymentIntent: paymentController.intent);
+              paymentController.displayPaymentSheet();
+              ///payment STRIPE
+            },),
           ],
         ),
       ),),

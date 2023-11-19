@@ -783,6 +783,42 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.3.1)
+  - Stripe (23.16.0):
+    - StripeApplePay (= 23.16.0)
+    - StripeCore (= 23.16.0)
+    - StripePayments (= 23.16.0)
+    - StripePaymentsUI (= 23.16.0)
+    - StripeUICore (= 23.16.0)
+  - stripe_ios (0.0.1):
+    - Flutter
+    - Stripe (~> 23.16.0)
+    - StripeApplePay (~> 23.16.0)
+    - StripeFinancialConnections (~> 23.16.0)
+    - StripePayments (~> 23.16.0)
+    - StripePaymentSheet (~> 23.16.0)
+    - StripePaymentsUI (~> 23.16.0)
+  - StripeApplePay (23.16.0):
+    - StripeCore (= 23.16.0)
+  - StripeCore (23.16.0)
+  - StripeFinancialConnections (23.16.0):
+    - StripeCore (= 23.16.0)
+    - StripeUICore (= 23.16.0)
+  - StripePayments (23.16.0):
+    - StripeCore (= 23.16.0)
+    - StripePayments/Stripe3DS2 (= 23.16.0)
+  - StripePayments/Stripe3DS2 (23.16.0):
+    - StripeCore (= 23.16.0)
+  - StripePaymentSheet (23.16.0):
+    - StripeApplePay (= 23.16.0)
+    - StripeCore (= 23.16.0)
+    - StripePayments (= 23.16.0)
+    - StripePaymentsUI (= 23.16.0)
+  - StripePaymentsUI (23.16.0):
+    - StripeCore (= 23.16.0)
+    - StripePayments (= 23.16.0)
+    - StripeUICore (= 23.16.0)
+  - StripeUICore (23.16.0):
+    - StripeCore (= 23.16.0)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -794,6 +830,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_sms (from `.symlinks/plugins/flutter_sms/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - stripe_ios (from `.symlinks/plugins/stripe_ios/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
@@ -813,6 +850,14 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - Stripe
+    - StripeApplePay
+    - StripeCore
+    - StripeFinancialConnections
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
 
 EXTERNAL SOURCES:
   cloud_firestore:
@@ -829,6 +874,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_sms/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  stripe_ios:
+    :path: ".symlinks/plugins/stripe_ios/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
@@ -855,8 +902,17 @@ SPEC CHECKSUMS:
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  Stripe: fcab417424a45d995aa1e62a39bc942233b61ba3
+  stripe_ios: 2b444aaa35682eee30eac8733a9d502c1e925a4a
+  StripeApplePay: 81de266a964b3ad02fb25e8b22fd8c235d2916a8
+  StripeCore: ac141047bca25f5ae945a1cbdd00a90b0d08c616
+  StripeFinancialConnections: d7a452e4bed1195d8978ee4f6c0ba2f82c89fdf4
+  StripePayments: 5804cb9b02cca488042e5cf8cf57a86a5080006b
+  StripePaymentSheet: 06ea6bbf49be869769c46bf31be4fbc3e23b5b19
+  StripePaymentsUI: 24a0349ae8c7e8c7402086703720fe06c52ddea0
+  StripeUICore: ce85e040a22bf0335061d14973d37757528b3d2d
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
 
-PODFILE CHECKSUM: 6a1a9b2a3b330a1e7461e6fd2f029483224f2164
+PODFILE CHECKSUM: 4306098ec7ec1e0d611c4b5974413e47dc846603
 
 COCOAPODS: 1.11.3

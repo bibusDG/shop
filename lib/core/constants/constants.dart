@@ -1,6 +1,11 @@
 import 'package:shop/features/user_auth/domain/entities/user.dart';
 
-const COMPANY_NAME = 'sudol_coo';
+const COMPANY_NAME = 'mal0ry';
+
+///PAYMENTS
+const INTENT_CURRENCY = 'PLN';
+const INTENT_AMOUNT = '10000';
+
 
 const EMPTY_USER = User(
     userID: '',
