@@ -11,7 +11,6 @@ import 'package:shop/core/bindings/notification_bindings.dart';
 import 'package:shop/core/bindings/order_bindings.dart';
 import 'package:shop/core/bindings/product_category_bindings.dart';
 import 'package:shop/core/bindings/user_bindings.dart';
-import 'package:shop/features/notifications/presentation/getx/user_notification_controller.dart';
 import 'package:shop/features/order/presentation/pages/allOrders_page.dart';
 import 'package:shop/features/order/presentation/pages/order_detail_page.dart';
 import 'package:shop/features/product/presentation/pages/create_product_page.dart';
